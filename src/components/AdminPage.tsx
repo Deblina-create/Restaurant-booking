@@ -1,6 +1,4 @@
-import { getMaxListeners } from "process";
 import { useState } from "react";
-import { getCombinedModifierFlags } from "typescript";
 import "../Admin.css";
 import { Modal } from "../modals/EditModal";
 
@@ -31,6 +29,7 @@ export const AdmingPage = () => {
     );
   });
 
+
   return (
     <div className="admin-page">
       <div className="back">
@@ -46,7 +45,7 @@ export const AdmingPage = () => {
         <p className="add">add</p>
         <ul>{liTag}</ul>
       </div>
-      <Modal onClose={() => setShow(false)}show={show}/>
+      <Modal onClose={() => setShow(false)} show={show}/>
     </div>
   );
 };
