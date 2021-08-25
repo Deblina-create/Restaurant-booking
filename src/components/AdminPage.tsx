@@ -12,8 +12,13 @@ export const AdmingPage = () => {
     { id: 4, BookingTime: "18:00", NoOfPeople: 6, Name: "Nils" },
   ];
 
+  let dateNow = new Date().toDateString();
+
   const [bookings, setBookings] = useState(defaultValue);
   const [show, setShow] = useState(false);
+  const [date, setDate] = useState(dateNow);
+
+  let totalNoOfPeople = bookings.reduce((acc, curr) => acc + curr.NoOfPeople, 0);
 
   let liTag = bookings.map((booking) => {
     return (
@@ -21,14 +26,12 @@ export const AdmingPage = () => {
         <span>{booking.BookingTime}</span>
         <span>{booking.NoOfPeople}</span>
         <span>{booking.Name}</span>
-        
+
         <button onClick={() => setShow(true)}>edit</button>
         <button>delete</button>
-
       </li>
     );
   });
-
 
   return (
     <div className="admin-page">
@@ -39,13 +42,14 @@ export const AdmingPage = () => {
         </a>
       </div>
       <div>
-          <h2>date</h2>
+        <h2>{date}</h2>
       </div>
+      <p className="total">Total:  {bookings.length} bookings and {totalNoOfPeople} people</p>
       <div>
         <p className="add">add</p>
         <ul>{liTag}</ul>
       </div>
-      <Modal onClose={() => setShow(false)} show={show}/>
+      <Modal onClose={() => setShow(false)} show={show} />
     </div>
   );
 };

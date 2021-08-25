@@ -14,11 +14,19 @@ export const Modal: React.FC<ModalProps> = ({ onClose, show }) => {
     <div className="modal">
       <div className="modal-content">
         <div className="modal-header">
-          <h4 className="modal-title"> Modal title</h4>
+          <h3 className="modal-title">Booking detail</h3>
         </div>
-        <div className="modal-body">Here is modal content</div>
+        <div className="modal-body">
+            <input type="text" placeholder="Date"/>
+            <input type="text" placeholder="Time"/>
+            <input type="text" placeholder="Number of people"/>
+            <input type="text" placeholder="Name"/>
+            <input type="text" placeholder="Mobile number"/>
+            <input type="text" placeholder="Email"/>
+            <input type="text" placeholder="Preference"/>
+        </div>
         <div className="modal-footer">
-          <button onClick={onClose} className="button">
+          <button onClick={onClose} className="save-button">
             Save
           </button>
         </div>

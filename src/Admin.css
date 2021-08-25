@@ -18,6 +18,14 @@ a {
     margin: 0 auto;
 }
 
+h2 {
+    text-align: left;
+}
+
+.total {
+    text-align: left;
+}
+
 .add {
     text-align: right;
     cursor: pointer;
