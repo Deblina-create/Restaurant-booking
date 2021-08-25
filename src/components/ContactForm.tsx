@@ -11,16 +11,21 @@ const ContactForm = () => {
   // const history = useHistory();
 
   function handleNameChange(event: any) {
-    console.log(event.target);
-    setName(event.target.value);
+
+    setName (event.target.value);
+  
   }
   
-  function handleEmailChange(event: any) {
-    setEmail(event.target.value);
+  function handleEmailChange (event: any) {
+    
+    setEmail (event.target.value);
+  
   }
   
-  function handleMessageChange(event: any) {
-    setMessage(event.target.value);
+  function handleMessageChange (event: any) {
+    
+    setMessage (event.target.value);
+  
   }
   
   async function handleSubmit() {
@@ -28,15 +33,28 @@ const ContactForm = () => {
       name,
       email,
       message,
-    };
+    }
+    
+    
+    //
     await restaurantApi.post("/contact", payload)
       .catch((error) => console.log(error))
       .then((response) => {
         if (response) {
           // history.push("/confirmation");
           console.log(response);
+          
+          //If the message is sent succesefully we should present the 
+          //"Your Message was sent successfully"
+          //Or maybe we should create a component here for confirmation! 
+          return (
+            <div id="contact-container-succes">
+              <p>Your Message was Recieved!</p>
+            </div>
+          );
         }
       });
+
   }
 
   return (
@@ -50,8 +68,10 @@ const ContactForm = () => {
         <div><input type="text" value={message} placeholder="Message" onChange={handleMessageChange}/></div>
 
         <button type="submit" onSubmit={handleSubmit}>Send</button>
+
       </form>
     </div>
+    
   );
 }
 
