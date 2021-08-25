@@ -38,7 +38,7 @@ export const AdmingPage = () => {
       <div className="back">
         {/* <Link to={"/"}><i></i> Admin</Link> */}
         <a href="/">
-          <span>Admin</span>
+          <span><i className="fas fa-chevron-left"></i></span><span>Admin</span>
         </a>
       </div>
       <div>
