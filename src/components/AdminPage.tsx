@@ -2,7 +2,7 @@ import { getMaxListeners } from "process";
 import { useState } from "react";
 import { getCombinedModifierFlags } from "typescript";
 import "../Admin.css";
-import { Modal } from "../modals/Modal";
+import { Modal } from "../modals/EditModal";
 
 // import { Link } from "react-router-dom";
 

@@ -16,6 +16,7 @@ export const Modal = (props:any) => {
                 <div className="modal-footer">
                     <button onClick={props.onClose} className="button">Save</button>
                 </div>
+                <button onClick={props.onClose} className="close-icon">X</button>
             </div>
         </div>
     )
