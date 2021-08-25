@@ -14,7 +14,7 @@ a {
 }
 
 .admin-page {
-    width: 350px;
+    width: 90vw;
     margin: 0 auto;
 }
 
@@ -36,4 +36,8 @@ ul {
 
 li > span {
     padding-right: 50px;
+}
+
+.icons {
+    text-align: right;
 }

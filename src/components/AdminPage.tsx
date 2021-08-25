@@ -2,6 +2,7 @@ import { getMaxListeners } from "process";
 import { useState } from "react";
 import { getCombinedModifierFlags } from "typescript";
 import "../Admin.css";
+import { Modal } from "../modal/Modal";
 
 // import { Link } from "react-router-dom";
 export const AdmingPage = () => {
@@ -18,6 +19,10 @@ export const AdmingPage = () => {
         <span>{booking.BookingTime}</span>
         <span>{booking.NoOfPeople}</span>
         <span>{booking.Name}</span>
+        <div className="icons">
+        <a>edit</a>
+        <a>delete</a>
+        </div>
       </li>
     );
   });
@@ -36,6 +41,7 @@ export const AdmingPage = () => {
         <p className="add">add</p>
         <ul>{liTag}</ul>
       </div>
+      <Modal/>
     </div>
   );
 };

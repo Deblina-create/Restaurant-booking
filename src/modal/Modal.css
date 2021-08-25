@@ -1,0 +1,15 @@
+.modal {
+    position: fixed;
+    background-color: rgb(50, 50, 50);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90vw;
+    border-radius: 10px;
+}
+
+.modal-header, .modal-footer, 
+.modal-body {
+    padding: 10px;
+}
