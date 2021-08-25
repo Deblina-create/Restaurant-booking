@@ -10,7 +10,7 @@ a {
 
 .back {
     text-align: left;
-    padding: 10px;
+    padding: 10px 0;
 }
 
 .admin-page {
@@ -29,6 +29,12 @@ h2 {
 .add {
     text-align: right;
     cursor: pointer;
+}
+
+.add-button {
+    background-color: black;
+    color: white;
+    border: none;
 }
 
 .booking-list {

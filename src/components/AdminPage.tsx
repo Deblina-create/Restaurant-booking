@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../Admin.css";
-import { Modal } from "../modals/EditModal";
+import { DeleteModal } from "../modals/DeleteModal";
+import { EditModal} from "../modals/EditModal";
 
 // import { Link } from "react-router-dom";
 
@@ -15,7 +16,8 @@ export const AdmingPage = () => {
   let dateNow = new Date().toDateString();
 
   const [bookings, setBookings] = useState(defaultValue);
-  const [show, setShow] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
   const [date, setDate] = useState(dateNow);
 
   let totalNoOfPeople = bookings.reduce((acc, curr) => acc + curr.NoOfPeople, 0);
@@ -27,8 +29,8 @@ export const AdmingPage = () => {
         <span>{booking.NoOfPeople}</span>
         <span>{booking.Name}</span>
 
-        <button onClick={() => setShow(true)}>edit</button>
-        <button>delete</button>
+        <button onClick={() => setShowEdit(true)}>edit</button>
+        <button onClick={() => setShowDelete(true)}>delete</button>
       </li>
     );
   });
@@ -38,18 +40,22 @@ export const AdmingPage = () => {
       <div className="back">
         {/* <Link to={"/"}><i></i> Admin</Link> */}
         <a href="/">
-          <span><i className="fas fa-chevron-left"></i></span><span>Admin</span>
+        <span><i className="fas fa-chevron-left"></i></span>
+        <span> Admin</span>
         </a>
       </div>
       <div>
         <h2>{date}</h2>
       </div>
       <p className="total">Total:  {bookings.length} bookings and {totalNoOfPeople} people</p>
-      <div>
-        <p className="add">add</p>
-        <ul>{liTag}</ul>
+      <div className="add">
+        <button className="add-button"><i className="fas fa-plus"></i><span> add</span></button>
       </div>
-      <Modal onClose={() => setShow(false)} show={show} />
+      <div>
+      <ul>{liTag}</ul>
+      </div>
+      <EditModal onClose={() => setShowEdit(false)} show={showEdit} />
+      <DeleteModal onClose={() => setShowDelete(false)} show={showDelete}/>
     </div>
   );
 };

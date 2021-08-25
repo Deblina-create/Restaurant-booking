@@ -6,9 +6,8 @@
     /* align-items: center; */
     /* justify-content: center; */
     width: 90vw;
-    height: 90vh;
     border-radius: 15px;
-    top: 7vh;
+    top: 13vh;
 }
 
 .modal-title {
@@ -52,4 +51,24 @@ input {
     border-radius: 5px;
     padding: 10px 30px;
     cursor: pointer;
+}
+
+.yes-button {
+    background-color:orange;
+    color: white;
+    border: 2px solid orange;
+    border-radius: 5px;
+    padding: 10px 30px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.no-button {
+    background-color:rgb(50, 50, 50);
+    color: orange;
+    border: 2px solid orange;
+    border-radius: 5px;
+    padding: 10px 30px;
+    cursor: pointer;
+    margin: 10px;
 }

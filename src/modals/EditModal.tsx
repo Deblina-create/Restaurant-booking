@@ -5,7 +5,7 @@ interface ModalProps {
   onClose: () => void;
   show: boolean;
 }
-export const Modal: React.FC<ModalProps> = ({ onClose, show }) => {
+export const EditModal: React.FC<ModalProps> = ({ onClose, show }) => {
   if (!show) {
     return null;
   }
@@ -31,7 +31,7 @@ export const Modal: React.FC<ModalProps> = ({ onClose, show }) => {
           </button>
         </div>
         <button onClick={onClose} className="close-icon">
-          X
+        <i className="fas fa-times"></i>
         </button>
       </div>
     </div>
