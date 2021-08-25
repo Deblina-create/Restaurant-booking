@@ -11,16 +11,18 @@ const ContactForm = () => {
   // const history = useHistory();
 
   function handleNameChange(event: any) {
-    console.log(event.target);
-    setName(event.target.value);
+    console.log (event.target);
+    setName (event.target.value);
   }
   
-  function handleEmailChange(event: any) {
-    setEmail(event.target.value);
+  function handleEmailChange (event: any) {
+    console.log (event.target);
+    setEmail (event.target.value);
   }
   
-  function handleMessageChange(event: any) {
-    setMessage(event.target.value);
+  function handleMessageChange (event: any) {
+    console.log (event.target);
+    setMessage (event.target.value);
   }
   
   async function handleSubmit() {
@@ -35,6 +37,13 @@ const ContactForm = () => {
         if (response) {
           // history.push("/confirmation");
           console.log(response);
+          //If the message is sent succesefully we should present the 
+          //"Your Message was sent successfully"
+          return (
+            <div id="contact-container-succes">
+              <p>Your Message was Recieved!</p>
+            </div>
+          );
         }
       });
   }
