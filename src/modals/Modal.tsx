@@ -1,5 +1,5 @@
 import React from "react";
-import "./Modal.css";
+import "./css/Modal.css";
 export const Modal = (props:any) => {
     if(!props.show) {
         return null
