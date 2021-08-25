@@ -6,22 +6,23 @@ body {
 a {
     text-decoration: none;
     color: white;
-    margin: 20px;
 }
 
 .back {
-    margin: 20px;
     text-align: left;
+    padding: 10px;
 }
 
-div {
-    width: 400px;
+.admin-page {
+    width: 350px;
+    margin: 0 auto;
 }
 
 .add {
     text-align: right;
     cursor: pointer;
 }
+
 .booking-list {
     padding: 0.5em;
     list-style: none;
@@ -29,6 +30,10 @@ div {
     text-align: left;
 }
 
+ul {
+    padding: 0;
+}
+
 li > span {
-    padding-right: 100px;
+    padding-right: 50px;
 }

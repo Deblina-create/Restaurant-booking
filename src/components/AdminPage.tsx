@@ -30,6 +30,9 @@ export const AdmingPage = () => {
         </a>
       </div>
       <div>
+          <h2>date</h2>
+      </div>
+      <div>
         <p className="add">add</p>
         <ul>{liTag}</ul>
       </div>
