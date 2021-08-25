@@ -1,5 +1,9 @@
+import React from "react";
 import "./Modal.css";
-export const Modal = () => {
+export const Modal = (props:any) => {
+    if(!props.show) {
+        return null
+    }
     return(
         <div className="modal">
             <div className="modal-content">
@@ -10,7 +14,7 @@ export const Modal = () => {
                     Here is modal content
                 </div>
                 <div className="modal-footer">
-                    <button className="button">Close</button>
+                    <button onClick={props.onClose} className="button">Save</button>
                 </div>
             </div>
         </div>

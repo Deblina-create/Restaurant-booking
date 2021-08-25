@@ -6,7 +6,9 @@
     align-items: center;
     justify-content: center;
     width: 90vw;
-    border-radius: 10px;
+    height: 90vh;
+    border-radius: 15px;
+    top: 7vh;
 }
 
 .modal-header, .modal-footer, 
