@@ -14,16 +14,17 @@ export const AdmingPage = () => {
   ];
 
   let dateNow = new Date().toDateString();
-  let currentDate = new Date();
-  let numberOfMlSeconds = currentDate.getTime();
-  let dayToMlSeconds = 24 * 60 * 60 * 1000;
-  let previousDate = new Date(numberOfMlSeconds - dayToMlSeconds).toDateString();
-  let nextDate = new Date(numberOfMlSeconds + dayToMlSeconds).toDateString();
 
   const [bookings, setBookings] = useState(defaultValue);
   const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [date, setDate] = useState(dateNow);
+
+  let currentDate = new Date(date);
+  let numberOfMlSeconds = currentDate.getTime();
+  let dayToMlSeconds = 24 * 60 * 60 * 1000;
+  let previousDate = new Date(numberOfMlSeconds - dayToMlSeconds).toDateString();
+  let nextDate = new Date(numberOfMlSeconds + dayToMlSeconds).toDateString();
 
   let totalNoOfPeople = bookings.reduce(
     (acc, curr) => acc + curr.NoOfPeople,
