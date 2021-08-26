@@ -7,4 +7,8 @@ const restaurantApi = axios.create({
   },
 });
 
+//NODEJS BASE URL HERE
+//SOMEENDPOINT HERE
+//EMPTY END POINT WILL WORK
+//SAID TEGEL
 export default restaurantApi;
