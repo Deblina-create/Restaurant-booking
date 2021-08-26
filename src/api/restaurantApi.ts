@@ -1,14 +1,14 @@
 import axios from "axios";
 
 const restaurantApi = axios.create({
-  baseURL: "https://example.com/api/v1",
+  baseURL: "http://localhost:8000",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-export default restaurantApi;
 //NODEJS BASE URL HERE
 //SOMEENDPOINT HERE
 //EMPTY END POINT WILL WORK
 //SAID TEGEL
+export default restaurantApi;

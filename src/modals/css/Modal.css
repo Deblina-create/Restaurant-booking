@@ -1,0 +1,82 @@
+.modal {
+  position: fixed;
+  background-color: rgb(50, 50, 50);
+  margin: 0 auto;
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
+  width: 91vw;
+  border-radius: 15px;
+  top: 13vh;
+}
+
+.modal-title {
+  text-align: left;
+  top: 10px;
+}
+
+/* h1 {
+    margin: 0;
+} */
+
+h3 {
+  margin: 0;
+  padding-left: 5px;
+}
+
+.modal-header {
+  padding: 20px;
+}
+
+.modal-body,
+.modal-footer {
+  padding: 0 20px 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.close-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: rgb(50, 50, 50);
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: rgb(50, 50, 50);
+  color: orange;
+  border: 2px solid orange;
+  border-radius: 5px;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+.yes-button {
+  background-color: orange;
+  color: white;
+  border: 2px solid orange;
+  border-radius: 5px;
+  padding: 10px 30px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.no-button {
+  background-color: rgb(50, 50, 50);
+  color: orange;
+  border: 2px solid orange;
+  border-radius: 5px;
+  padding: 10px 30px;
+  cursor: pointer;
+  margin: 10px;
+}
