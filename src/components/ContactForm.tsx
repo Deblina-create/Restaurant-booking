@@ -70,7 +70,7 @@ const ContactForm = () => {
   <p>Dear {name},Your Message was Recieved!</p>
   
   :
-  <div>
+  <div id="contact-container">
     <p>Please Contact Us Using the Form Below</p>
       <form>
           <div><input type="text" value={name} placeholder="Name" onChange={handleNameChange}/></div>
