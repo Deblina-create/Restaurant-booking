@@ -1,12 +1,12 @@
 import React from 'react';
 
 
-const BookingConfirmation = ()=>{
+const BookingConfirmation = () => {
 
 
     return (
         <div>
-
+            BOOKING CONFIRMED
         </div>
     );
 }

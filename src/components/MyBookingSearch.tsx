@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import SearchRequest from '../models/SearchRequest';
 import restaurantApi from '../api/restaurantApi';
 import SearchInfo from '../models/SearchInfo';
@@ -12,6 +11,8 @@ const initialSelectedSlot : SearchInfo  = {
     TimeSlotText: "",
     IsTableAvailable: false
 };
+
+
 
 
 const MyBookingSearch = () => {
@@ -72,13 +73,13 @@ const MyBookingSearch = () => {
             <input type="number" min={1} defaultValue={2} onChange={onNumberOfPeopleChange} />
             <button onClick={fetchData}>Search</button>
 
-            {searchData.map((data, index) => <div>
+            {searchData.map((data, index) => <div key={index}>
                 <input type="radio" value={data.TimeSlotText} disabled={!data.IsTableAvailable} name="slot" onClick={() => openForm(data)} />
                 <label>{data.TimeSlotText}</label>
             </div>)}
             {dataFetched && searchData.length === 0 ? <div>Sorry! we have 0 tables left. Try to change date.</div> : ''}
             {searchData.length > 0 && selectedSlot.TimeSlotIndex != -1 ? <div>
-                <BookingForm></BookingForm>
+                <BookingForm bookingDate={bookingDate} peopleCount={peopleCount} slot={selectedSlot}></BookingForm>
             </div>: ''}
 
 
