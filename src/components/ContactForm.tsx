@@ -4,11 +4,12 @@ import "./contactForm.css";
 import restaurantApi from "../api/restaurantApi";
 
 const ContactForm = () => {
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-
-  // const history = useHistory();
+  const [isSent, messageSent]= useState(false);
+  //const history = useHistory();
 
   function handleNameChange(event: any) {
 
@@ -28,36 +29,47 @@ const ContactForm = () => {
   
   }
   
+  function changeMessageStatus () {
+
+    messageSent(true);
+
+  }
+
   async function handleSubmit() {
+
     const payload = {
       name,
       email,
       message,
     }
     
-    
-    //
+   
     await restaurantApi.post("/contact", payload)
       .catch((error) => console.log(error))
       .then((response) => {
+
+      
         if (response) {
           // history.push("/confirmation");
+          changeMessageStatus();
           console.log(response);
-          
-          //If the message is sent succesefully we should present the 
-          //"Your Message was sent successfully"
-          //Or maybe we should create a component here for confirmation! 
-          return (
-            <div id="contact-container-succes">
-              <p>Your Message was Recieved!</p>
-            </div>
-          );
+        
         }
       });
 
   }
 
   return (
+
+    //IF WWILL COME HERE
+
+    //if (messageSent) {
+    //  return
+    //  ( <div id="contact-container-succes">
+    //      <p>Dear {name},Your Message was Recieved!</p>
+    //      </div>)
+    //   } else {
+    //create an if and if all is good print out if conditional rendering /react
     <div id="contact-container">
       <p>Please Contact Us Using the Form Below</p>
       <form>
@@ -71,8 +83,8 @@ const ContactForm = () => {
 
       </form>
     </div>
-    
+    //}
   );
 }
-
+ 
 export default ContactForm
