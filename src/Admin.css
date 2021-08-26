@@ -55,6 +55,10 @@ button:disabled {
   cursor: pointer;
 }
 
+.add-icon {
+    font-size: 20px;
+}
+
 .booking-list {
   padding: 0.5em;
   list-style: none;

@@ -24,9 +24,12 @@ h3 {
     padding-left: 5px;
 }
 
-.modal-header, .modal-footer, 
-.modal-body {    
+.modal-header {
     padding: 20px;
+}
+
+.modal-body, .modal-footer {    
+    padding: 0 20px 20px;
 }
 
 input {
@@ -39,8 +42,8 @@ input {
 
 .close-icon {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 15px;
+    right: 15px;
     background-color:rgb(50, 50, 50);
     border: none;
     color: white;

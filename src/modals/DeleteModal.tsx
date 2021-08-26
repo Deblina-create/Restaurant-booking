@@ -16,7 +16,7 @@ export const DeleteModal: React.FC<ModalProps> = ({ onClose, show }) => {
           <h1 className="modal-title">Delete reservation</h1>
         </div>
         <div className="modal-body">
-          <h3>Delete selected reservation</h3>
+          <h3>Delete selected reservation?</h3>
         </div>
         <div className="modal-footer">
           <button onClick={onClose} className="yes-button">
