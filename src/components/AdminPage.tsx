@@ -25,7 +25,9 @@ export const AdmingPage = () => {
   let currentDate = new Date(date);
   let numberOfMlSeconds = currentDate.getTime();
   let dayToMlSeconds = 24 * 60 * 60 * 1000;
-  let previousDate = new Date(numberOfMlSeconds - dayToMlSeconds).toDateString();
+  let previousDate = new Date(
+    numberOfMlSeconds - dayToMlSeconds
+  ).toDateString();
   let nextDate = new Date(numberOfMlSeconds + dayToMlSeconds).toDateString();
 
   let totalNoOfPeople = bookings.reduce(
@@ -64,7 +66,11 @@ export const AdmingPage = () => {
         <h2>
           {date}
           {/* {date === dateNow? <span>(Today)</span> : ""} */}
-          <button onClick={() => setDate(previousDate)} disabled={date === dateNow} className="decrease">  
+          <button
+            onClick={() => setDate(previousDate)}
+            disabled={date === dateNow}
+            className="decrease"
+          >
             <i className="fas fa-chevron-left"></i>
           </button>
           <button onClick={() => setDate(nextDate)} className="increase">
@@ -83,7 +89,7 @@ export const AdmingPage = () => {
       <div>
         <ul>{liTag}</ul>
       </div>
-      <AddModal onClose={() => setShowAdd(false)} show={showAdd}/>
+      <AddModal onClose={() => setShowAdd(false)} show={showAdd} />
       <EditModal onClose={() => setShowEdit(false)} show={showEdit} />
       <DeleteModal onClose={() => setShowDelete(false)} show={showDelete} />
     </div>
