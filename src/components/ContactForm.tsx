@@ -2,6 +2,7 @@ import { useState } from "react";
 // import { useHistory } from "react-router";
 import "./contactForm.css";
 import restaurantApi from "../api/restaurantApi";
+import { render } from "@testing-library/react";
 
 const ContactForm = () => {
 
@@ -59,32 +60,34 @@ const ContactForm = () => {
 
   }
 
+ 
   return (
-
-    //IF WWILL COME HERE
-
-    //if (messageSent) {
-    //  return
-    //  ( <div id="contact-container-succes">
-    //      <p>Dear {name},Your Message was Recieved!</p>
-    //      </div>)
-    //   } else {
-    //create an if and if all is good print out if conditional rendering /react
-    <div id="contact-container">
-      <p>Please Contact Us Using the Form Below</p>
+  <div id="contact-container-succes">
+    
+    {isSent
+  
+  ?
+  <p>Dear {name},Your Message was Recieved!</p>
+  
+  :
+  <div>
+    <p>Please Contact Us Using the Form Below</p>
       <form>
-        <div><input type="text" value={name} placeholder="Name" onChange={handleNameChange}/></div>
+          <div><input type="text" value={name} placeholder="Name" onChange={handleNameChange}/></div>
         
-        <div><input type="text" value={email} placeholder="Email" onChange={handleEmailChange}/></div>
+          <div><input type="text" value={email} placeholder="Email" onChange={handleEmailChange}/></div>
         
-        <div><input type="text" value={message} placeholder="Message" onChange={handleMessageChange}/></div>
+          <div><input type="text" value={message} placeholder="Message" onChange={handleMessageChange}/></div>
 
-        <button type="submit" onSubmit={handleSubmit}>Send</button>
+            <button type="submit" onSubmit={handleSubmit}>Send</button>
+          
+     </form>
+  </div>
+  }
+  
+  </div>);
 
-      </form>
-    </div>
-    //}
-  );
 }
+
  
 export default ContactForm
