@@ -61,8 +61,8 @@ export const AdmingPage = () => {
       <div>
         <h2>
           {date}
-          {date === dateNow? <span>(Today)</span> : ""} 
-          <button onClick={() => setDate(previousDate)}>  
+          {date === dateNow? <span>(Today)</span> : ""}
+          <button onClick={() => setDate(previousDate)} disabled={date === dateNow}>  
             <i className="fas fa-chevron-left"></i>
           </button>
           <button onClick={() => setDate(nextDate)}>
