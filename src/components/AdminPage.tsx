@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../Admin.css";
+import { AddModal } from "../modals/AddModal";
 import { DeleteModal } from "../modals/DeleteModal";
 import { EditModal } from "../modals/EditModal";
 
@@ -18,6 +19,7 @@ export const AdmingPage = () => {
   const [bookings, setBookings] = useState(defaultValue);
   const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
   const [date, setDate] = useState(dateNow);
 
   let currentDate = new Date(date);
@@ -40,7 +42,7 @@ export const AdmingPage = () => {
         <button onClick={() => setShowEdit(true)} className="edit-icon">
           <i className="fas fa-pen"></i>
         </button>
-        <button onClick={() => setShowDelete(true)} className="remove-icon">
+        <button onClick={() => setShowDelete(true)} className="delete-icon">
           <i className="fas fa-trash-alt"></i>
         </button>
       </li>
@@ -61,11 +63,11 @@ export const AdmingPage = () => {
       <div>
         <h2>
           {date}
-          {date === dateNow? <span>(Today)</span> : ""}
-          <button onClick={() => setDate(previousDate)} disabled={date === dateNow}>  
+          {/* {date === dateNow? <span>(Today)</span> : ""} */}
+          <button onClick={() => setDate(previousDate)} disabled={date === dateNow} className="decrease">  
             <i className="fas fa-chevron-left"></i>
           </button>
-          <button onClick={() => setDate(nextDate)}>
+          <button onClick={() => setDate(nextDate)} className="increase">
             <i className="fas fa-chevron-right"></i>
           </button>
         </h2>
@@ -74,14 +76,14 @@ export const AdmingPage = () => {
         Total: {bookings.length} bookings and {totalNoOfPeople} people
       </p>
       <div className="add">
-        <button className="add-icon">
+        <button onClick={() => setShowAdd(true)} className="add-icon">
           <i className="fas fa-plus"></i>
-          <span> add</span>
         </button>
       </div>
       <div>
         <ul>{liTag}</ul>
       </div>
+      <AddModal onClose={() => setShowAdd(false)} show={showAdd}/>
       <EditModal onClose={() => setShowEdit(false)} show={showEdit} />
       <DeleteModal onClose={() => setShowDelete(false)} show={showDelete} />
     </div>
