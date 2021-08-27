@@ -73,11 +73,11 @@ const ContactForm = () => {
   <div id="contact-container">
     <p>Please Contact Us Using the Form Below</p>
       <form onSubmit={handleSubmit}>
-          <div><input type="text" value={name} placeholder="Name" onChange={handleNameChange}/></div>
+          <div><input type="text" value={name} placeholder="Name" required onChange={handleNameChange}/></div>
         
-          <div><input type="text" value={email} placeholder="Email" onChange={handleEmailChange}/></div>
+          <div><input type="email" value={email} placeholder="Email" required onChange={handleEmailChange}/></div>
         
-          <div><input type="text" value={message} placeholder="Message" onChange={handleMessageChange}/></div>
+          <div><input type="text" value={message} placeholder="Message" required onChange={handleMessageChange}/></div>
 
           <button type="submit">Send</button>
           

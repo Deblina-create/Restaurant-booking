@@ -29,8 +29,8 @@ describe("handleEmailChange", () => {
              />);
         const inputElement = screen.getByPlaceholderText(/Email/i);
         
-        fireEvent.change(inputElement, { target: { value: "John@Doe.com"}})
-        expect(inputElement.value).toBe("John@Doe.com");
+        fireEvent.change(inputElement, { target: { value: "John@doe.com"}})
+        expect(inputElement.value).toBe("John@doe.com");
       });
     })
 
@@ -56,7 +56,7 @@ describe("handleEmailChange", () => {
                 //expect(inputElementMessage.value).toBe("Just a mock message");
 
                 const inputElementEmail = screen.getByPlaceholderText(/Email/i);
-                fireEvent.change(inputElementEmail, { target: { value: "john@doe"}})
+                fireEvent.change(inputElementEmail, { target: { value: "john@doe.com"}})
                 // expect(inputElementEmail.value).toBe("john@doe");
 
                 const inputElementName = screen.getByPlaceholderText(/Name/i);
@@ -66,9 +66,9 @@ describe("handleEmailChange", () => {
                 const buttonElement = screen.getByRole("button");
                 fireEvent.click(buttonElement)
                 expect(inputElementName.value).toBe("John Doe");
-                expect(inputElementEmail.value).toBe("john@doe");
+                expect(inputElementEmail.value).toBe("john@doe.com");
                 expect(inputElementMessage.value).toBe("Just a mock message");
-                //testing only name here. is there a way to add "and"??
+                
                 //If I could do this test (covering all the steps execpt api) why I did the others? 
                 //Maybe I should delete them?
               });
