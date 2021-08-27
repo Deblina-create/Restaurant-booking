@@ -6,7 +6,7 @@ import { EditModal } from "../modals/EditModal";
 
 // import { Link } from "react-router-dom";
 
-export const AdmingPage = () => {
+export const AdminPage = () => {
   let defaultValue = [
     { id: 1, BookingTime: "18:00", NoOfPeople: 2, Name: "Stina" },
     { id: 2, BookingTime: "18:00", NoOfPeople: 4, Name: "Per" },

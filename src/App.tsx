@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
-import { AdmingPage } from './components/AdminPage';
+import { AdminPage } from './components/AdminPage';
+import { NotFound } from './components/NotFound';
+
 
 function App() {
   return (
     <div className="App">
-      <AdmingPage></AdmingPage>
+      <AdminPage/>
+      {/* <NotFound/> */}
     </div>
   );
 }
