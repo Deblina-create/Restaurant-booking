@@ -11,7 +11,7 @@ test('should check if the page rendered as it should be-contact form', async () 
 
 
 describe("handleNameChange", () => {
-test('should render input element name', async () => {
+test('should render input element:name', async () => {
     render(<ContactForm
          
          />);
@@ -23,7 +23,7 @@ test('should render input element name', async () => {
 })
 
 describe("handleEmailChange", () => {
-    test('should render input element email', async () => {
+    test('should render input element:email', async () => {
         render(<ContactForm
              
              />);
@@ -33,6 +33,22 @@ describe("handleEmailChange", () => {
         expect(inputElement.value).toBe("John@Doe.com");
       });
     })
+
+    describe("handleMessageChange", () => {
+        test('should render input element:message', async () => {
+            render(<ContactForm
+                 
+                 />);
+            const inputElement = screen.getByPlaceholderText(/Message/i);
+            
+            fireEvent.change(inputElement, { target: { value: "Just a mock message"}})
+            expect(inputElement.value).toBe("Just a mock message");
+          });
+        })
+    
+    
+    
+
 
 // test('should check if the page rendered as it should be-message recieved', async () => {
 //     render(<ContactForm />);
