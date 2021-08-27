@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "../Admin.css";
 import restaurantApi from "../api/restaurantApi";
 import { AddModal } from "../modals/AddModal";
@@ -41,7 +42,7 @@ export const AdminPage = () => {
       const response = await restaurantApi.post<Booking[]>("/admin_search", {
         data: date,
       });
-      console.log("Response is ", response.data.map(b => b.BookingTime));
+      // console.log("Response is ", response.data.map(b => b.BookingTime));
       
       setBookings(response.data as Booking[]);
     };
@@ -71,13 +72,7 @@ export const AdminPage = () => {
     return (
       <div className="admin-page">
         <div className="back">
-          {/* <Link to={"/"}><i></i> Admin</Link> */}
-          <a href="/">
-            <span>
-              <i className="fas fa-chevron-left"></i>
-            </span>
-            <span> Admin</span>
-          </a>
+          <Link to={"/"}><i className="fas fa-chevron-left"></i> Admin</Link>
         </div>
         <div>
           <h2>

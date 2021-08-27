@@ -12,8 +12,6 @@ import { NotFound } from './components/NotFound';
 function App() {
   return (
     <div className="App">
-      {/* <AdminPage/> */}
-      {/* <NotFound/> */}
       <Switch>
         <Route exact path="/" component={MyBookingSearch} />
         <Route exact path="/search" component={MyBookingSearch} />
