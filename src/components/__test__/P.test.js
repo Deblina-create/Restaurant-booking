@@ -46,7 +46,33 @@ describe("handleEmailChange", () => {
           });
         })
     
-    
+        describe("handleSubmit", () => {
+            test('should submit values when submit button clicked', async () => {
+                render(<ContactForm
+                     
+                     />);
+                const inputElementMessage = screen.getByPlaceholderText(/Message/i);
+                fireEvent.change(inputElementMessage, { target: { value: "Just a mock message"}})
+                //expect(inputElementMessage.value).toBe("Just a mock message");
+
+                const inputElementEmail = screen.getByPlaceholderText(/Email/i);
+                fireEvent.change(inputElementEmail, { target: { value: "john@doe"}})
+                // expect(inputElementEmail.value).toBe("john@doe");
+
+                const inputElementName = screen.getByPlaceholderText(/Name/i);
+                fireEvent.change(inputElementName, { target: { value: "John Doe"}})
+                // expect(inputElementName.value).toBe("John Doe");
+
+                const buttonElement = screen.getByRole("button");
+                fireEvent.click(buttonElement)
+                expect(inputElementName.value).toBe("John Doe");
+                expect(inputElementEmail.value).toBe("john@doe");
+                expect(inputElementMessage.value).toBe("Just a mock message");
+                //testing only name here. is there a way to add "and"??
+                //If I could do this test (covering all the steps execpt api) why I did the others? 
+                //Maybe I should delete them?
+              });
+            })
     
 
 

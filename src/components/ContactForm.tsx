@@ -72,14 +72,14 @@ const ContactForm = () => {
   :
   <div id="contact-container">
     <p>Please Contact Us Using the Form Below</p>
-      <form>
+      <form onSubmit={handleSubmit}>
           <div><input type="text" value={name} placeholder="Name" onChange={handleNameChange}/></div>
         
           <div><input type="text" value={email} placeholder="Email" onChange={handleEmailChange}/></div>
         
           <div><input type="text" value={message} placeholder="Message" onChange={handleMessageChange}/></div>
 
-            <button type="submit" onSubmit={handleSubmit}>Send</button>
+          <button type="submit">Send</button>
           
      </form>
   </div>
@@ -88,6 +88,6 @@ const ContactForm = () => {
   </div>);
 
 }
-
+//add a if case and if the form is empty dont send
  
 export default ContactForm
