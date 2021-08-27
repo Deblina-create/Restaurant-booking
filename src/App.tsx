@@ -1,18 +1,18 @@
 import React from 'react';
 import './App.css';
-import { AdminPage } from './components/AdminPage';
-import { NotFound } from './components/NotFound';
 import ContactForm from './components/ContactForm';
 import { Route, Switch } from 'react-router-dom';
 import BookingConfirmation from './components/BookingConfirmation';
 import MyBookingSearch from './components/MyBookingSearch';
+import { AdminPage } from './components/AdminPage';
+import { NotFound } from './components/NotFound';
 
 
 
 function App() {
   return (
     <div className="App">
-      <AdminPage/>
+      {/* <AdminPage/> */}
       {/* <NotFound/> */}
       <Switch>
         <Route exact path="/" component={MyBookingSearch} />

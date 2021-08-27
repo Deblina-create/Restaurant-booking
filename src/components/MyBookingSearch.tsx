@@ -81,10 +81,6 @@ const MyBookingSearch = () => {
             {searchData.length > 0 && selectedSlot.TimeSlotIndex != -1 ? <div>
                 <BookingForm bookingDate={bookingDate} peopleCount={peopleCount} slot={selectedSlot}></BookingForm>
             </div>: ''}
-
-
-
-
         </div>
     );
 }

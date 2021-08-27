@@ -71,7 +71,12 @@ ul {
 }
 
 li > span {
-  padding-right: 50px;
+  padding-right: 40px;
+}
+
+.guest {
+  font-size: 12px;
+  padding-right: 5px;
 }
 
 .edit-icon {

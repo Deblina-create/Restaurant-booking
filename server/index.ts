@@ -37,9 +37,14 @@ app.delete('/booking/:id', async (req, res) => {
     return res.json(dbResponse);
 });
 
+app.post('/admin_search', async (req, res) => {
+    let date = new Date(req.body.data); 
+    const dbResponse= await BD.adminSearchBookings(date);
+    return res.json(dbResponse);
+})
 
 app.listen(PORT, () => {
     console.log(`[server]: Server is running at http://localhost:${PORT}`);
-  });
+  }); 
 
 export default app;
