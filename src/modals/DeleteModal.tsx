@@ -19,10 +19,10 @@ export const DeleteModal: React.FC<ModalProps> = ({ onClose, show }) => {
           <h3>Delete selected reservation?</h3>
         </div>
         <div className="modal-footer">
-          <button onClick={onClose} className="yes-button">
+          <button onClick={onClose} className="full-btn">
             Yes
           </button>
-          <button onClick={onClose} className="no-button">
+          <button onClick={onClose} className="empty-btn">
             No
           </button>
         </div>

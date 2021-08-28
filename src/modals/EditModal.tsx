@@ -26,7 +26,7 @@ export const EditModal: React.FC<ModalProps> = ({ onClose, show }) => {
           <input type="text" placeholder="Preference" />
         </div>
         <div className="modal-footer">
-          <button onClick={onClose} className="save-button">
+          <button onClick={onClose} className="full-btn">
             Save
           </button>
         </div>

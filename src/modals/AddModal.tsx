@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import restaurantApi from "../api/restaurantApi";
-import Booking from "../models/Booking";
-import ErrorResponse from "../models/ErrorResponse";
+import BookingForm from "../components/BookingForm";
+import SearchInfo from "../models/SearchInfo";
+import SearchRequest from "../models/SearchRequest";
 import "./css/Modal.css";
 
 interface ModalProps {
@@ -9,57 +10,53 @@ interface ModalProps {
   show: boolean;
 }
 
-const initialhBookingInfo: Booking = {
-  BookingTime: "",
-  NoOfPeople: 0,
-  Email: "",
-  Preferences: "",
-  Name: "",
-  Phone: "",
-  BookedTableCount: 0,
+const initialData: SearchInfo[] = [];
+const initialSelectedSlot: SearchInfo = {
+  TimeSlotIndex: -1,
+  TimeSlotText: "",
+  IsTableAvailable: false,
 };
 
 export const AddModal: React.FC<ModalProps> = ({ onClose, show }) => {
-
-  const [selectedTime, setSelectedTime] = useState("18:00");
-  const [bookingInfo, setBookingInfo] = useState(initialhBookingInfo);
+  let curr = new Date();
+  let dt = curr.toISOString().substr(0, 10);
+  const [bookingDate, setBookingDate] = useState(dt);
+  const [peopleCount, setPeopleCount] = useState(2);
+  const [searchData, setSearchData] = useState(initialData);
+  const [dataFetched, setDataFetched] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState(initialSelectedSlot);
 
   if (!show) {
     return null;
   }
-  const dateChange = (e: any) => {
-    setBookingInfo({ ...bookingInfo, BookingTime: e.target.value.toString() });
+
+  const onDateChange = (e: any) => {
+    const dt = e.target.value.toString();
+    setBookingDate(dt);
   };
 
-  const noOfPeopleChanged = (e: any) => {
-    setBookingInfo({ ...bookingInfo, NoOfPeople: e.target.value});
+  const onNumberOfPeopleChange = (e: any) => {
+    setPeopleCount(Number.parseInt(e.target.value.toString()));
   };
 
-  const nameChanged = (e: any) => {
-    setBookingInfo({ ...bookingInfo, Name: e.target.value.toString() });
-  };
-
-  const phoneChanged = (e: any) => {
-    setBookingInfo({ ...bookingInfo, Phone: e.target.value.toString() });
-  };
-
-  const emailChanged = (e: any) => {
-    setBookingInfo({ ...bookingInfo, Email: e.target.value.toString() });
-  };
-
-  const saveBookingInfo = async (e: any) => {
-    let bookDate = new Date(bookingInfo.BookingTime);
-    if (selectedTime == "18:00") {
-      bookDate.setHours(18, 0, 0, 0);
-    } else if (selectedTime == "21:00") {
-      bookDate.setHours(21, 0, 0, 0);
-    }
-    bookingInfo.BookingTime = bookDate.toString();
-
-    await restaurantApi.post<string | ErrorResponse>("/booking", {
-      data: bookingInfo,
+  const fetchData = async () => {
+    console.log("Date value", bookingDate);
+    console.log("People value", peopleCount);
+    const payload: SearchRequest = {
+      BookingDate: new Date(bookingDate),
+      PeopleCount: peopleCount,
+    };
+    console.log("Payload", payload);
+    const x = await restaurantApi.post<SearchInfo[]>("/search", {
+      data: payload,
     });
-    onClose();
+    setSearchData(x.data as SearchInfo[]);
+    setDataFetched(true);
+    console.log("response data", x.data);
+  };
+
+  const openForm = (timeSlot: SearchInfo) => {
+    setSelectedSlot(timeSlot);
   };
 
   return (
@@ -69,43 +66,54 @@ export const AddModal: React.FC<ModalProps> = ({ onClose, show }) => {
           <h3 className="modal-title">Booking detail</h3>
         </div>
         <div className="modal-body">
-          <input type="date" onChange={dateChange} />
-          <div className="radio">
-            <input
-              type="radio"
-              name="slot"
-              onClick={() => setSelectedTime("18:00")}
-              className="radio-btn"
-              defaultChecked
-            />
-            <label htmlFor="18:00">18:00</label>
-            <input
-              type="radio"
-              name="slot"
-              onClick={() => setSelectedTime("21:00")}
-              className="radio-btn"
-            />
-            <label htmlFor="21:00">21:00</label>
-          </div>
+          <input
+            type="date"
+            onChange={onDateChange}
+            defaultValue={bookingDate.toString()}
+          />
           <input
             type="number"
-            placeholder="Number of people"
-            onChange={noOfPeopleChanged}
+            min={1}
+            defaultValue={2}
+            onChange={onNumberOfPeopleChange}
           />
-          <input type="text" placeholder="Name" onChange={nameChanged} />
-          <input
-            type="text"
-            placeholder="Mobile number"
-            onChange={phoneChanged}
-          />
-          <input type="email" placeholder="Email" onChange={emailChanged} />
-          <input type="text" placeholder="Preference" />
-        </div>
-        <div className="modal-footer">
-          <button onClick={saveBookingInfo} className="save-button">
-            Add
+          <button onClick={fetchData} className="empty-btn">
+            Search
           </button>
         </div>
+        <div className="radio">
+          {searchData.map((data, index) => (
+            <div key={index} className="radio-btn">
+              <input
+                type="radio"
+                value={data.TimeSlotText}
+                disabled={!data.IsTableAvailable}
+                name="slot"
+                onClick={() => openForm(data)}
+              />
+                <label className="slot">{data.TimeSlotText}</label>
+            </div>
+          ))}
+        </div>
+        {dataFetched && searchData.length === 0 ? (
+          <div>Sorry! we have 0 tables left. Try to change date.</div>
+        ) : (
+          ""
+        )}
+        {searchData.length > 0 && selectedSlot.TimeSlotIndex != -1 ? (
+          <div className="modal-body">
+            <BookingForm
+              bookingDate={bookingDate}
+              peopleCount={peopleCount}
+              slot={selectedSlot}
+            ></BookingForm>
+          </div>
+        ) : (
+          ""
+        )}
+        {/* <div className="modal-footer">
+          <button className="save-button">Add</button>
+        </div> */}
         <button onClick={onClose} className="close-icon">
           <i className="fas fa-times"></i>
         </button>
