@@ -12,8 +12,8 @@ export const AdminPage = () => {
     let dateNow = new Date().toDateString();
 
     const [bookings, setBookings] = useState([] as Booking[]);
-    const [showEdit, setShowEdit] = useState(false);
-    const [showAdd, setShowAdd] = useState(false);
+    const [selectedBooking, setSelectedBooking] = useState<any>();
+    const [showAddModal, setShowAddModal] = useState(false);
     const [date, setDate] = useState(dateNow);
     const [deleteBookingId, setDeleteBookingId] = useState<string>();
 
@@ -54,7 +54,7 @@ export const AdminPage = () => {
           <div><i className="fas fa-user-friends guest"></i>{booking.NoOfPeople}</div>
           <div>{booking.Name}</div>
           <div className="buttons">
-          <button onClick={() => setShowEdit(true)} className="edit-icon">
+          <button onClick={() => setSelectedBooking(booking)} className="edit-icon">
             <i className="fas fa-pen"></i>
           </button>
           <button onClick={() => setDeleteBookingId(booking.id)} className="delete-icon">
@@ -90,21 +90,26 @@ export const AdminPage = () => {
           Total: {bookings.length} bookings and {totalNoOfPeople} people
         </p>
         <div className="add">
-          <button onClick={() => setShowAdd(true)} className="add-icon">
+          <button onClick={() => setShowAddModal(true)} className="add-icon">
             <i className="fas fa-plus"></i>
           </button>
         </div>
         <div>
           {liTag}
         </div>
-        <AddModal onClose={() => setShowAdd(false)} show={showAdd} />
-        <EditModal onClose={() => setShowEdit(false)} show={showEdit}/>
+        <AddModal onClose={() => setShowAddModal(false)} show={showAddModal} />
+        <EditModal onClose={onEditDone} show={selectedBooking? true: false} bookingInfo={selectedBooking!}/>
         <DeleteModal onClose={onDeleteDone} show={deleteBookingId ? true : false} bookingId={deleteBookingId!}/>
       </div>
     );
 
     function onDeleteDone() {
       setDeleteBookingId(undefined);
+      fetchData();
+    }
+
+    function onEditDone() {
+      setSelectedBooking(undefined);
       fetchData();
     }
 
