@@ -7,20 +7,19 @@ import "./css/Modal.css";
 interface ModalProps {
   onClose: () => void;
   show: boolean;
-  props: string | undefined;
+  bookingId: string | undefined;
 }
-export const DeleteModal: React.FC<ModalProps> = ({ onClose, show, props }) => {
-  const [bookingId] = useState(props);
+export const DeleteModal: React.FC<ModalProps> = ({ onClose, show, bookingId }) => {
+  // const [bookingId, setBookingId] = useState(id); 
 
   if (!show) {
     return null;
   }
 
   const deleteBooking = async () => {
-    console.log("delete booking" + props);
-    await restaurantApi.delete<Booking | ErrorResponse>("/booking/:id", {
-      data: bookingId,
-    });
+    console.log("delete booking" + bookingId);
+    await restaurantApi.delete<Booking | ErrorResponse>(`/booking/${bookingId}`);
+    onClose();
   };
 
   return (

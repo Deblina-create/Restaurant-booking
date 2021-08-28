@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import restaurantApi from "../api/restaurantApi";
 import BookingForm from "../components/BookingForm";
-import { NotFound } from "../components/NotFound";
 import SearchInfo from "../models/SearchInfo";
 import SearchRequest from "../models/SearchRequest";
 import "./css/Modal.css";

@@ -13,9 +13,9 @@ export const AdminPage = () => {
 
     const [bookings, setBookings] = useState([] as Booking[]);
     const [showEdit, setShowEdit] = useState(false);
-    const [showDelete, setShowDelete] = useState(false);
     const [showAdd, setShowAdd] = useState(false);
     const [date, setDate] = useState(dateNow);
+    const [deleteBookingId, setDeleteBookingId] = useState<string>();
 
     let currentDate = new Date(date);
     let numberOfMlSeconds = currentDate.getTime();
@@ -57,11 +57,11 @@ export const AdminPage = () => {
           <button onClick={() => setShowEdit(true)} className="edit-icon">
             <i className="fas fa-pen"></i>
           </button>
-          <button onClick={() => setShowDelete(true)} className="delete-icon">
+          <button onClick={() => setDeleteBookingId(booking.id)} className="delete-icon">
             <i className="fas fa-trash-alt"></i>
           </button>
           </div>
-          <DeleteModal onClose={() => setShowDelete(false)} show={showDelete} props={booking.id}/>
+        
         </div>
       );
     });
@@ -86,7 +86,7 @@ export const AdminPage = () => {
             </button>
           </h2>
         </div>
-        <p className="total">
+        <p className="total"> 
           Total: {bookings.length} bookings and {totalNoOfPeople} people
         </p>
         <div className="add">
@@ -99,8 +99,14 @@ export const AdminPage = () => {
         </div>
         <AddModal onClose={() => setShowAdd(false)} show={showAdd} />
         <EditModal onClose={() => setShowEdit(false)} show={showEdit}/>
+        <DeleteModal onClose={onDeleteDone} show={deleteBookingId ? true : false} bookingId={deleteBookingId!}/>
       </div>
     );
+
+    function onDeleteDone() {
+      setDeleteBookingId(undefined);
+      fetchData();
+    }
 
     function dateStringToTime(datestr:string) {
       let date = new Date(datestr);
