@@ -35,14 +35,14 @@ button:disabled {
 .decrease {
   position: absolute;
   top: 65px;
-  right: 120px;
+  left: 230px;
   font-size: 20px;
 }
 
 .increase {
   position: absolute;
   top: 65px;
-  right: 80px;
+  left: 260px;
   font-size: 20px;
 }
 
@@ -53,6 +53,7 @@ button:disabled {
 .add {
   text-align: right;
   cursor: pointer;
+  padding: 0.5em;
 }
 
 .add-icon {
@@ -60,18 +61,12 @@ button:disabled {
 }
 
 .booking-list {
-  padding: 0.5em;
+  padding: 1em;
   list-style: none;
   border-top: 1px solid white;
-  text-align: left;
-}
-
-ul {
-  padding: 0;
-}
-
-li > span {
-  padding-right: 40px;
+  /* text-align: left; */
+  display: flex;
+  justify-content: space-between;
 }
 
 .guest {
@@ -79,12 +74,22 @@ li > span {
   padding-right: 5px;
 }
 
-.edit-icon {
-  position: absolute;
-  right: 50px;
+@media screen and (min-width: 560px) {
+  .increase {
+    left: 330px;
+  } 
+
+  .decrease {
+    left: 300px;
+  }
 }
 
-.delete-icon {
-  position: absolute;
-  right: 20px;
+@media screen and (min-width: 780px) {
+  .increase {
+    left: 430px;
+  } 
+
+  .decrease {
+    left: 400px;
+  }
 }

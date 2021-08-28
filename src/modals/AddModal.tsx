@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import restaurantApi from "../api/restaurantApi";
 import BookingForm from "../components/BookingForm";
+import { NotFound } from "../components/NotFound";
 import SearchInfo from "../models/SearchInfo";
 import SearchRequest from "../models/SearchRequest";
 import "./css/Modal.css";
@@ -74,7 +75,7 @@ export const AddModal: React.FC<ModalProps> = ({ onClose, show }) => {
           <input
             type="number"
             min={1}
-            defaultValue={2}
+            placeholder={"No. of people"}
             onChange={onNumberOfPeopleChange}
           />
           <button onClick={fetchData} className="empty-btn">
@@ -100,7 +101,7 @@ export const AddModal: React.FC<ModalProps> = ({ onClose, show }) => {
         ) : (
           ""
         )}
-        {searchData.length > 0 && selectedSlot.TimeSlotIndex != -1 ? (
+        {searchData.length > 0 && selectedSlot.TimeSlotIndex !== -1 ? (
           <div className="modal-body">
             <BookingForm
               bookingDate={bookingDate}

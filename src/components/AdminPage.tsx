@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../Admin.css";
+import "./Admin.css";
 import restaurantApi from "../api/restaurantApi";
 import { AddModal } from "../modals/AddModal";
 import { DeleteModal } from "../modals/DeleteModal";
 import { EditModal } from "../modals/EditModal";
 import Booking from "../models/Booking";
-
-interface SearchRequest {
-  BookingDate: Date;
-}
 
 export const AdminPage = () => {
 
@@ -34,7 +30,6 @@ export const AdminPage = () => {
       0
     );
 
-
     const fetchData = async () => {
       console.log("bookings from DB");
       const response = await restaurantApi.post<Booking[]>("/admin_search", {
@@ -54,17 +49,20 @@ export const AdminPage = () => {
 
     let liTag = bookings.map((booking) => {
       return (
-        <li key={booking.id} className="booking-list">
-          <span>{dateStringToTime(booking.BookingTime)}</span>
-          <span><i className="fas fa-user-friends guest"></i>{booking.NoOfPeople}</span>
-          <span>{booking.Name}</span>
+        <div key={booking.id} className="booking-list">
+          <div>{dateStringToTime(booking.BookingTime)}</div>
+          <div><i className="fas fa-user-friends guest"></i>{booking.NoOfPeople}</div>
+          <div>{booking.Name}</div>
+          <div className="buttons">
           <button onClick={() => setShowEdit(true)} className="edit-icon">
             <i className="fas fa-pen"></i>
           </button>
           <button onClick={() => setShowDelete(true)} className="delete-icon">
             <i className="fas fa-trash-alt"></i>
           </button>
-        </li>
+          </div>
+          <DeleteModal onClose={() => setShowDelete(false)} show={showDelete} props={booking.id}/>
+        </div>
       );
     });
     return (
@@ -97,11 +95,10 @@ export const AdminPage = () => {
           </button>
         </div>
         <div>
-          <ul>{liTag}</ul>
+          {liTag}
         </div>
         <AddModal onClose={() => setShowAdd(false)} show={showAdd} />
-        <EditModal onClose={() => setShowEdit(false)} show={showEdit} />
-        <DeleteModal onClose={() => setShowDelete(false)} show={showDelete} />
+        <EditModal onClose={() => setShowEdit(false)} show={showEdit}/>
       </div>
     );
 
