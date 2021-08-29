@@ -37,6 +37,7 @@ button:disabled {
   top: 65px;
   left: 230px;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .increase {
@@ -44,6 +45,7 @@ button:disabled {
   top: 65px;
   left: 260px;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .total {
@@ -52,12 +54,12 @@ button:disabled {
 
 .add {
   text-align: right;
-  cursor: pointer;
   padding: 0.5em;
 }
 
 .add-icon {
   font-size: 20px;
+  cursor: pointer;
 }
 
 .booking-list {
@@ -72,6 +74,15 @@ button:disabled {
 .guest {
   font-size: 12px;
   padding-right: 5px;
+}
+
+.edit-icon {
+  cursor: pointer;
+}
+
+.delete-icon {
+  padding-left: 10px;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 560px) {
