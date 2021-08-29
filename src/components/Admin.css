@@ -50,6 +50,7 @@ button:disabled {
 
 .total {
   text-align: left;
+  padding-left: 3px;
 }
 
 .add {

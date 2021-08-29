@@ -61,7 +61,6 @@ export const AdminPage = () => {
             <i className="fas fa-trash-alt"></i>
           </button>
           </div>
-        
         </div>
       );
     });
