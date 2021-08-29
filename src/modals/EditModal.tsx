@@ -34,7 +34,7 @@ export const EditModal: React.FC<ModalProps> = ({ onClose, show, bookingInfo }) 
           <h3 className="modal-title">Booking detail</h3>
         </div>
         <div className="modal-body">
-          <input type="date" placeholder="Date" defaultValue={date.toLocaleDateString()} />
+          <input type="date" placeholder="Date" defaultValue={date.toISOString().split('T')[0]} />
           <input type="text" defaultValue={date.toLocaleTimeString("sv-SE", { timeStyle: "short" })} />
           <input
             type="number"
