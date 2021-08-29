@@ -46,7 +46,10 @@ const BookingForm = (props: any) => {
         e.preventDefault();
         const x = await restaurantApi.post<string | ErrorResponse>("/booking", { data: bookingInfo });
         console.log("response data", x.data);
-        history.push("/confirmation");
+        if(props.onSave){
+            props.onSave(bookingInfo);
+        }
+        //history.push("/confirmation");
     }
 
     return (
@@ -62,6 +65,7 @@ const BookingForm = (props: any) => {
                 <input type="email" placeholder="Email" onChange={emailChanged}></input>
                 <button onClick={saveData}>Book</button>
             </form>
+
         </div>
     );
 }
