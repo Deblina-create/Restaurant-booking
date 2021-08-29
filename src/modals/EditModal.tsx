@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { setTokenSourceMapRange } from "typescript";
+import React from "react";
 import restaurantApi from "../api/restaurantApi";
 import Booking from "../models/Booking";
 import ErrorResponse from "../models/ErrorResponse";
@@ -11,39 +10,13 @@ interface ModalProps {
   bookingInfo?: Booking;
 }
 
-const initialBookingInfo: Booking = {
-  BookingTime: "",
-  NoOfPeople: 0,
-  Email: "",
-  Preferences: "",
-  Name: "",
-  Phone: "",
-  BookedTableCount: 0
-}
-
 export const EditModal: React.FC<ModalProps> = ({ onClose, show, bookingInfo }) => {
-  // const [editBookingInfo, setEditBookingInfo] = useState(initialBookingInfo);
-  // const [name, setName] = useState(bookingInfo?.Name);
 
   if (!show) {
     return null;
   }
 
   let date = new Date(bookingInfo!.BookingTime);
-
-  
-//   const nameChanged = (e:any)=>{
-//     setEditBookingInfo({...editBookingInfo, Name: e.target.value.toString()});
-//   }
-
-//   const phoneChanged = (e:any)=>{
-//     setEditBookingInfo({...editBookingInfo, Phone: e.target.value.toString()});
-// }
-
-// const emailChanged = (e:any)=>{
-//     setEditBookingInfo({...editBookingInfo, Email: e.target.value.toString()});
-// }
-
 
   const editBooking = async () => {
 
@@ -53,11 +26,6 @@ export const EditModal: React.FC<ModalProps> = ({ onClose, show, bookingInfo }) 
     });
     onClose();
   };
- 
-  // let data = bookingInfo!.BookingTime.split(" ");
-  // let date = data[0] + " " + data[1] + " " + data[2] + " " + data[3];
-  // let time = data[4];
-
 
   return (
     <div className="modal">
@@ -83,11 +51,13 @@ export const EditModal: React.FC<ModalProps> = ({ onClose, show, bookingInfo }) 
             type="text"
             placeholder="Mobile number"
             defaultValue={bookingInfo?.Phone}
+            onChange={e => bookingInfo!.Phone = e.target.value}
           />
           <input
             type="text"
             placeholder="Email"
             defaultValue={bookingInfo?.Email}
+            onChange={e => bookingInfo!.Email = e.target.value}
           />
           {/* <input
             type="text"
