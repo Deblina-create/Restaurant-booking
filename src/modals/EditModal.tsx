@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import restaurantApi from "../api/restaurantApi";
 import Booking from "../models/Booking";
 import ErrorResponse from "../models/ErrorResponse";
@@ -17,10 +17,14 @@ export const EditModal: React.FC<ModalProps> = ({ onClose, show, bookingInfo }) 
   const editBooking = async () => {
     console.log(bookingInfo);
     await restaurantApi.put<Booking | ErrorResponse>("/booking", {
-      data: bookingInfo
-    }) 
+      data: bookingInfo,
+    });
     onClose();
-  }
+  };
+
+  let data = bookingInfo.BookingTime.split(" ");
+  let date = data[0] + " " + data[1] + " " + data[2] + " " + data[3];
+  let time = data[4];
 
   return (
     <div className="modal">
@@ -29,13 +33,33 @@ export const EditModal: React.FC<ModalProps> = ({ onClose, show, bookingInfo }) 
           <h3 className="modal-title">Booking detail</h3>
         </div>
         <div className="modal-body">
-          <input type="text" placeholder="Date" defaultValue={bookingInfo.BookingTime}/>
-          <input type="text" placeholder="Time" />
-          <input type="text" placeholder="Number of people" defaultValue={bookingInfo.NoOfPeople} />
-          <input type="text" placeholder="Name" defaultValue={bookingInfo.Name}/>
-          <input type="text" placeholder="Mobile number" defaultValue={bookingInfo.Phone} />
-          <input type="text" placeholder="Email"defaultValue={bookingInfo.Email} />
-          <input type="text" placeholder="Preference" defaultValue={bookingInfo.Preference}/>
+          <input type="text" placeholder="Date" defaultValue={date} />
+          <input type="text" defaultValue={time} />
+          <input
+            type="text"
+            placeholder="Number of people"
+            defaultValue={bookingInfo.NoOfPeople}
+          />
+          <input
+            type="text"
+            placeholder="Name"
+            defaultValue={bookingInfo.Name}
+          />
+          <input
+            type="text"
+            placeholder="Mobile number"
+            defaultValue={bookingInfo.Phone}
+          />
+          <input
+            type="text"
+            placeholder="Email"
+            defaultValue={bookingInfo.Email}
+          />
+          <input
+            type="text"
+            placeholder="Preference"
+            defaultValue={bookingInfo.Preference}
+          />
         </div>
         <div className="modal-footer">
           <button onClick={editBooking} className="full-btn">
