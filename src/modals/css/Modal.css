@@ -2,22 +2,22 @@
   position: fixed;
   background-color: rgb(50, 50, 50);
   margin: 0 auto;
-  display: flex;
+  /* display: flex; */
   /* align-items: center; */
   /* justify-content: center; */
   width: 91vw;
   border-radius: 15px;
-  top: 13vh;
+  top: 14vh;
 }
 
 .modal-title {
-  text-align: left;
+  /* text-align: left; */
   top: 10px;
 }
 
-/* h1 {
-    margin: 0;
-} */
+h1 {
+    margin: 10px;
+}
 
 h3 {
   margin: 0;
@@ -30,7 +30,7 @@ h3 {
 
 .modal-body,
 .modal-footer {
-  padding: 0 20px 20px;
+  padding: 0 20px;
 }
 
 input {
@@ -40,6 +40,16 @@ input {
   box-sizing: border-box;
   border-radius: 10px;
 }
+
+.radio {
+ display: flex;
+ justify-content: space-around;
+ padding-bottom: 10px;
+}
+
+/* .radio-btn {
+  display: inline-block;
+} */
 
 .close-icon {
   position: absolute;
@@ -52,16 +62,17 @@ input {
   cursor: pointer;
 }
 
-.save-button {
+.empty-btn {
   background-color: rgb(50, 50, 50);
   color: orange;
   border: 2px solid orange;
   border-radius: 5px;
   padding: 10px 30px;
   cursor: pointer;
+  margin: 10px;
 }
 
-.yes-button {
+.full-btn {
   background-color: orange;
   color: white;
   border: 2px solid orange;
@@ -71,12 +82,9 @@ input {
   margin: 10px;
 }
 
-.no-button {
-  background-color: rgb(50, 50, 50);
-  color: orange;
-  border: 2px solid orange;
-  border-radius: 5px;
-  padding: 10px 30px;
-  cursor: pointer;
-  margin: 10px;
+
+@media screen and (min-width: 992px) {
+ .modal {
+  width: 60vw;
+ }
 }
