@@ -85,7 +85,7 @@ button:disabled {
   cursor: pointer;
 }
 
-@media screen and (min-width: 560px) {
+@media screen and (min-width: 600px) {
   .increase {
     left: 330px;
   } 
@@ -95,12 +95,42 @@ button:disabled {
   }
 }
 
-@media screen and (min-width: 780px) {
+@media screen and (min-width: 768px) {
+  /* .admin-page {
+    width: 70vw;
+  } */
   .increase {
-    left: 430px;
+    left: 390px;
   } 
 
   .decrease {
-    left: 400px;
+    left: 360px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .admin-page {
+    width: 60vw;
+  }
+  .increase {
+    left: 490px;
+  } 
+
+  .decrease {
+    left: 460px;
+  }
+
+  .delete-icon {
+    padding-left: 20px; 
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .increase {
+    left: 690px;
+  } 
+
+  .decrease {
+    left: 660px;
   }
 }
