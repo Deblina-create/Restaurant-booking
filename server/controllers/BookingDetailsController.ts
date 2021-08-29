@@ -44,8 +44,8 @@ const saveBookingDetail = async (booking: Booking): Promise<string | ErrorRespon
     if (doc && doc.id) {
         let booking: Booking = await getBookingDetailById(doc.id);
         const html = `
-        <h1>Your reservation has been confirmed!</h>
-        <h3>Your booking details are as mentioned below</h3>
+        <h4>Your reservation has been confirmed!</h4>
+        <h5>Your booking details are as mentioned below</h5>
         <table>
         <tr>
             <td><b>Reservation No.</b></td>
@@ -103,7 +103,13 @@ const editBookingDetail = async (booking: Booking): Promise<boolean> => {
 const deleteBookingDetail = async (id: string): Promise<boolean> => {
 
     try {
+        let booking: Booking = await getBookingDetailById(id);
         await firebase.db.collection("BookingDetails").doc(id).delete();
+        
+        const html = `
+        <h3>Your Reservation (#${id}) has been cancelled!</h3>
+        `;
+        sendMail(booking.Email, "Restaurant Reservation cancelled", "Your reservation has been cancelled!", html);
         return true;
     }
     catch (err: any) {
@@ -195,7 +201,7 @@ const checkTableAvailability = (bookings: Booking[] | null, tableRequired: numbe
     if (NoOfTableBooked + tableRequired <= TotalTableCount) {
         return true;
     }
-    return false;
+    return false; 
 };
 
 const sendMail = (to: string, subject: string, text: string, html: string) => {

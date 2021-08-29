@@ -5,6 +5,8 @@ import SearchInfo from '../models/SearchInfo';
 import Booking from '../models/Booking';
 import BookingForm from './BookingForm';
 import BookingDetails from './BookingDetails';
+import "./Admin.css";
+import "../modals/css/Modal.css";
 
 const initialData: SearchInfo[] = [];
 const initialSelectedSlot : SearchInfo  = {
@@ -74,6 +76,12 @@ const MyBookingSearch = () => {
 
     return (
         <>
+        
+      <div className="admin-page">
+        <div className="back">
+          <div>Booking Page</div>
+        </div>
+        <div>
 
 {dataSaved ? <BookingDetails
                 headerMessage="Your Boking Details"
@@ -97,11 +105,12 @@ const MyBookingSearch = () => {
         </h2>
             <input type="number" min={1} defaultValue={2} onChange={onNumberOfPeopleChange} />
             <button style={{ backgroundColor: "#E1AD01", height: "40px", width: "75px" }} onClick={fetchData}>Search</button>
-
-            {searchData.map((data, index) => <div key={index}>
-                <input style={{ backgroundColor:"#E1AD01" }} type="radio" value={data.TimeSlotText} disabled={!data.IsTableAvailable} name="slot" onClick={() => openForm(data)} />
+            <div className="radio">
+            {searchData.map((data, index) => <div className="radio-btn" key={index}>
+                <input  type="radio" value={data.TimeSlotText} disabled={!data.IsTableAvailable} name="slot" onClick={() => openForm(data)} />
                 <label>{data.TimeSlotText}</label>
             </div>)}
+            </div>
             {dataFetched && searchData.length === 0 ? <div>Sorry! we have 0 tables left. Try to change date.</div> : ''}
             {searchData.length > 0 && selectedSlot.TimeSlotIndex != -1 ? <div>
                 <BookingForm bookingDate={bookingDate} peopleCount={peopleCount} slot={selectedSlot} onSave={saveData}></BookingForm>
@@ -111,6 +120,8 @@ const MyBookingSearch = () => {
 
 
         </div>}
+        </div>
+        </div>
         </>
         
     );

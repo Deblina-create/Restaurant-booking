@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import restaurantApi from '../api/restaurantApi';
+import { DeleteModal } from '../modals/DeleteModal';
 import Booking from '../models/Booking';
 import ErrorResponse from '../models/ErrorResponse';
-import BookingDetails from './BookingDetails';
 
 type deleteParams = {
     id: string;
@@ -24,10 +24,17 @@ const BookingDelete = () => {
     const history = useHistory();
     const [bookingInfo, setBookingInfo] = useState(initialBookingInfo);
     const [dataFetched, setDataFetched] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
         fetchData();
     }, []);
+
+    useEffect(() => {
+        if(dataFetched){
+            setShowDeleteModal(true);
+        }
+    }, [dataFetched]);
 
     const fetchData = async () => {
         const res = await restaurantApi.get<Booking | null>(`/booking/${id}`);
@@ -35,27 +42,18 @@ const BookingDelete = () => {
         setDataFetched(true);
     }
 
-
-    const cancelBooking = async (booking: Booking) => {
-        const res = await restaurantApi.delete<boolean>(`/booking/${id}`);
-
-        if (res.data) {
-            history.push('/confirmcancel');
-        }
+    const handleClose = () =>{
+        history.replace('/');
     }
+    
 
 
     return (
         <div>
             {bookingInfo ? <div>
-                <BookingDetails
-                    headerMessage="Your Boking Details"
-                    name={bookingInfo.Name}
-                    bookingDate={new Date(bookingInfo.BookingTime).toDateString()}
-                    peopleCount={bookingInfo.NoOfPeople}
-                />
-                <button onClick={() => cancelBooking(bookingInfo)}>Cancel</button>
+                <DeleteModal show={showDeleteModal} bookingId={id} onClose={handleClose} />
             </div>: <p>Invalid reservation number!</p>}
+            
         </div>
     );
 }
