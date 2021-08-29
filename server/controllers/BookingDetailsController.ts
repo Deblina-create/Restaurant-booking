@@ -90,8 +90,32 @@ const searchBookingDetail = async (dt: Date, noOfPeople: number): Promise<Search
 
 }
 
-//helper functions
+const adminSearchBookings = async (date: Date): Promise<Booking[]> => {
+    date.setHours(0);
+    let from = date.toString()
+    date.setHours(23, 59);
+    let to = date.toString()
 
+    console.log(`Trying to find bookings between ${from} to ${to}`);
+    
+    const snapshot= await firebase.db.collection("BookingDetails")
+    .where("BookingTime", ">", from)
+    .where("BookingTime", "<", to)
+    .get(); 
+    if(snapshot && snapshot.docs){
+        const bds = snapshot.docs.map((doc)=>{
+            const data = doc.data() as Booking;
+            const booking: Booking = {
+                ...data, id: doc.id
+            }
+            return booking;
+        });
+        return bds;   
+    }
+    return null;
+}
+
+//helper functions
 
 const getBookingsData = async (timeslot: Date): Promise<Booking[] | null> => {
     const snapshot= await firebase.db.collection("BookingDetails")
@@ -129,4 +153,4 @@ const checkTableAvailability = (bookings: Booking[] | null, tableRequired: numbe
 
 
 
-export default { saveBookingDetail, editBookingDetail, deleteBookingDetail, searchBookingDetail };
+export default { saveBookingDetail, editBookingDetail, deleteBookingDetail, searchBookingDetail, adminSearchBookings };
