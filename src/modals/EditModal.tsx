@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import restaurantApi from "../api/restaurantApi";
 import Booking from "../models/Booking";
 import ErrorResponse from "../models/ErrorResponse";
@@ -10,16 +10,27 @@ interface ModalProps {
   bookingInfo?: Booking;
 }
 
-export const EditModal: React.FC<ModalProps> = ({ onClose, show, bookingInfo }) => {
+const initialBookingInfo: Booking = {
+  BookingTime: "",
+  NoOfPeople: 0,
+  Email: "",
+  Preferences: "",
+  Name: "",
+  Phone: "",
+  BookedTableCount: 0
+}
 
+export const EditModal: React.FC<ModalProps> = ({ onClose, show, bookingInfo }) => {
   if (!show) {
     return null;
   }
 
   let date = new Date(bookingInfo!.BookingTime);
+  let bookedDate = date.toISOString().split('T')[0];
+  let bookedTime = date.toLocaleTimeString("sv-SE", { timeStyle: "short" });
 
   const editBooking = async () => {
-
+    bookingTime();
     console.log(bookingInfo);
     await restaurantApi.put<Booking | ErrorResponse>("/booking", {
       data: bookingInfo,
@@ -34,12 +45,16 @@ export const EditModal: React.FC<ModalProps> = ({ onClose, show, bookingInfo }) 
           <h3 className="modal-title">Booking detail</h3>
         </div>
         <div className="modal-body">
-          <input type="date" placeholder="Date" defaultValue={date.toISOString().split('T')[0]} />
-          <input type="text" defaultValue={date.toLocaleTimeString("sv-SE", { timeStyle: "short" })} />
+          <input type="date" placeholder="Date" defaultValue={bookedDate} />
+          <input 
+          type="text" 
+          defaultValue={bookedTime}
+          />
           <input
             type="number"
             placeholder="Number of people"
             defaultValue={bookingInfo?.NoOfPeople} 
+            onChange={e => bookingInfo!.NoOfPeople = Number.parseInt(e.target.value.toString())}
           />
           <input
             type="text"
@@ -76,4 +91,15 @@ export const EditModal: React.FC<ModalProps> = ({ onClose, show, bookingInfo }) 
       </div>
     </div>
   );
+  function bookingTime(){
+    const dt = new Date(bookedDate.toString());
+    let bookingTimeText = "";
+    if(bookedTime=== "18:00"){
+        bookingTimeText= new Date(new Date(dt).setHours(18,0,0,0)).toString();
+    }
+    else if(bookedTime === "21:00"){
+        bookingTimeText= new Date(new Date(dt).setHours(21,0,0,0)).toString();
+    }
+    bookingInfo!.BookingTime = bookingTimeText;
+  }
 };
