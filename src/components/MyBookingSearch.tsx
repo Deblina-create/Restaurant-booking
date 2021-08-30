@@ -7,6 +7,7 @@ import BookingForm from './BookingForm';
 import BookingDetails from './BookingDetails';
 import "./Admin.css";
 import "../modals/css/Modal.css";
+import { Link } from 'react-router-dom';
 
 const initialData: SearchInfo[] = [];
 const initialSelectedSlot : SearchInfo  = {
@@ -79,7 +80,7 @@ const MyBookingSearch = () => {
         
       <div className="admin-page">
         <div className="back">
-          <div>Booking Page</div>
+        <Link to={"/"}><i className="fas fa-chevron-left"></i> Booking Page</Link>
         </div>
         <div>
 
