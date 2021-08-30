@@ -35,9 +35,12 @@
   font-size: 70px;
 }
 
-#table,
-#here {
+#table {
   font-size: 30px;
+}
+
+#here {
+  font-size: 50px;
 }
 
 .links {
@@ -58,8 +61,11 @@
     font-size: 80px;
   }
 
-  #table,
-  #here {
+  #table {
     font-size: 35px;
+  }
+
+  #here {
+    font-size: 60px;
   }
 }
