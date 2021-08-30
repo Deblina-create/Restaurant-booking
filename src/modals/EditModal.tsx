@@ -45,10 +45,16 @@ export const EditModal: React.FC<ModalProps> = ({ onClose, show, bookingInfo }) 
           <h3 className="modal-title">Booking detail</h3>
         </div>
         <div className="modal-body">
-          <input type="date" placeholder="Date" defaultValue={bookedDate} />
+          <input 
+          type="date" 
+          placeholder="Date" 
+          defaultValue={bookedDate} 
+          onChange={e => bookedDate = e.target.value}
+          />
           <input 
           type="text" 
           defaultValue={bookedTime}
+          onChange={e => bookedTime = e.target.value}
           />
           <input
             type="number"
