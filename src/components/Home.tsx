@@ -9,9 +9,8 @@ export const Home = () => {
         <img src={Table_logo} alt="restaurant-logo" className="logo-img"></img>
       </div>
       <div className="bookingLink">
-        <Link to="/booking"><h1 id="bookingLink">BOOK</h1>
-        </Link>
-        <h1>YOUR TABLE</h1>
+        <Link to="/booking"><h1 id="book">BOOK <span id="table">YOUR TABLE</span></h1>
+        </Link>        
       </div>
       <div className="links">
         <div>
