@@ -12,7 +12,7 @@ export const AdminPage = () => {
     let dateNow = new Date().toDateString();
 
     const [bookings, setBookings] = useState([] as Booking[]);
-    const [selectedBooking, setSelectedBooking] = useState<any>();
+    const [selectedBooking, setSelectedBooking] = useState<Booking>();
     const [showAddModal, setShowAddModal] = useState(false);
     const [date, setDate] = useState(dateNow);
     const [deleteBookingId, setDeleteBookingId] = useState<string>();
@@ -97,7 +97,7 @@ export const AdminPage = () => {
           {liTag}
         </div>
         <AddModal onClose={() => setShowAddModal(false)} show={showAddModal} />
-        <EditModal onClose={onEditDone} show={selectedBooking? true: false} bookingInfo={selectedBooking!}/>
+        <EditModal onClose={onEditDone} show={selectedBooking? true: false} bookingInfo={selectedBooking}/>
         <DeleteModal onClose={onDeleteDone} show={deleteBookingId ? true : false} bookingId={deleteBookingId!}/>
       </div>
     );
