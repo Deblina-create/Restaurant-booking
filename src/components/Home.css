@@ -1,0 +1,26 @@
+.home {
+  padding: 50px;
+}
+
+/* .logo {
+  height: 15vh;
+  line-height: 15vh;
+} */
+
+.logo-img {
+ height: 10vh;
+ line-height: 10vh;
+}
+
+.bookingLink {
+    padding:auto;
+    margin:auto;
+    height: 60vh;
+}
+
+.links {
+  height: 10vh;
+  line-height: 10vh;
+  display: flex;
+  justify-content: space-around;
+}
