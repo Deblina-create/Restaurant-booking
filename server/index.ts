@@ -18,6 +18,12 @@ app.post('/search', async (req, res) => {
     return res.json(dbResponse);
 });
 
+app.get('/booking/:id', async (req, res) => {
+    const id = req.params.id;
+    const dbResponse= await BD.getBookingDetailById(id); 
+    return res.json(dbResponse);
+});
+
 app.post('/booking',async (req, res) => {
     const bd = req.body.data as Booking;
     console.log("req payload", req.body);
