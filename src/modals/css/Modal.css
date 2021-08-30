@@ -16,7 +16,7 @@
 }
 
 h1 {
-    margin: 10px;
+  margin: 10px;
 }
 
 h3 {
@@ -42,14 +42,18 @@ input {
 }
 
 .radio {
- display: flex;
- justify-content: space-around;
- padding-bottom: 10px;
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 10px;
 }
 
 /* .radio-btn {
   display: inline-block;
 } */
+#time18,
+#time21 {
+  cursor: pointer;
+}
 
 .close-icon {
   position: absolute;
@@ -82,9 +86,8 @@ input {
   margin: 10px;
 }
 
-
 @media screen and (min-width: 992px) {
- .modal {
-  width: 60vw;
- }
+  .modal {
+    width: 60vw;
+  }
 }

@@ -10,11 +10,15 @@ interface ModalProps {
   bookingInfo?: Booking;
 }
 
-export const EditModal: React.FC<ModalProps> = ({onClose,show,bookingInfo,}) => {
+export const EditModal: React.FC<ModalProps> = ({
+  onClose,
+  show,
+  bookingInfo,
+}) => {
   if (!show) {
     return null;
   }
- 
+
   let date = new Date(bookingInfo!.BookingTime);
   let bookedDate = date.toISOString().split("T")[0];
   let bookedTime = date.toLocaleTimeString("sv-SE", { timeStyle: "short" });
@@ -44,21 +48,29 @@ export const EditModal: React.FC<ModalProps> = ({onClose,show,bookingInfo,}) => 
           <div className="radio">
             <div className="radio-btn">
               <input
+                id="time18"
                 type="radio"
                 value={"18:00"}
-                onChange={(e)=>{bookedTime = e.target.value}}
+                name="time"
+                onChange={(e) => {
+                  bookedTime = e.target.value;
+                }}
                 defaultChecked={bookedTime === "18:00"}
               />
-              <label>18:00</label>
+              <label htmlFor="time18">18:00</label>
             </div>
             <div className="radio-btn">
               <input
+                id="time21"
                 type="radio"
                 value={"21:00"}
-                onChange={(e)=>{bookedTime = e.target.value}}
+                name="time"
+                onChange={(e) => {
+                  bookedTime = e.target.value;
+                }}
                 defaultChecked={bookedTime === "21:00"}
               />
-              <label>21:00</label>
+              <label htmlFor="time21">21:00</label>
             </div>
           </div>
           <input
