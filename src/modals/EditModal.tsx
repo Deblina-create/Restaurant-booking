@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import restaurantApi from "../api/restaurantApi";
 import Booking from "../models/Booking";
 import ErrorResponse from "../models/ErrorResponse";
@@ -10,11 +10,7 @@ interface ModalProps {
   bookingInfo?: Booking;
 }
 
-export const EditModal: React.FC<ModalProps> = ({
-  onClose,
-  show,
-  bookingInfo,
-}) => {
+export const EditModal: React.FC<ModalProps> = ({onClose, show,bookingInfo,}) => {
   if (!show) {
     return null;
   }
@@ -46,19 +42,25 @@ export const EditModal: React.FC<ModalProps> = ({
             onChange={(e) => (bookedDate = e.target.value)}
           />
           <input
-            type="text"
-            defaultValue={bookedTime}
+            type="radio"
+            value={"18:00"}
             onChange={(e) => (bookedTime = e.target.value)}
+            checked={bookedTime === "18:00"} 
           />
+          <label>18:00</label>
+          <input
+            type="radio"
+            value={"21:00"}
+            onChange={(e) => (bookedTime = e.target.value)}
+            checked={bookedTime === "21:00"} 
+          />
+          <label>21:00</label>
           <input
             type="number"
             placeholder="Number of people"
             defaultValue={bookingInfo?.NoOfPeople}
             onChange={(e) =>
-              (bookingInfo!.NoOfPeople = Number.parseInt(
-                e.target.value.toString()
-              ))
-            }
+              (bookingInfo!.NoOfPeople = Number.parseInt(e.target.value.toString()))}
           />
           <input
             type="text"
