@@ -18,7 +18,6 @@ export const EditModal: React.FC<ModalProps> = ({onClose,show,bookingInfo,}) => 
   let date = new Date(bookingInfo!.BookingTime);
   let bookedDate = date.toISOString().split("T")[0];
   let bookedTime = date.toLocaleTimeString("sv-SE", { timeStyle: "short" });
-  const [newTime, setNewTime] = useState(bookedTime);
 
   const editBooking = async () => {
     bookingTime();
@@ -27,10 +26,6 @@ export const EditModal: React.FC<ModalProps> = ({onClose,show,bookingInfo,}) => 
       data: bookingInfo,
     });
     onClose();
-  };
-
-  const onBookingTimeChange = (e: any) => {
-    setNewTime(e.target.value);
   };
 
   return (
@@ -51,8 +46,8 @@ export const EditModal: React.FC<ModalProps> = ({onClose,show,bookingInfo,}) => 
               <input
                 type="radio"
                 value={"18:00"}
-                onChange={onBookingTimeChange}
-                defaultChecked={newTime === "18:00"}
+                onChange={(e)=>{bookedTime = e.target.value}}
+                defaultChecked={bookedTime === "18:00"}
               />
               <label>18:00</label>
             </div>
@@ -60,8 +55,8 @@ export const EditModal: React.FC<ModalProps> = ({onClose,show,bookingInfo,}) => 
               <input
                 type="radio"
                 value={"21:00"}
-                onChange={onBookingTimeChange}
-                defaultChecked={newTime === "21:00"}
+                onChange={(e)=>{bookedTime = e.target.value}}
+                defaultChecked={bookedTime === "21:00"}
               />
               <label>21:00</label>
             </div>
