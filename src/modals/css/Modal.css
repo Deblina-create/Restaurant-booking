@@ -1,18 +1,13 @@
 .modal {
-  position: fixed;
+  position: absolute;
   background-color: rgb(50, 50, 50);
   margin: 0 auto;
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
   width: 91vw;
   border-radius: 15px;
-  top: 14vh;
-  /* overflow-y: initial !important; */
+  top: 15vh;
 }
 
 .modal-title {
-  /* text-align: left; */
   top: 10px;
 }
 
@@ -34,10 +29,6 @@ h3 {
   padding: 0 20px;
 }
 
-/* .modal-body {
-  overflow-y: auto;
-} */
-
 input {
   width: 100%;
   padding: 12px 20px;
@@ -56,9 +47,6 @@ input[type="text"][disabled] {
   padding-bottom: 10px;
 }
 
-/* .radio-btn {
-  display: inline-block;
-} */
 #time18,
 #time21 {
   cursor: pointer;
