@@ -10,14 +10,15 @@ interface ModalProps {
   bookingInfo?: Booking;
 }
 
-export const EditModal: React.FC<ModalProps> = ({onClose, show,bookingInfo,}) => {
+export const EditModal: React.FC<ModalProps> = ({onClose,show,bookingInfo,}) => {
   if (!show) {
     return null;
   }
-
+ 
   let date = new Date(bookingInfo!.BookingTime);
   let bookedDate = date.toISOString().split("T")[0];
   let bookedTime = date.toLocaleTimeString("sv-SE", { timeStyle: "short" });
+  const [newTime, setNewTime] = useState(bookedTime);
 
   const editBooking = async () => {
     bookingTime();
@@ -26,6 +27,10 @@ export const EditModal: React.FC<ModalProps> = ({onClose, show,bookingInfo,}) =>
       data: bookingInfo,
     });
     onClose();
+  };
+
+  const onBookingTimeChange = (e: any) => {
+    setNewTime(e.target.value);
   };
 
   return (
@@ -41,26 +46,35 @@ export const EditModal: React.FC<ModalProps> = ({onClose, show,bookingInfo,}) =>
             defaultValue={bookedDate}
             onChange={(e) => (bookedDate = e.target.value)}
           />
-          <input
-            type="radio"
-            value={"18:00"}
-            onChange={(e) => (bookedTime = e.target.value)}
-            checked={bookedTime === "18:00"} 
-          />
-          <label>18:00</label>
-          <input
-            type="radio"
-            value={"21:00"}
-            onChange={(e) => (bookedTime = e.target.value)}
-            checked={bookedTime === "21:00"} 
-          />
-          <label>21:00</label>
+          <div className="radio">
+            <div className="radio-btn">
+              <input
+                type="radio"
+                value={"18:00"}
+                onChange={onBookingTimeChange}
+                defaultChecked={newTime === "18:00"}
+              />
+              <label>18:00</label>
+            </div>
+            <div className="radio-btn">
+              <input
+                type="radio"
+                value={"21:00"}
+                onChange={onBookingTimeChange}
+                defaultChecked={newTime === "21:00"}
+              />
+              <label>21:00</label>
+            </div>
+          </div>
           <input
             type="number"
             placeholder="Number of people"
             defaultValue={bookingInfo?.NoOfPeople}
             onChange={(e) =>
-              (bookingInfo!.NoOfPeople = Number.parseInt(e.target.value.toString()))}
+              (bookingInfo!.NoOfPeople = Number.parseInt(
+                e.target.value.toString()
+              ))
+            }
           />
           <input
             type="text"
