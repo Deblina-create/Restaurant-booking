@@ -114,11 +114,11 @@ button:disabled {
     width: 50vw;
   }
   .increase {
-    left: 490px;
+    left: 530px;
   } 
 
   .decrease {
-    left: 460px;
+    left: 500px;
   }
 
   .delete-icon {
@@ -128,10 +128,10 @@ button:disabled {
 
 @media screen and (min-width: 1200px) {
   .increase {
-    left: 690px;
+    left: 730px;
   } 
 
   .decrease {
-    left: 660px;
+    left: 700px;
   }
 }

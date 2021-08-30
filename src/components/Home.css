@@ -2,11 +2,6 @@
   padding: 50px;
 }
 
-/* .logo {
-  height: 15vh;
-  line-height: 15vh;
-} */
-
 .logo-img {
   height: 10vh;
   line-height: 10vh;
@@ -22,7 +17,8 @@
 }
 
 #book,
-#table {
+#table,
+#here {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
@@ -32,15 +28,15 @@
 }
 
 #book {
-  font-size: 70px;
+  font-size: 80px;
 }
 
 #table {
-  font-size: 30px;
+  font-size: 40px;
 }
 
 #here {
-  font-size: 50px;
+  font-size: 60px;
 }
 
 .links {
@@ -52,20 +48,24 @@
 
 @media screen and (min-width: 768px) {
   .bookingLink {
-    height: 40vh;
-    width: 40vh;
+    height: 43vh;
+    width: 43vh;
     margin: 80px auto;
   }
 
+  #book, #table, #here {
+    line-height: 6vh;
+  }
+
   #book {
-    font-size: 80px;
+    font-size: 90px;
   }
 
   #table {
-    font-size: 35px;
+    font-size: 50px;
   }
 
   #here {
-    font-size: 60px;
+    font-size: 70px;
   }
 }
