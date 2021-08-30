@@ -59,21 +59,21 @@ describe("handleEmailChange", () => {
     describe("handleSubmit", () => {
       test('should submit values when submit button clicked', async () => {
         render(<ContactForm />);
-        const inputElementMessage = screen.getByPlaceholderText(/Message/i);
-        fireEvent.change(inputElementMessage, { target: { value: "Just a mock message"}})
+          const inputElementMessage = screen.getByPlaceholderText(/Message/i);
+          fireEvent.change(inputElementMessage, { target: { value: "Just a mock message"}})
 
-        const inputElementEmail = screen.getByPlaceholderText(/Email/i);
-        fireEvent.change(inputElementEmail, { target: { value: "john@doe.com"}})
+          const inputElementEmail = screen.getByPlaceholderText(/Email/i);
+          fireEvent.change(inputElementEmail, { target: { value: "john@doe.com"}})
 
-        const inputElementName = screen.getByPlaceholderText(/Name/i);
-        fireEvent.change(inputElementName, { target: { value: "John Doe"}})
+          const inputElementName = screen.getByPlaceholderText(/Name/i);
+          fireEvent.change(inputElementName, { target: { value: "John Doe"}})
 
-        const buttonElement = screen.getByRole("button");
-        fireEvent.click(buttonElement)
+          const buttonElement = screen.getByRole("button");
+          fireEvent.click(buttonElement)
 
-        expect(inputElementName.value).toBe("John Doe");
-        expect(inputElementEmail.value).toBe("john@doe.com");
-        expect(inputElementMessage.value).toBe("Just a mock message");
+          expect(inputElementName.value).toBe("John Doe");
+          expect(inputElementEmail.value).toBe("john@doe.com");
+          expect(inputElementMessage.value).toBe("Just a mock message");
       });
     })
 
