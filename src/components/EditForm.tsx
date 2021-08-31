@@ -43,7 +43,7 @@ export const EditForm = () => {
     await restaurantApi.put<Booking | ErrorResponse>("/booking", {
       data: bookingInfo,
     });
-    history.push('/admin');
+    history.push("/admin");
   };
 
   useEffect(() => {
@@ -77,11 +77,11 @@ export const EditForm = () => {
         <h3>Edit form</h3>
       </div>
       <div>
-        <input 
-        type="date" 
-        defaultValue={bookedDate}
-        onChange={(e) => setBookedDate(e.target.value)}
-         />
+        <input
+          type="date"
+          value={bookedDate}
+          onChange={(e) => setBookedDate(e.target.value)}
+        />
         <div className="radio">
           <div className="radio-btn">
             <input
@@ -89,7 +89,7 @@ export const EditForm = () => {
               type="radio"
               value={"18:00"}
               name="time"
-              defaultChecked={bookedTime === "18:00"}
+              checked={bookedTime === "18:00"}
               onChange={(e) => setBookedTime(e.target.value)}
             />
             <label htmlFor="time18">18:00</label>
@@ -100,7 +100,7 @@ export const EditForm = () => {
               type="radio"
               value={"21:00"}
               name="time"
-              defaultChecked={bookedTime === "21:00"}
+              checked={bookedTime === "21:00"}
               onChange={(e) => setBookedTime(e.target.value)}
             />
             <label htmlFor="time21">21:00</label>
@@ -109,25 +109,25 @@ export const EditForm = () => {
         <input
           type="number"
           placeholder="Number of people"
-          defaultValue={bookingInfo.NoOfPeople}
+          value={bookingInfo.NoOfPeople}
           onChange={onNumberOfPeopleChange}
         />
         <input
           type="text"
           placeholder="Name"
-          defaultValue={bookingInfo.Name}
+          value={bookingInfo.Name}
           onChange={nameChanged}
         />
         <input
           type="text"
           placeholder="Mobile number"
-          defaultValue={bookingInfo.Phone}
+          value={bookingInfo.Phone}
           onChange={phoneChanged}
         />
         <input
           type="text"
           placeholder="Email"
-          defaultValue={bookingInfo.Email}
+          value={bookingInfo.Email}
           onChange={emailChanged}
         />
         {/* <input
