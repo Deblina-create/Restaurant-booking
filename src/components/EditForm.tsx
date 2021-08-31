@@ -151,6 +151,6 @@ export const EditForm = () => {
     } else if (bookedTime === "21:00") {
       bookingTimeText = new Date(new Date(dt).setHours(21, 0, 0, 0)).toString();
     }
-    setBookingInfo({ ...bookingInfo, BookingTime: bookingTimeText });
+    bookingInfo.BookingTime = bookingTimeText;
   }
 };
