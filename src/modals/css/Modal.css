@@ -4,7 +4,7 @@
   margin: 0 auto;
   width: 91vw;
   border-radius: 15px;
-  top: 15vh;
+  top: 14vh;
 }
 
 .modal-title {
@@ -20,13 +20,17 @@ h3 {
   padding-left: 5px;
 }
 
+p {
+  font-size: 18px;
+}
+
 .modal-header {
   padding: 20px;
 }
 
 .modal-body,
 .modal-footer {
-  padding: 0 20px;
+  padding: 20px;
 }
 
 input {
@@ -83,8 +87,23 @@ input[type="text"][disabled] {
   margin: 10px;
 }
 
+@media screen and (min-width: 600px) {
+  
+  h1 {
+    font-size: 40px;
+  }
+  p {
+    font-size: 20px;
+  }
+}
+
 @media screen and (min-width: 992px) {
   .modal {
     width: 50vw;
   }
+
+  h1 {
+    font-size: 40px;
+  }
+
 }

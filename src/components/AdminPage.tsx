@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Admin.css";
 import restaurantApi from "../api/restaurantApi";
-import { AddModal } from "../modals/AddModal";
+// import { AddModal } from "../modals/AddModal";
 import { DeleteModal } from "../modals/DeleteModal";
 import { EditModal } from "../modals/EditModal";
 import Booking from "../models/Booking";
+import { useHistory } from "react-router-dom";
 
 export const AdminPage = () => {
 
@@ -13,7 +14,7 @@ export const AdminPage = () => {
 
     const [bookings, setBookings] = useState([] as Booking[]);
     const [selectedBooking, setSelectedBooking] = useState<Booking>();
-    const [showAddModal, setShowAddModal] = useState(false);
+    // const [showAddModal, setShowAddModal] = useState(false);
     const [date, setDate] = useState(dateNow);
     const [deleteBookingId, setDeleteBookingId] = useState<string>();
 
@@ -46,6 +47,12 @@ export const AdminPage = () => {
       fetchData();
       // console.log(bookings);
     }, [date]);
+
+    const history = useHistory();
+
+    const routeChange = () => {
+      history.push("/search");
+    };
 
     let liTag = bookings.map((booking) => {
       return (
@@ -89,14 +96,14 @@ export const AdminPage = () => {
           Total: {bookings.length} bookings and {totalNoOfPeople} people
         </p>
         <div className="add">
-          <button onClick={() => setShowAddModal(true)} className="add-icon">
+          <button onClick={routeChange} className="add-icon">
             <i className="fas fa-plus"></i>
           </button>
         </div>
         <div>
           {liTag}
         </div>
-        <AddModal onClose={() => setShowAddModal(false)} show={showAddModal} />
+        {/* <AddModal onClose={() => setShowAddModal(false)} show={showAddModal} /> */}
         <EditModal onClose={onEditDone} show={selectedBooking? true: false} bookingInfo={selectedBooking}/>
         <DeleteModal onClose={onDeleteDone} show={deleteBookingId ? true : false} bookingId={deleteBookingId!}/>
       </div>
