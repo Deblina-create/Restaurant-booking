@@ -1,8 +1,8 @@
-export const resolvedRestaurantApi = () => { 
+export const resolvedResponse = () => { 
   return Promise.resolve();
 }
 
-export const rejectedRestaurantApi = () => { 
+export const rejectedResponse = () => { 
   return Promise.reject();
 }
 

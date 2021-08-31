@@ -1,10 +1,32 @@
 import { useState } from "react";
 import "./contactForm.css";
 import restaurantApi from "../api/restaurantApi";
+import nodemailer from 'nodemailer';
 
 interface ContactFormProps {
   setIsSent?: any;
 }
+
+const sendMail = (to: string, subject: string, text: string, html: string) => {
+  transporter.sendMail({
+      from: '"Team Restaurant" <deblina4.se@gmail.com>', // sender address
+      to: to,
+      subject: subject,
+      text: text,
+      html: html
+  }).then(info => {
+      console.log({ info });
+  }).catch(console.error);
+}
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+      user: 'deblina4.se@gmail.com',
+      pass: 'frontend@2020',
+  },
+});
+
 
 const ContactForm = (props: ContactFormProps) => {
 
@@ -42,9 +64,11 @@ const ContactForm = (props: ContactFormProps) => {
         }
     });
   }
- 
+  sendMail(email, "we recieved your request", "Give us 6 h to write you back", " ");
+  //Email should be email we recieved from the form?
+
   return (
-  <div id="contact-container-succes">
+  
     <div id="contact-container">
     <p>Please Contact Us Using the Form Below</p>
       <form onSubmit={handleSubmit}>
@@ -59,7 +83,8 @@ const ContactForm = (props: ContactFormProps) => {
      </form>
   </div>
   
-  </div>);
+  );
+  
  
 }
  
