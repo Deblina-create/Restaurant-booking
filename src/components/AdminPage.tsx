@@ -31,6 +31,10 @@ export const AdminPage = () => {
       0
     );
 
+    const getEditForm = (booking: Booking) => {
+      history.push("/edit/" + `${booking.id}`)
+    }
+
     const fetchData = async () => {
       console.log("bookings from DB");
       const response = await restaurantApi.post<Booking[]>("/admin_search", {
@@ -61,7 +65,7 @@ export const AdminPage = () => {
           <div><i className="fas fa-user-friends guest"></i>{booking.NoOfPeople}</div>
           <div>{booking.Name}</div>
           <div className="buttons">
-          <button onClick={() => setSelectedBooking(booking)} className="edit-icon">
+          <button onClick={() => getEditForm(booking)} className="edit-icon">
             <i className="fas fa-pen"></i>
           </button>
           <button onClick={() => setDeleteBookingId(booking.id)} className="delete-icon">
