@@ -5,7 +5,7 @@ interface ModalProps {
   onClose: () => void;
   show: boolean;
 }
-export const EditModal: React.FC<ModalProps> = ({ onClose, show }) => {
+export const MsgRecievedModal: React.FC<ModalProps> = ({ onClose, show }) => {
   if (!show) {
     return null;
   }
