@@ -11,9 +11,22 @@
   padding: auto;
   margin: 100px auto;
   background-color: orange;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   height: 35vh;
   width: 35vh;
+  /* -webkit-animation:circle 1s linear infinite;
+  -moz-animation:circle 1s linear infinite;
+  -o-animation: circle 1s linear infinite;
+  animation: circle 1s linear infinite; */
+  /* transition: all 0.2s; */
+  -webkit-animation: rotation .9s;
+	-moz-animation: rotation .9s;
+	-o-animation: rotation .9s;
+	animation: rotation .9s;
+}
+
+.bookingLink:hover {
+  transform: scale(1.1);
 }
 
 #book,
@@ -53,7 +66,9 @@
     margin: 80px auto;
   }
 
-  #book, #table, #here {
+  #book,
+  #table,
+  #here {
     line-height: 6vh;
   }
 
@@ -69,3 +84,55 @@
     font-size: 70px;
   }
 }
+
+@-webkit-keyframes rotation {
+	from {
+	  -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);}
+	to {
+	  -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);}
+}
+
+@-moz-keyframes rotation {
+	from {
+	  -moz-transform: rotate(0deg);
+    transform: rotate(0deg);}
+	to {
+	  -moz-transform: rotate(359deg);
+    transform: rotate(359deg);}
+}
+
+@-o-keyframes rotation {
+	from {
+	  -o-transform: rotate(0deg);
+    transform: rotate(0deg);}
+	to {
+	  -o-transform: rotate(359deg);
+    transform: rotate(359deg);}
+}
+
+@keyframes rotation {
+	from {
+	  -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+	  -o-transform: rotate(0deg);
+    transform: rotate(0deg);}
+	to {
+	  -webkit-transform: rotate(359deg);
+	  -moz-transform: rotate(359deg);
+	  -o-transform: rotate(359deg);
+    transform: rotate(359deg);}
+}
+
+/* @keyframes circle {
+  0% {
+    transform:scale(.9);
+  }
+  70% {
+    transform:scale(1);
+  }
+    100% {
+    transform:scale(.9);
+  }
+} */
