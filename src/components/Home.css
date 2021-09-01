@@ -1,3 +1,15 @@
+@keyframes circle {
+  0% {
+    transform:scale(.9);
+  }
+  70% {
+    transform:scale(1);
+  }
+    100% {
+    transform:scale(.9);
+  }
+}
+
 .home {
   padding: 50px;
 }
@@ -14,6 +26,12 @@
   border-radius: 50%;
   height: 35vh;
   width: 35vh;
+  animation: circle 1s linear infinite;
+  /* transition: all 0.2s; */
+}
+
+.bookingLink:hover {
+  transform: scale(1.1);
 }
 
 #book,
@@ -53,7 +71,9 @@
     margin: 80px auto;
   }
 
-  #book, #table, #here {
+  #book,
+  #table,
+  #here {
     line-height: 6vh;
   }
 
