@@ -168,6 +168,7 @@ export const EditForm = () => {
                 onClick={() => openForm(data)}
               />
               <label>{data.TimeSlotText}</label>
+              {!data.IsTableAvailable? <span> (Full)</span> : ""}
             </div>
           ))}
         </div>
@@ -204,35 +205,35 @@ export const EditForm = () => {
             disabled={disabled}
             onClick={searchTable}
           >
-            Search a table
+            Check available tabels
           </button>
         </div>
         <p>
           Contact information
-          <span className="edit" onClick={activateContact}>
+          {/* <span className="edit" onClick={activateContact}>
             <i className="fas fa-pen"></i>
-          </span>
+          </span> */}
         </p>
         <input
           type="text"
           placeholder="Name"
           value={bookingInfo.Name}
           onChange={nameChanged}
-          disabled={disabledContact}
+          // disabled={disabledContact}
         />
         <input
           type="text"
           placeholder="Mobile number"
           value={bookingInfo.Phone}
           onChange={phoneChanged}
-          disabled={disabledContact}
+          // disabled={disabledContact}
         />
         <input
           type="text"
           placeholder="Email"
           value={bookingInfo.Email}
           onChange={emailChanged}
-          disabled={disabledContact}
+          // disabled={disabledContact}
         />
         {/* <input
             type="text"
@@ -244,7 +245,7 @@ export const EditForm = () => {
         <button
           onClick={saveData}
           className="empty-btn"
-          disabled={disabledContact}
+          // disabled={disabledContact}
           style={{ backgroundColor: "black" }}
         >
           Save

@@ -98,7 +98,8 @@ const editBookingDetail = async (booking: Booking): Promise<boolean> => {
         tableRequired++;
     }
 
-    const bookings = await getBookingsData(new Date(booking.BookingTime));
+    let bookings = await getBookingsData(new Date(booking.BookingTime));
+    bookings = bookings.filter(b => b.id != booking.id)
     if (bookings && bookings.length > 0) {
          checkTableAvailability(bookings, tableRequired, new Date(booking.BookingTime));
         // if (!available) {
