@@ -3,6 +3,16 @@ import "./contactForm.css";
 import restaurantApi from "../api/restaurantApi";
 import nodemailer from 'nodemailer';
 
+
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+      user: 'deblina4.se@gmail.com',
+      pass: 'frontend@2020',
+  },
+});
+
 interface ContactFormProps {
   setIsSent?: any;
 }
@@ -19,13 +29,7 @@ const sendMail = (to: string, subject: string, text: string, html: string) => {
   }).catch(console.error);
 }
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-      user: 'deblina4.se@gmail.com',
-      pass: 'frontend@2020',
-  },
-});
+
 
 
 const ContactForm = (props: ContactFormProps) => {
@@ -65,8 +69,8 @@ const ContactForm = (props: ContactFormProps) => {
     });
   }
   sendMail(email, "we recieved your request", "Give us 6 h to write you back", " ");
-  //Email should be email we recieved from the form?
-
+  
+//since I have return here I cant use sendMail function after the rendering the div
   return (
   
     <div id="contact-container">
