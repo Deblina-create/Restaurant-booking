@@ -125,7 +125,7 @@
     transform: rotate(359deg);}
 }
 
-@keyframes circle {
+/* @keyframes circle {
   0% {
     transform:scale(.9);
   }
@@ -135,4 +135,4 @@
     100% {
     transform:scale(.9);
   }
-}
+} */
