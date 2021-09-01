@@ -35,11 +35,11 @@ export const EditForm = () => {
   const [bookedDate, setBookedDate] = useState("");
   const [bookedTime, setBookedTime] = useState("");
   const [disabled, setDisabled] = useState(true);
-  const [disabledBtn, setDisabledBtn] = useState(false);
+  const [disabledContact, setDisabledContact] = useState(false);
   const [searchData, setSearchData] = useState(initialData);
   const [dataFetched, setDataFetched] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState(initialSelectedSlot);
-  const [type, setType] = useState("radio");
+  // const [type, setType] = useState("radio");
   const [hidden, setHidden] = useState(false);
 
   const history = useHistory();
@@ -55,7 +55,7 @@ export const EditForm = () => {
   };
 
   const searchTable = async () => {
-    setType("hidden");
+    // setType("hidden");
     setHidden(true);
     let peopleCount = bookingInfo.NoOfPeople;
     console.log("Date value", bookedDate);
@@ -109,7 +109,12 @@ export const EditForm = () => {
 
   const activate = () => {
     setDisabled(false);
-    // setDisabledBtn(true);
+    setDisabledContact(true);
+  };
+
+  const activateContact = () => {
+    setDisabledContact(false);
+    setDisabled(true);
   };
 
   const openForm = (timeSlot: SearchInfo) => {
@@ -132,7 +137,6 @@ export const EditForm = () => {
             </span>
           </p>
         </div>
-
         <input
           type="date"
           value={bookedDate}
@@ -145,6 +149,13 @@ export const EditForm = () => {
           value={bookingInfo.NoOfPeople}
           onChange={onNumberOfPeopleChange}
           disabled={disabled}
+        />
+        <input
+          type="text"
+          value={bookedTime}
+          // onChange={(e) => setBookedDate(e.target.value)}
+          disabled
+          hidden={hidden}
         />
         <div className="radio">
           {searchData.map((data, index) => (
@@ -160,7 +171,7 @@ export const EditForm = () => {
             </div>
           ))}
         </div>
-        <div className="radio">
+        {/* <div className="radio">
           <div className="radio-btn">
             <input
               id="time18"
@@ -169,7 +180,7 @@ export const EditForm = () => {
               name="time"
               checked={bookedTime === "18:00"}
               onChange={(e) => setBookedTime(e.target.value)}
-              disabled={disabled}
+              // disabled={disabled}
             />
             <label htmlFor="time18" hidden={hidden}>18:00</label>
           </div>
@@ -181,15 +192,14 @@ export const EditForm = () => {
               name="time"
               checked={bookedTime === "21:00"}
               onChange={(e) => setBookedTime(e.target.value)}
-              disabled={disabled}
+              // disabled={disabled}
             />
             <label htmlFor="time21" hidden={hidden}>21:00</label>
           </div>
-        </div>
+        </div> */}
         <div>
           <button
             className="empty-btn"
-            id="activate"
             style={{ backgroundColor: "black" }}
             disabled={disabled}
             onClick={searchTable}
@@ -197,24 +207,32 @@ export const EditForm = () => {
             Search a table
           </button>
         </div>
-        <p>Contact information</p>
+        <p>
+          Contact information
+          <span className="edit" onClick={activateContact}>
+            <i className="fas fa-pen"></i>
+          </span>
+        </p>
         <input
           type="text"
           placeholder="Name"
           value={bookingInfo.Name}
           onChange={nameChanged}
+          disabled={disabledContact}
         />
         <input
           type="text"
           placeholder="Mobile number"
           value={bookingInfo.Phone}
           onChange={phoneChanged}
+          disabled={disabledContact}
         />
         <input
           type="text"
           placeholder="Email"
           value={bookingInfo.Email}
           onChange={emailChanged}
+          disabled={disabledContact}
         />
         {/* <input
             type="text"
@@ -223,7 +241,12 @@ export const EditForm = () => {
           /> */}
       </div>
       <div className="modal-footer">
-        <button onClick={saveData} className="full-btn" disabled={disabledBtn}>
+        <button
+          onClick={saveData}
+          className="empty-btn"
+          disabled={disabledContact}
+          style={{ backgroundColor: "black" }}
+        >
           Save
         </button>
       </div>
