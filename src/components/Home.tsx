@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import "./Home.css";
 import Table_logo from "./The_Table_logo.png";
 
@@ -9,24 +8,24 @@ export const Home = () => {
         <img src={Table_logo} alt="restaurant-logo" className="logo-img"></img>
       </div>
       <div className="bookingLink">
-        <Link to="/booking">
+        <a href="/booking">
           <h1 id="book">
             <span>BOOK </span>
             <span id="table"> YOUR TABLE </span>
             <span id="here"> HERE </span>
           </h1>
-        </Link>
+        </a>
       </div>
       <div className="links">
         <div>
-          <Link to="/contact">
+          <a href="/contact">
             Contact us <i className="fas fa-chevron-down"></i>
-          </Link>
+          </a>
         </div>
         <div>
-          <Link to="/admin">
+          <a href="/admin">
             Admin <i className="fas fa-chevron-down"></i>
-          </Link>
+          </a>
         </div>
       </div>
     </div>

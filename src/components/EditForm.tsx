@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import restaurantApi from "../api/restaurantApi";
 import Booking from "../models/Booking";
 import ErrorResponse from "../models/ErrorResponse";
@@ -124,9 +124,9 @@ export const EditForm = () => {
   return (
     <div className="admin-page">
       <div className="back">
-        <Link to={"/admin"}>
+        <a href={"/admin"}>
           <i className="fas fa-chevron-left"></i> Edit form
-        </Link>
+        </a>
       </div>
       <div>
         <div>

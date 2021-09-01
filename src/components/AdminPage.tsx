@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "./Admin.css";
 import restaurantApi from "../api/restaurantApi";
 // import { AddModal } from "../modals/AddModal";
@@ -78,7 +77,7 @@ export const AdminPage = () => {
     return (
       <div className="admin-page">
         <div className="back">
-          <Link to={"/"}><i className="fas fa-chevron-left"></i> Admin</Link>
+          <a href={"/"}><i className="fas fa-chevron-left"></i> Admin</a>
         </div>
         <div>
           <h2>
@@ -100,7 +99,7 @@ export const AdminPage = () => {
           Total: {bookings.length} bookings and {totalNoOfPeople} people
         </p>
         <div className="add">
-          <button onClick={routeChange} className="add-icon">
+          <button onClick={routeChange} className="add-icon" data-testid="add-btn">
             <i className="fas fa-plus"></i>
           </button>
         </div>
