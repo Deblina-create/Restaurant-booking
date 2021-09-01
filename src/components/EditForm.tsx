@@ -255,9 +255,10 @@ export const EditForm = () => {
   function bookingTime() {
     const dt = new Date(bookedDate.toString());
     let bookingTimeText = "";
-    if (selectedSlot.TimeSlotIndex === 0) {
+    if (selectedSlot.TimeSlotIndex === 0 || bookedTime === "18:00") {
       bookingTimeText = new Date(new Date(dt).setHours(18, 0, 0, 0)).toString();
-    } else if (selectedSlot.TimeSlotIndex === 1) {
+    
+    } else if(selectedSlot.TimeSlotIndex === 1 || bookedTime === "21:00") {
       bookingTimeText = new Date(new Date(dt).setHours(21, 0, 0, 0)).toString();
     }
     bookingInfo.BookingTime = bookingTimeText;
