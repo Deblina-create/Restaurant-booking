@@ -89,9 +89,30 @@ const getBookingDetailById = async (id: string): Promise<Booking | null> => {
 }
 
 const editBookingDetail = async (booking: Booking): Promise<boolean> => {
+    // let error: ErrorResponse = {
+    //     Code: "",
+    //     Message: ""
+    // };
+    let tableRequired = Math.floor(booking.NoOfPeople / TableCapacity);
+    if (booking.NoOfPeople % TableCapacity > 0) {
+        tableRequired++;
+    }
+
+    const bookings = await getBookingsData(new Date(booking.BookingTime));
+    if (bookings && bookings.length > 0) {
+         checkTableAvailability(bookings, tableRequired, new Date(booking.BookingTime));
+        // if (!available) {
+        //     error = {
+        //         Code: "ERROR_TABLE_UNAVAILABLE",
+        //         Message: "We are fully booked on this time slot. Please try a different date and time"
+        //     };
+        //     return error;
+        // }
+    }
+
 
     try {
-        await firebase.db.collection("BookingDetails").doc(booking.id).update({ NoOfPeople: booking.NoOfPeople, Email: booking.Email, Preferences: booking.Preferences, Name: booking.Name, Phone: booking.Phone, BookingTime: booking.BookingTime });
+        await firebase.db.collection("BookingDetails").doc(booking.id).update({ NoOfPeople: booking.NoOfPeople, Email: booking.Email, Preferences: booking.Preferences, Name: booking.Name, Phone: booking.Phone, BookingTime: booking.BookingTime, BookedTableCount: tableRequired });
         return true;
     }
     catch (err: any) {
