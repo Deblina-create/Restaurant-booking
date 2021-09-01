@@ -41,8 +41,8 @@ input {
   border-radius: 10px;
 }
 
-input[type="text"][disabled] {
-  color: white;
+[disabled] {
+  color: gray;
 }
 
 .radio {
