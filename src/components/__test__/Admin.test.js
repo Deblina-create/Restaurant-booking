@@ -1,47 +1,86 @@
 import React from "react";
+import { rest } from "msw";
+import { setupServer } from "msw/node";
 import {
   render,
   fireEvent,
-  cleanup,
-  waitForElement,
+  waitFor,
 } from "@testing-library/react";
+import "@testing-library/jest-dom";
 import { AdminPage } from "../AdminPage";
 import { useState } from "react";
-import axiosMock from "axios";
-afterEach(cleanup);
-jest.mock('axios');
 
-it("fetches and displays data", async () => {
- 
-  let dateNow = new Date().toDateString();
-  axiosMock.post.mockResolvedValueOnce({
-    data: [
-      {
-        id: "adfkjadgkhakdfjal",
-        BookingTime: dateNow,
-        NoOfPeople: 10,
-        Email: "testing@gmail.com",
-        Preferences: "",
-        Name: "testing",
-        Phone: "00000000",
-        BookedTableCount: 2,
-      },
-    ]
-  });
-  const url = "/bookinglist";
-  const {getByTestId} = render(<AdminPage url={url}/>);
-  const resolvedDiv = await waitForElement(() => 
-  getByTestId("resolved"));
+const server = setupServer(
+  rest.post("/admin_search", (req, res, ctx) => {
+    return res(
+      ctx.json({
+        data:
+          {
+            id: "adfkjadgkhakdfjal",
+            BookingTime: new Date().toDateString(),
+            NoOfPeople: 10,
+            Email: "testing@gmail.com",
+            Preferences: "",
+            Name: "testing",
+            Phone: "00000000",
+            BookedTableCount: 2,
+          },
+      })
+    )
+  })
+)
 
-  expect(resolvedDiv).toHaveTextContent("testing");
-  expect(axiosMock.post).toHaveBeenCalledTimes(1);
-  expoect(axiosMock.post).toHaveBeenCalledWith(url);
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
-  // const { queryByTestId, getByText } = render(<AdminPage />);
-  // expect(getByText("Admin")).toBeInTheDocument;
-  // expect(getByText(dateNow)).toBeInTheDocument;
-  // expect(queryByTestId("add-btn")).toBeTruthy;
+test("Loads and displays data", async () => {});
+
+test("handlers server error", async () => {
+  server.use(
+    rest.post("/admin_search", (req, res, cts) => {
+      return res(ctx.status(500));
+    })
+  );
+
+  const {getByTestId} = render(<AdminPage
+  />)
+  const resolvedDiv = await waitFor(() =>
+    getByTestId("resolved"));
+    expect(resolvedDiv).toHaveTextContent("Deblina");
 });
+
+// it("fetches and displays data", async () => {
+
+//   let dateNow = new Date().toDateString();
+//   axiosMock.post.mockResolvedValueOnce({
+//     data: [
+//       {
+//         id: "adfkjadgkhakdfjal",
+//         BookingTime: dateNow,
+//         NoOfPeople: 10,
+//         Email: "testing@gmail.com",
+//         Preferences: "",
+//         Name: "testing",
+//         Phone: "00000000",
+//         BookedTableCount: 2,
+//       },
+//     ]
+//   });
+//   const url = "/bookinglist";
+//   const {getByTestId} = render(<AdminPage url={url}/>);
+//   const resolvedDiv = await waitForElement(() =>
+//   getByTestId("resolved"));
+
+//   expect(resolvedDiv).toHaveTextContent("testing");
+//   expect(axiosMock.post).toHaveBeenCalledTimes(1);
+//   expoect(axiosMock.post).toHaveBeenCalledWith(url);
+
+// const { queryByTestId, getByText } = render(<AdminPage />);
+// expect(getByText("Admin")).toBeInTheDocument;
+// expect(getByText(dateNow)).toBeInTheDocument;
+// expect(queryByTestId("add-btn")).toBeTruthy;
+// });
 
 it("can change date", () => {
   const { getByText, asFragment } = render(<TestDateChangeComponent />);
