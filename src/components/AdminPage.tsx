@@ -40,7 +40,6 @@ export const AdminPage = () => {
         data: date,
       });
       console.log("### Response is ", response);
-      
       setBookings(response.data as Booking[]);
     };
 
@@ -48,7 +47,7 @@ export const AdminPage = () => {
       console.log("AdminPage.useEffect called");
       
       fetchData();
-      // console.log(bookings);
+      console.log(bookings);
     }, [date]);
 
     const history = useHistory();
@@ -62,7 +61,7 @@ export const AdminPage = () => {
         <div key={booking.id} className="booking-list" data-testid="booking-list">
           <div>{dateStringToTime(booking.BookingTime)}</div>
           <div><i className="fas fa-user-friends guest"></i>{booking.NoOfPeople}</div>
-          <div>{booking.Name}</div>
+          <div data-testid="resolved">{booking.Name}</div>
           <div className="buttons">
           <button onClick={() => getEditForm(booking)} className="edit-icon">
             <i className="fas fa-pen"></i>

@@ -1,38 +1,22 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  cleanup,
+  waitForElement,
+} from "@testing-library/react";
 import { AdminPage } from "../AdminPage";
 import { useState } from "react";
-import axios from "axios";
-import { restaurantApi } from "../../api/restaurantApi";
-import { async } from "q";
-jest.mock("axios");
+import axiosMock from "axios";
+afterEach(cleanup);
+jest.mock('axios');
 
-
-// it("renders a booking list", () => {
-//   axios.post.mockImplementation(() => {
-//     let dateNow = new Date().toDateString();
-//     return Promise.resolve({
-//       data: [{
-//         id: adfkjadgkhakdfjal,
-//         BookingTime: dateNow,
-//         NoOfPeople: 10,
-//         Email: "testing@gmail.com",
-//         Preferences: "",
-//         Name: "testing",
-//         Phone: "00000000",
-//         BookedTableCount: 2,
-//       }]
-//     });
-//   });
-//   const { queryByTestId, getByText } = render(<AdminPage/>);
-//   expect(getByText('')).toBeInTheDocument();
-// });
-
-describe("fetch booking list", () => {
-  describe("when API call is successful", () => {
-    it("should return booking list", async () => {
-      let dateNow = new Date().toDateString();
-      const bookings = [{
+it("fetches and displays data", async () => {
+ 
+  let dateNow = new Date().toDateString();
+  axiosMock.post.mockResolvedValueOnce({
+    data: [
+      {
         id: "adfkjadgkhakdfjal",
         BookingTime: dateNow,
         NoOfPeople: 10,
@@ -41,36 +25,22 @@ describe("fetch booking list", () => {
         Name: "testing",
         Phone: "00000000",
         BookedTableCount: 2,
-        },{
-        id: "adfkjkflsvlkjdflk",
-        BookingTime: dateNow,
-        NoOfPeople: 4,
-        Email: "testing2@gmail.com",
-        Preferences: "",
-        Name: "testing2",
-        Phone: "00000000",
-        BookedTableCount: 1
-        }
-      ];
-      axios.post.mockResolvedValueOnce(bookings);
-      const { queryByTestId, getByText } = render(<AdminPage/>);
-        expect(getByText('testing')).toBeInTheDocument();
-
-      // when
-      // const result = await `${BASE_URL}/admin_search`;
-      // then
-      // expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/admin`);
-      // expect(result).toEqual(bookings);
-    });
+      },
+    ]
   });
-});
+  const url = "/bookinglist";
+  const {getByTestId} = render(<AdminPage url={url}/>);
+  const resolvedDiv = await waitForElement(() => 
+  getByTestId("resolved"));
 
-it("renders correctly", () => {
-  const { queryByTestId, getByText } = render(<AdminPage/>);
-  let dateNow = new Date().toDateString();
-  expect(getByText("Admin")).toBeInTheDocument;
-  expect(getByText(dateNow)).toBeInTheDocument;
-  expect(queryByTestId("add-btn")).toBeTruthy;
+  expect(resolvedDiv).toHaveTextContent("testing");
+  expect(axiosMock.post).toHaveBeenCalledTimes(1);
+  expoect(axiosMock.post).toHaveBeenCalledWith(url);
+
+  // const { queryByTestId, getByText } = render(<AdminPage />);
+  // expect(getByText("Admin")).toBeInTheDocument;
+  // expect(getByText(dateNow)).toBeInTheDocument;
+  // expect(queryByTestId("add-btn")).toBeTruthy;
 });
 
 it("can change date", () => {
@@ -127,3 +97,24 @@ const ModalComponent = () => {
     </div>
   );
 };
+
+// const bookings = [{
+//         id: "adfkjadgkhakdfjal",
+//         BookingTime: dateNow,
+//         NoOfPeople: 10,
+//         Email: "testing@gmail.com",
+//         Preferences: "",
+//         Name: "testing",
+//         Phone: "00000000",
+//         BookedTableCount: 2,
+//         },{
+//         id: "adfkjkflsvlkjdflk",
+//         BookingTime: dateNow,
+//         NoOfPeople: 4,
+//         Email: "testing2@gmail.com",
+//         Preferences: "",
+//         Name: "testing2",
+//         Phone: "00000000",
+//         BookedTableCount: 1
+//         }
+//       ];
