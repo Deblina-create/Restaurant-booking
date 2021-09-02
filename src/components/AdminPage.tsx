@@ -35,11 +35,11 @@ export const AdminPage = () => {
     }
 
     const fetchData = async () => {
-      console.log("bookings from DB");
+      console.log("### bookings from DB");
       const response = await restaurantApi.post<Booking[]>("/admin_search", {
         data: date,
       });
-      // console.log("Response is ", response.data.map(b => b.BookingTime));
+      console.log("### Response is ", response);
       
       setBookings(response.data as Booking[]);
     };
@@ -57,9 +57,9 @@ export const AdminPage = () => {
       history.push("/search");
     };
 
-    let liTag = bookings.map((booking) => {
+    let divTag = bookings.map((booking) => {
       return (
-        <div key={booking.id} className="booking-list">
+        <div key={booking.id} className="booking-list" data-testid="booking-list">
           <div>{dateStringToTime(booking.BookingTime)}</div>
           <div><i className="fas fa-user-friends guest"></i>{booking.NoOfPeople}</div>
           <div>{booking.Name}</div>
@@ -77,7 +77,7 @@ export const AdminPage = () => {
     return (
       <div className="admin-page">
         <div className="back">
-          <a href={"/"}><i className="fas fa-chevron-left"></i> Admin</a>
+          <a href={"/"} data-testid="admin"><i className="fas fa-chevron-left"></i> Admin</a>
         </div>
         <div>
           <h2>
@@ -90,7 +90,7 @@ export const AdminPage = () => {
             >
               <i className="fas fa-chevron-left"></i>
             </button>
-            <button onClick={() => setDate(nextDate)} className="increase">
+            <button onClick={() => setDate(nextDate)} className="increase" data-testid="increment">
               <i className="fas fa-chevron-right"></i>
             </button>
           </h2>
@@ -104,7 +104,7 @@ export const AdminPage = () => {
           </button>
         </div>
         <div>
-          {liTag}
+          {divTag}
         </div>
         {/* <AddModal onClose={() => setShowAddModal(false)} show={showAddModal} /> */}
         <EditModal onClose={onEditDone} show={selectedBooking? true: false} bookingInfo={selectedBooking}/>
