@@ -3,16 +3,37 @@ import { render, fireEvent } from "@testing-library/react";
 import { AdminPage } from "../AdminPage";
 import { useState } from "react";
 import axios from "axios";
+import { restaurantApi } from "../../api/restaurantApi";
 import { async } from "q";
 jest.mock("axios");
 
 
-it("renders a booking list", () => {
-  axios.post.mockImplementation(() => {
-    let dateNow = new Date().toDateString();
-    return Promise.resolve({
-      data: [{
-        id: adfkjadgkhakdfjal,
+// it("renders a booking list", () => {
+//   axios.post.mockImplementation(() => {
+//     let dateNow = new Date().toDateString();
+//     return Promise.resolve({
+//       data: [{
+//         id: adfkjadgkhakdfjal,
+//         BookingTime: dateNow,
+//         NoOfPeople: 10,
+//         Email: "testing@gmail.com",
+//         Preferences: "",
+//         Name: "testing",
+//         Phone: "00000000",
+//         BookedTableCount: 2,
+//       }]
+//     });
+//   });
+//   const { queryByTestId, getByText } = render(<AdminPage/>);
+//   expect(getByText('')).toBeInTheDocument();
+// });
+
+describe("fetch booking list", () => {
+  describe("when API call is successful", () => {
+    it("should return booking list", async () => {
+      let dateNow = new Date().toDateString();
+      const bookings = [{
+        id: "adfkjadgkhakdfjal",
         BookingTime: dateNow,
         NoOfPeople: 10,
         Email: "testing@gmail.com",
@@ -20,11 +41,28 @@ it("renders a booking list", () => {
         Name: "testing",
         Phone: "00000000",
         BookedTableCount: 2,
-      }]
+        },{
+        id: "adfkjkflsvlkjdflk",
+        BookingTime: dateNow,
+        NoOfPeople: 4,
+        Email: "testing2@gmail.com",
+        Preferences: "",
+        Name: "testing2",
+        Phone: "00000000",
+        BookedTableCount: 1
+        }
+      ];
+      axios.post.mockResolvedValueOnce(bookings);
+      const { queryByTestId, getByText } = render(<AdminPage/>);
+        expect(getByText('testing')).toBeInTheDocument();
+
+      // when
+      // const result = await `${BASE_URL}/admin_search`;
+      // then
+      // expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/admin`);
+      // expect(result).toEqual(bookings);
     });
   });
-  const { queryByTestId, getByText } = render(<AdminPage/>);
-  expect(getByText("testing")).toBeInTheDocument();
 });
 
 it("renders correctly", () => {
