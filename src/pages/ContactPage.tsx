@@ -4,11 +4,12 @@ import { MsgRecievedModal } from "../modals/MsgRecievedModal";
  
 const ContactPage = () => {
   const [isSent, setIsSent] = useState(false);
-  const [showMsgRecieved, setMsgRecieved] = useState(false);
+  const [showMsgRec, setShowEdit] = useState(true);
+
   return (
     isSent ? (
       <div>
-        <MsgRecievedModal onClose={() => setMsgRecieved(false)} show={showMsgRecieved} />
+        <MsgRecievedModal onClose={() => setShowEdit(false)} show={showMsgRec}/>
       </div>
     ) : <ContactForm setIsSent={setIsSent} />
   );

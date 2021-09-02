@@ -59,6 +59,13 @@ const ContactForm = (props: ContactFormProps) => {
       message,
     };
 
+    function show() {
+      //add here show msg recieved and set the boleeans
+      //setMsgRe
+      console.log("modal");
+      };
+      
+
    restaurantApi.post("/contact", { data: payload })
       .catch((error) => console.log(error))
       .then((response) => {
@@ -67,8 +74,9 @@ const ContactForm = (props: ContactFormProps) => {
           console.log(response);
         }
     });
+    sendMail(email, "we recieved your request", "Give us 6 h to write you back", " ");
+  //doing things twice
   }
-  sendMail(email, "we recieved your request", "Give us 6 h to write you back", " ");
   
 //since I have return here I cant use sendMail function after the rendering the div
   return (
@@ -83,6 +91,7 @@ const ContactForm = (props: ContactFormProps) => {
           <div><input type="text" value={message} placeholder="Message" required onChange={handleMessageChange}/></div>
  
           <button type="submit">Send</button>
+          
           
      </form>
   </div>

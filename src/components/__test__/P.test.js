@@ -1,18 +1,48 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, getByLabelText, waitFor } from '@testing-library/react';
 import ContactForm from '../ContactForm';
 import ContactPage from '../../pages/ContactPage';
 
+const errorMessage = "**** ERROR ****";
+const successResult = "API REPLY";
+const getSuccess = jest.fn(() => Promise.resolve(successResult));
+//const getFail = jest.fn(() => Promise.reject(new Error()));
+// const labelAfterGet = await waitForElement(() => queryByLabelText(/display/i)); DONT FORGET
 
-// This is the mocked response object from the API with status code 200
-const resolvedResponse = {
-  status: 200,
-};
+describe("displays correct thing when API response is succesfull", () => {
+  test('API TEST Success', async () => {
+  
+    render(<ContactForm get={getSuccess}/>);
+    
+    const button = screen.getByText(/send/i);
 
-// This is the mocked response from the API with status code 404
-const rejectedResponse = {
-  status: 404,
-};
+    fireEvent.submit(button);
+
+    const renderedComponent = await waitFor(() => screen.getByText(/Booking detail/));
+   
+    
+    expect(renderedComponent.value).toBeInTheDocument();
+
+  })
+})
+
+describe("displays correct thing when API response is NOT succesfull", () => {
+  test('API TEST Fail', async () => {
+  
+    render(<ContactForm get={errorMessage}/>);
+    
+    const button = screen.getByText(/send/i);
+
+    fireEvent.submit(button);
+
+    const renderedComponent = await waitFor(() => screen.getByText(/Please Contact Us Using the Form Below/));
+   
+    
+    expect(renderedComponent.value).toBeInTheDocument();
+
+  })
+})
+
 
 test('should check if the page rendered as it should be-contact form', async () => {
 
@@ -65,43 +95,6 @@ describe("handleMessageChange", () => {
     expect(inputElement.value).toBe("Just a mock message");
     });
   })
-
-// describe("postApi", () => {
-//   test('should render success message when status === 200', async () => {
-  
-//     render(<ContactPage />);
-  
-//     const asyncMock = jest
-  
-//         .fn()
-    
-//         .mockResolvedValueOnce(resolvedResponse)
-//         //.mockResolvedValue(resolvedResponse)
-//         await asyncMock ();
-    
-//         //const renderedDivElement = screen.getByRole("div");
-//         const renderedText = screen.getByText;
-//         console.log(renderedText);
-//         expect(renderedText.value).toBe("Dear Custormer, Your Message was Recieved!");
-//     });
-
-//     test('should render Contact Form when status === 400', async () => {
-
-//       render(<ContactForm/>);
-//       const asyncMock = jest
-      
-//         .fn()
-      
-//         .mockResolvedValueOnce(rejectedResponse)
-      
-//         await asyncMock ();
-//         //renderedComponent??
-//         const renderedDivElement = screen.getByRole("div");
-      
-//         //expect(renderedDivElement.value).toBe("");
-//         expect(renderedDivElement.value).toContain("Please Contact Us Using the Form Below")
-//     });
-//   })
 
 describe("handleSubmit", () => {
   test('should submit values when submit button clicked', async () => {

@@ -1,0 +1,14 @@
+import React from 'react';
+import { render, screen, fireEvent, getByLabelText, waitFor} from '@testing-library/react';
+import ContactForm from '../ContactForm';
+//import ContactPage from '../../pages/ContactPage';
+
+
+const errorMessage = "**** ERROR ****";
+const successResult = "API REPLY";
+const getSuccess = jest.fn(() => Promise.resolve(successResult));
+//const getFail = jest.fn(() => Promise.reject(new Error()));
+// const labelAfterGet = await waitForElement(() => queryByLabelText(/display/i)); DONT FORGET
+
+
+
