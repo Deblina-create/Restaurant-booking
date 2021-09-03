@@ -2,11 +2,11 @@ import axios from "axios";
 import React, { useState } from "react";
 import restaurantApi from "../api/restaurantApi";
 import ContactForm from "../components/ContactForm";
-import { MsgRecievedModal } from "../modals/MsgRecievedModal";
+//import { MsgRecievedModal } from "../modals/MsgRecievedModal";
 
 const ContactPage = () => {
   const [isSent, setIsSent] = useState(false);
-  const [showMsgRec, setShowEdit] = useState(true);
+  //const [showMsgRec, setShowEdit] = useState(true);
 
   //SEND MAIL???
   const sendMail = (payload: any) => {

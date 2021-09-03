@@ -12,29 +12,25 @@ import ContactPage from "../../pages/ContactPage";
 const errorMessage = "**** ERROR ****";
 const successResult = "API REPLY";
 const getSuccess = jest.fn(() => Promise.resolve(successResult));
-const getFail =jest.fn(() => Promise.reject(new Error()));
+
 
 describe("displays correct thing when API response is succesfull", () => {
   test("API TEST Success", async () => {
-    const { getByLabelText, queryByLabelText } = render(<ContactPage get={getSuccess} />);
-    
-    const labelBeforePost = queryByLabelText(/isSent/i);
-    expect(labelBeforePost).toBeFalsy();
-    // render(<ContactPage post={getSuccess} />);
+    render(<ContactPage post={getSuccess} />);
 
-    // const button = screen.getByText(/send/i);
+    const button = screen.getByText(/send/i);
 
-    // fireEvent.click(button);
+    fireEvent.click(button);
 
-    // const renderedComponent = await waitFor(() => screen.getByText(/Booking detail/));
+    const renderedComponent = await waitFor(() => screen.getByText(/Booking detail/));
 
-    // expect(renderedComponent.value).toBeInTheDocument();
+    expect(renderedComponent.value).toBeInTheDocument();
   });
 });
 
 describe("displays correct thing when API response is NOT succesfull", () => {
   test("API TEST Fail", async () => {
-    render(<ContactForm get={getFail} />);
+    render(<ContactForm get={errorMessage} />);
 
     const button = screen.getByText(/send/i);
 
