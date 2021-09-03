@@ -5,6 +5,7 @@ import { AdmingPage } from './components/AdminPage';
 import { Route, Switch } from 'react-router-dom';
 import BookingConfirmation from './components/BookingConfirmation';
 import MyBookingSearch from './components/MyBookingSearch';
+import ContactPage from './pages/ContactPage';
 
 
 
@@ -16,7 +17,7 @@ function App() {
         <Route exact path="/search" component={MyBookingSearch} />
         <Route exact path="/confirmation" component={BookingConfirmation} />
         <Route exact path="/admin" component={AdmingPage} />
-        <Route exact path="/contact" component={ContactForm} />
+        <Route exact path="/contact" component={ContactPage} />
       </Switch>
     </div>
   );

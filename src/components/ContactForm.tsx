@@ -15,19 +15,20 @@ const transporter = nodemailer.createTransport({
 
 interface ContactFormProps {
   setIsSent?: any;
+  post(payload: any): any;
 }
 
-const sendMail = (to: string, subject: string, text: string, html: string) => {
-  transporter.sendMail({
-      from: '"Team Restaurant" <deblina4.se@gmail.com>', // sender address
-      to: to,
-      subject: subject,
-      text: text,
-      html: html
-  }).then(info => {
-      console.log({ info });
-  }).catch(console.error);
-}
+// const sendMail = (to: string, subject: string, text: string, html: string) => {
+//   transporter.sendMail({
+//       from: '"Team Restaurant" <deblina4.se@gmail.com>', // sender address
+//       to: to,
+//       subject: subject,
+//       text: text,
+//       html: html
+//   }).then(info => {
+//       console.log({ info });
+//   }).catch(console.error);
+// }
 
 
 
@@ -52,45 +53,39 @@ const ContactForm = (props: ContactFormProps) => {
   }
 
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const payload = {
       name,
       email,
       message,
     };
 
-    function show() {
-      //add here show msg recieved and set the boleeans
-      //setMsgRe
-      console.log("modal");
-      };
-      
+    // function show() {
+    //   //add here show msg recieved and set the boleeans
+    //   //setMsgRe
+    //   console.log("modal");
+    //   };
 
-   restaurantApi.post("/contact", { data: payload })
-      .catch((error) => console.log(error))
-      .then((response) => {
-        if (response) {
-          props.setIsSent(true);
-          console.log(response);
-        }
-    });
-    sendMail(email, "we recieved your request", "Give us 6 h to write you back", " ");
-  //doing things twice
+    console.log(props.post)
+
+    await props.post(payload);
+    
+
   }
   
-//since I have return here I cant use sendMail function after the rendering the div
+
   return (
   
     <div id="contact-container">
     <p>Please Contact Us Using the Form Below</p>
-      <form onSubmit={handleSubmit}>
+      <form >
           <div><input type="text" value={name} placeholder="Name" required onChange={handleNameChange}/></div>
         
           <div><input type="email" value={email} placeholder="Email" required onChange={handleEmailChange}/></div>
         
           <div><input type="text" value={message} placeholder="Message" required onChange={handleMessageChange}/></div>
  
-          <button type="submit">Send</button>
+          <button type="button" onClick={handleSubmit}>Send</button>
           
           
      </form>
@@ -100,6 +95,5 @@ const ContactForm = (props: ContactFormProps) => {
   
  
 }
- 
  
 export default ContactForm
