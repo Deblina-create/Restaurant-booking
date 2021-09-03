@@ -1,86 +1,48 @@
 import React from "react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import {
-  render,
-  fireEvent,
-  waitFor,
-} from "@testing-library/react";
+import { render, fireEvent, waitFor, screen, getByTestId } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { AdminPage } from "../AdminPage";
 import { useState } from "react";
+import axios from "axios";
+jest.mock('axios');
 
-const server = setupServer(
-  rest.post("/admin_search", (req, res, ctx) => {
-    return res(
-      ctx.json({
-        data:
-          {
-            id: "adfkjadgkhakdfjal",
-            BookingTime: new Date().toDateString(),
-            NoOfPeople: 10,
-            Email: "testing@gmail.com",
-            Preferences: "",
-            Name: "testing",
-            Phone: "00000000",
-            BookedTableCount: 2,
-          },
-      })
-    )
-  })
-)
+const fakeBookings = [
+  {
+    id: "adfkjadgkhakdfjal",
+    BookingTime: new Date().toDateString(),
+    NoOfPeople: 10,
+    Email: "testing@gmail.com",
+    Preferences: "",
+    Name: "testing",
+    Phone: "00000000",
+    BookedTableCount: 2,
+  },
+  {
+    id: "adfkjkflsvlkjdflk",
+    BookingTime: new Date().toDateString(),
+    NoOfPeople: 4,
+    Email: "testing2@gmail.com",
+    Preferences: "",
+    Name: "testing2",
+    Phone: "00000000",
+    BookedTableCount: 1,
+  },
+];
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
-test("Loads and displays data", async () => {});
-
-test("handlers server error", async () => {
-  server.use(
-    rest.post("/admin_search", (req, res, cts) => {
-      return res(ctx.status(500));
-    })
-  );
-
-  const {getByTestId} = render(<AdminPage
-  />)
-  const resolvedDiv = await waitFor(() =>
-    getByTestId("resolved"));
-    expect(resolvedDiv).toHaveTextContent("Deblina");
+describe("Admin component", () => {
+  test("it displays a row for each booking", async () => {
+    const resp = { data: fakeBookings };
+    axios.post.mockResolvedValue(resp);
+    render(<AdminPage />);
+    
+    expect(screen.getByText("Admin")).toBeInTheDocument();
+    
+    const bookingList = await waitFor(() => screen.findAllByTestId("booking"));
+    expect(bookingList).toHaveLength(2);
+  });
 });
-
-// it("fetches and displays data", async () => {
-
-//   let dateNow = new Date().toDateString();
-//   axiosMock.post.mockResolvedValueOnce({
-//     data: [
-//       {
-//         id: "adfkjadgkhakdfjal",
-//         BookingTime: dateNow,
-//         NoOfPeople: 10,
-//         Email: "testing@gmail.com",
-//         Preferences: "",
-//         Name: "testing",
-//         Phone: "00000000",
-//         BookedTableCount: 2,
-//       },
-//     ]
-//   });
-//   const url = "/bookinglist";
-//   const {getByTestId} = render(<AdminPage url={url}/>);
-//   const resolvedDiv = await waitForElement(() =>
-//   getByTestId("resolved"));
-
-//   expect(resolvedDiv).toHaveTextContent("testing");
-//   expect(axiosMock.post).toHaveBeenCalledTimes(1);
-//   expoect(axiosMock.post).toHaveBeenCalledWith(url);
-
-// const { queryByTestId, getByText } = render(<AdminPage />);
-// expect(getByText("Admin")).toBeInTheDocument;
-// expect(getByText(dateNow)).toBeInTheDocument;
-// expect(queryByTestId("add-btn")).toBeTruthy;
-// });
 
 it("can change date", () => {
   const { getByText, asFragment } = render(<TestDateChangeComponent />);
@@ -136,24 +98,3 @@ const ModalComponent = () => {
     </div>
   );
 };
-
-// const bookings = [{
-//         id: "adfkjadgkhakdfjal",
-//         BookingTime: dateNow,
-//         NoOfPeople: 10,
-//         Email: "testing@gmail.com",
-//         Preferences: "",
-//         Name: "testing",
-//         Phone: "00000000",
-//         BookedTableCount: 2,
-//         },{
-//         id: "adfkjkflsvlkjdflk",
-//         BookingTime: dateNow,
-//         NoOfPeople: 4,
-//         Email: "testing2@gmail.com",
-//         Preferences: "",
-//         Name: "testing2",
-//         Phone: "00000000",
-//         BookedTableCount: 1
-//         }
-//       ];

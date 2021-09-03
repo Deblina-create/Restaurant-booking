@@ -6,6 +6,7 @@ import { DeleteModal } from "../modals/DeleteModal";
 import { EditModal } from "../modals/EditModal";
 import Booking from "../models/Booking";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 export const AdminPage = () => {
 
@@ -36,7 +37,8 @@ export const AdminPage = () => {
 
     const fetchData = async () => {
       console.log("### bookings from DB");
-      const response = await restaurantApi.post<Booking[]>("/admin_search", {
+      // const response = await restaurantApi.post<Booking[]>("/admin_search", {
+      const response = await axios.post<Booking[]>(`http://localhost:8000/admin_search`, {
         data: date,
       });
       console.log("### Response is ", response);
@@ -58,7 +60,7 @@ export const AdminPage = () => {
 
     let divTag = bookings.map((booking) => {
       return (
-        <div key={booking.id} className="booking-list" data-testid="booking-list">
+        <div key={booking.id} className="booking-list" data-testid="booking">
           <div>{dateStringToTime(booking.BookingTime)}</div>
           <div><i className="fas fa-user-friends guest"></i>{booking.NoOfPeople}</div>
           <div data-testid="resolved">{booking.Name}</div>
