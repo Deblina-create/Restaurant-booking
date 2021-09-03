@@ -61,7 +61,7 @@ export const AdminPage = () => {
         <div key={booking.id} className="booking-list" data-testid="booking">
           <div>{dateStringToTime(booking.BookingTime)}</div>
           <div><i className="fas fa-user-friends guest"></i>{booking.NoOfPeople}</div>
-          <div data-testid="resolved">{booking.Name}</div>
+          <div>{booking.Name}</div>
           <div className="buttons">
           <button onClick={() => getEditForm(booking)} className="edit-icon">
             <i className="fas fa-pen"></i>
