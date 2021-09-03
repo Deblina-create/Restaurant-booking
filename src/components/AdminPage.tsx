@@ -6,7 +6,6 @@ import { DeleteModal } from "../modals/DeleteModal";
 import { EditModal } from "../modals/EditModal";
 import Booking from "../models/Booking";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 
 export const AdminPage = () => {
 
@@ -38,7 +37,6 @@ export const AdminPage = () => {
     const fetchData = async () => {
       console.log("### bookings from DB");
       const response = await restaurantApi.post<Booking[]>("/admin_search", {
-      // const response = await axios.post<Booking[]>("http://localhost:8000/admin_search", {
         data: date,
       });
       console.log("### Response is ", response);

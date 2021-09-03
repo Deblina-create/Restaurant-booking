@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from "axios";
-// const restaurantApi = axios;
 
 const restaurantApi: AxiosInstance = axios.create({
   baseURL: "http://localhost:8000",

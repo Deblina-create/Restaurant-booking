@@ -1,14 +1,18 @@
 import React from "react";
-import { rest } from "msw";
-import { setupServer } from "msw/node";
-import { render, fireEvent, waitFor, screen, getByTestId } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  waitFor,
+  screen,
+  getByTestId,
+} from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { AdminPage } from "../AdminPage";
 import { useState } from "react";
 import axios from "axios";
-jest.mock('axios');
+// jest.mock('axios');
 
-import MockAdapter from 'axios-mock-adapter'
+import MockAdapter from "axios-mock-adapter";
 import restaurantApi from "../../api/restaurantApi";
 
 const fakeBookings = [
@@ -37,10 +41,9 @@ const fakeBookings = [
 describe("Admin component", () => {
   const mock = new MockAdapter(restaurantApi);
   test("it displays a row for each booking", async () => {
-    const resp = { data: fakeBookings };
-
+    const resp = fakeBookings;
     mock.onPost("/admin_search").reply(200, resp);
-    // mock.post.mockResolvedValue(resp);
+    
     render(<AdminPage />);
     
     expect(screen.getByText("Admin")).toBeInTheDocument();
