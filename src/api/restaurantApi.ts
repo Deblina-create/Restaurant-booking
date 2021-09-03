@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
+// const restaurantApi = axios;
 
-const restaurantApi = axios.create({
+const restaurantApi: AxiosInstance = axios.create({
   baseURL: "http://localhost:8000",
   headers: {
     "Content-Type": "application/json",
