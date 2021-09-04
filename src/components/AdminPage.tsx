@@ -96,6 +96,7 @@ export const AdminPage = () => {
         </div>
         <p className="total"> 
           Total: {bookings.length} bookings and {totalNoOfPeople} people
+          <a href="#" className="notification"><span><i className="fas fa-envelope envelope"></i></span><span className="badge">0</span></a>
         </p>
         <div className="add">
           <button onClick={routeChange} className="add-icon" data-testid="add-btn">
