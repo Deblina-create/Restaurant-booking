@@ -20,7 +20,6 @@ function App() {
         <Route exact path="/booking" component={MyBookingSearch} />
         <Route exact path="/search" component={MyBookingSearch} />
         <Route exact path="/contact" component={ContactPage} />
-        <Route exact path="/contact" component={ContactForm} />
         <Route exact path="/cancel/:id" component={BookingDelete} />
         <Route exact path="/admin" component={AdminPage} />
         <Route exact path="/edit/:id" component={EditForm} />
