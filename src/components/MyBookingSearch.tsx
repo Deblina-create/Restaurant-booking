@@ -7,9 +7,10 @@ import BookingForm from './BookingForm';
 import BookingDetails from './BookingDetails';
 import "./Admin.css";
 import "../modals/css/Modal.css";
+import { Link } from 'react-router-dom';
 
 const initialData: SearchInfo[] = [];
-const initialSelectedSlot : SearchInfo  = {
+const initialSelectedSlot: SearchInfo = {
     TimeSlotIndex: -1,
     TimeSlotText: "",
     IsTableAvailable: false
@@ -31,13 +32,25 @@ const MyBookingSearch = () => {
     var dt = curr.toDateString();
     const [bookingDate, setBookingDate] = useState(dt);
     const [dataSaved, setDataSaved] = useState(false);
-    const [peopleCount, setPeopleCount] = useState(2);
+    const [peopleCount, setPeopleCount] = useState(0);
     const [searchData, setSearchData] = useState(initialData);
     const [dataFetched, setDataFetched] = useState(false);
     const [selectedSlot, setSelectedSlot] = useState(initialSelectedSlot);
     const [savedBookingInfo, setSavedBookingInfo] = useState(initialBookingInfo);
+    const [errorNum, setErrorNum] = useState(false);
 
-    
+
+    const validate = (): boolean => {
+        let valid = true;
+        if (peopleCount <= 0) {
+            setErrorNum(true);
+            valid = false;
+        }
+        else {
+            setErrorNum(false);
+        }
+        return valid;
+    }
 
     const onDateChange = (diff: number) => {
         const dt = new Date(bookingDate);
@@ -46,25 +59,25 @@ const MyBookingSearch = () => {
     }
 
     const onNumberOfPeopleChange = (e: any) => {
+        console.log("Changed", e.target.value.toString());
         setPeopleCount(Number.parseInt(e.target.value.toString()))
     }
 
     const fetchData = async () => {
-        console.log("Date value", bookingDate);
-        console.log("People value", peopleCount);
-        const payload: SearchRequest = {
-            BookingDate: new Date(bookingDate),
-            PeopleCount: peopleCount
-        };
-        console.log("Payload", payload);
-        const x = await restaurantApi.post<SearchInfo[]>("/search", { data: payload });
-        setSearchData(x.data as SearchInfo[]);
-        setDataFetched(true);
-        console.log("response data", x.data);
+        if (validate()) {
+            const payload: SearchRequest = {
+                BookingDate: new Date(bookingDate),
+                PeopleCount: peopleCount
+            };
+            const x = await restaurantApi.post<SearchInfo[]>("/search", { data: payload });
+            console.log("Search data", x.data);
+            setSearchData(x.data as SearchInfo[]);
+            setDataFetched(true);
+        }
     }
 
     const saveData = async (booking?: Booking) => {
-        if(booking != null){
+        if (booking != null) {
             setSavedBookingInfo(booking);
             setDataSaved(true);
         }
@@ -76,54 +89,55 @@ const MyBookingSearch = () => {
 
     return (
         <>
-        
-      <div className="admin-page">
-        <div className="back">
-        <a href={"/"}><i className="fas fa-chevron-left"></i> Booking Page</a>
-        </div>
-        <div>
 
-{dataSaved ? <BookingDetails
-                headerMessage="Your Boking Details"
-                name={savedBookingInfo.Name}
-                bookingDate={new Date(savedBookingInfo.BookingTime).toDateString()}
-                peopleCount={savedBookingInfo.NoOfPeople}
-            /> : <div >
-            <h2>
-          {bookingDate}
-          {/* {date === dateNow? <span>(Today)</span> : ""} */}
-          <button
-            onClick={() => onDateChange(-1)}
-            disabled={bookingDate === new Date().toDateString()}
-            className="decrease"
-          >
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <button onClick={() => onDateChange(1)} className="increase">
-            <i className="fas fa-chevron-right"></i>
-          </button>
-        </h2>
-            <input type="number" min={1} defaultValue={2} onChange={onNumberOfPeopleChange} />
-            <button className="empty-btn" style={{backgroundColor:"black"}} onClick={fetchData}>Search</button>
-            <div className="radio">
-            {searchData.map((data, index) => <div className="radio-btn" key={index}>
-                <input  type="radio" value={data.TimeSlotText} disabled={!data.IsTableAvailable} name="slot" onClick={() => openForm(data)} />
-                <label>{data.TimeSlotText}</label>
-            </div>)}
+            <div className="admin-page">
+                <div className="back">
+                    <Link to={"/"}><i className="fas fa-chevron-left"></i> Booking Page</Link>
+                </div>
+                <div>
+
+                    {dataSaved ? <BookingDetails
+                        headerMessage="Your Boking Details"
+                        name={savedBookingInfo.Name}
+                        bookingDate={new Date(savedBookingInfo.BookingTime).toDateString()}
+                        peopleCount={savedBookingInfo.NoOfPeople}
+                    /> : <div >
+                        <h2>
+                            {bookingDate}
+                            {/* {date === dateNow? <span>(Today)</span> : ""} */}
+                            <button
+                                onClick={() => onDateChange(-1)}
+                                disabled={bookingDate === new Date().toDateString()}
+                                className="decrease"
+                            >
+                                <i className="fas fa-chevron-left"></i>
+                            </button>
+                            <button onClick={() => onDateChange(1)} className="increase">
+                                <i className="fas fa-chevron-right"></i>
+                            </button>
+                        </h2>
+                        {errorNum ? <p style={{ color: "orange", margin: 0 }}>Please enter number of people!</p> : ''}
+                        <input type="number" min={1} placeholder="No. of people" onChange={onNumberOfPeopleChange} />
+                        <button className="empty-btn" style={{ backgroundColor: "black" }} onClick={fetchData}>Search</button>
+                        <div className="radio">
+                            {searchData.map((data, index) => <div className="radio-btn" key={index}>
+                                <input type="radio" value={data.TimeSlotText} disabled={!data.IsTableAvailable} name="slot" onClick={() => openForm(data)} />
+                                <label>{data.TimeSlotText}</label>
+                            </div>)}
+                        </div>
+                        {dataFetched && searchData.length === 0 ? <div>Sorry! we have 0 tables left. Try to change date.</div> : ''}
+                        {searchData.length > 0 && selectedSlot.TimeSlotIndex != -1 ? <div>
+                            <BookingForm bookingDate={bookingDate} peopleCount={peopleCount} slot={selectedSlot} onSave={saveData}></BookingForm>
+                        </div> : ''}
+
+
+
+
+                    </div>}
+                </div>
             </div>
-            {dataFetched && searchData.length === 0 ? <div>Sorry! we have 0 tables left. Try to change date.</div> : ''}
-            {searchData.length > 0 && selectedSlot.TimeSlotIndex != -1 ? <div>
-                <BookingForm bookingDate={bookingDate} peopleCount={peopleCount} slot={selectedSlot} onSave={saveData}></BookingForm>
-            </div>: ''}
-
-
-
-
-        </div>}
-        </div>
-        </div>
         </>
-        
+
     );
 }
 
