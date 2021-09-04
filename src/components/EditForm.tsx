@@ -74,7 +74,6 @@ export const EditForm = () => {
   };
 
   const saveData = async () => {
-    bookingTime();
     console.log(bookingInfo);
     await restaurantApi.put<Booking | ErrorResponse>("/booking", {
       data: bookingInfo,
@@ -118,7 +117,8 @@ export const EditForm = () => {
   };
 
   const openForm = (timeSlot: SearchInfo) => {
-    setSelectedSlot(timeSlot);
+    //setSelectedSlot(timeSlot);
+    bookingTime(timeSlot);
   };
 
   return (
@@ -253,15 +253,18 @@ export const EditForm = () => {
       </div>
     </div>
   );
-  function bookingTime() {
+  function bookingTime(slot: SearchInfo) {
+    console.log("Changed Slot", slot);
     const dt = new Date(bookedDate.toString());
     let bookingTimeText = "";
-    if (selectedSlot.TimeSlotIndex === 0 || bookedTime === "18:00") {
+    if (slot.TimeSlotIndex === 0 ) {
       bookingTimeText = new Date(new Date(dt).setHours(18, 0, 0, 0)).toString();
     
-    } else if(selectedSlot.TimeSlotIndex === 1 || bookedTime === "21:00") {
+    } else if(slot.TimeSlotIndex === 1) {
       bookingTimeText = new Date(new Date(dt).setHours(21, 0, 0, 0)).toString();
     }
-    bookingInfo.BookingTime = bookingTimeText;
+    console.log("Changed booking time", bookingTimeText);
+    //bookingInfo.BookingTime = bookingTimeText;
+    setBookingInfo({...bookingInfo, BookingTime: bookingTimeText});
   }
 };
