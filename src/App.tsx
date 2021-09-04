@@ -3,6 +3,7 @@ import './App.css';
 import ContactForm from './components/ContactForm';
 import { Route, Switch } from 'react-router-dom';
 import MyBookingSearch from './components/MyBookingSearch';
+import ContactPage from './pages/ContactPage';
 import BookingDelete from './components/BookingDelete';
 import { AdminPage } from './components/AdminPage';
 import { NotFound } from './components/NotFound';
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/" component={Home}/>
         <Route exact path="/booking" component={MyBookingSearch} />
         <Route exact path="/search" component={MyBookingSearch} />
+        <Route exact path="/contact" component={ContactPage} />
         <Route exact path="/contact" component={ContactForm} />
         <Route exact path="/cancel/:id" component={BookingDelete} />
         <Route exact path="/admin" component={AdminPage} />

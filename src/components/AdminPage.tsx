@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "./Admin.css";
 import restaurantApi from "../api/restaurantApi";
 // import { AddModal } from "../modals/AddModal";
@@ -36,12 +35,11 @@ export const AdminPage = () => {
     }
 
     const fetchData = async () => {
-      console.log("bookings from DB");
+      console.log("### bookings from DB");
       const response = await restaurantApi.post<Booking[]>("/admin_search", {
         data: date,
       });
-      // console.log("Response is ", response.data.map(b => b.BookingTime));
-      
+      console.log("### Response is ", response);
       setBookings(response.data as Booking[]);
     };
 
@@ -49,7 +47,7 @@ export const AdminPage = () => {
       console.log("AdminPage.useEffect called");
       
       fetchData();
-      // console.log(bookings);
+      console.log(bookings);
     }, [date]);
 
     const history = useHistory();
@@ -58,9 +56,9 @@ export const AdminPage = () => {
       history.push("/search");
     };
 
-    let liTag = bookings.map((booking) => {
+    let divTag = bookings.map((booking) => {
       return (
-        <div key={booking.id} className="booking-list">
+        <div key={booking.id} className="booking-list" data-testid="booking">
           <div>{dateStringToTime(booking.BookingTime)}</div>
           <div><i className="fas fa-user-friends guest"></i>{booking.NoOfPeople}</div>
           <div>{booking.Name}</div>
@@ -78,7 +76,7 @@ export const AdminPage = () => {
     return (
       <div className="admin-page">
         <div className="back">
-          <Link to={"/"}><i className="fas fa-chevron-left"></i> Admin</Link>
+          <a href={"/"} data-testid="admin"><i className="fas fa-chevron-left"></i> Admin</a>
         </div>
         <div>
           <h2>
@@ -91,7 +89,7 @@ export const AdminPage = () => {
             >
               <i className="fas fa-chevron-left"></i>
             </button>
-            <button onClick={() => setDate(nextDate)} className="increase">
+            <button onClick={() => setDate(nextDate)} className="increase" data-testid="increment">
               <i className="fas fa-chevron-right"></i>
             </button>
           </h2>
@@ -100,12 +98,12 @@ export const AdminPage = () => {
           Total: {bookings.length} bookings and {totalNoOfPeople} people
         </p>
         <div className="add">
-          <button onClick={routeChange} className="add-icon">
+          <button onClick={routeChange} className="add-icon" data-testid="add-btn">
             <i className="fas fa-plus"></i>
           </button>
         </div>
         <div>
-          {liTag}
+          {divTag}
         </div>
         {/* <AddModal onClose={() => setShowAddModal(false)} show={showAddModal} /> */}
         <EditModal onClose={onEditDone} show={selectedBooking? true: false} bookingInfo={selectedBooking}/>

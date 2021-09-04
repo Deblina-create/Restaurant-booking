@@ -1,93 +1,99 @@
 import { useState } from "react";
-// import { useHistory } from "react-router";
 import "./contactForm.css";
 import restaurantApi from "../api/restaurantApi";
-import { render } from "@testing-library/react";
+import nodemailer from 'nodemailer';
 
-const ContactForm = () => {
+
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+      user: 'deblina4.se@gmail.com',
+      pass: 'frontend@2020',
+  },
+});
+
+interface ContactFormProps {
+  setIsSent?: any;
+  post(payload: any): any;
+}
+
+// const sendMail = (to: string, subject: string, text: string, html: string) => {
+//   transporter.sendMail({
+//       from: '"Team Restaurant" <deblina4.se@gmail.com>', // sender address
+//       to: to,
+//       subject: subject,
+//       text: text,
+//       html: html
+//   }).then(info => {
+//       console.log({ info });
+//   }).catch(console.error);
+// }
+
+
+
+
+const ContactForm = (props: ContactFormProps) => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [isSent, messageSent]= useState(false);
-  //const history = useHistory();
+
 
   function handleNameChange(event: any) {
-
     setName (event.target.value);
-  
   }
   
   function handleEmailChange (event: any) {
-    
     setEmail (event.target.value);
-  
   }
   
   function handleMessageChange (event: any) {
-    
     setMessage (event.target.value);
-  
   }
-  
-  function changeMessageStatus () {
 
-    messageSent(true);
-
-  }
 
   async function handleSubmit() {
-
     const payload = {
       name,
       email,
       message,
-    }
-    
-   
-    await restaurantApi.post("/contact", payload)
-      .catch((error) => console.log(error))
-      .then((response) => {
+    };
 
-      
-        if (response) {
-          // history.push("/confirmation");
-          changeMessageStatus();
-          console.log(response);
-        
-        }
-      });
+    // function show() {
+    //   //add here show msg recieved and set the boleeans
+    //   //setMsgRe
+    //   console.log("modal");
+    //   };
+
+    console.log(props.post)
+
+    await props.post(payload);
+    
 
   }
+  
 
- 
   return (
-  <div id="contact-container-succes">
-    
-    {isSent
   
-  ?
-  <p>Dear {name},Your Message was Recieved!</p>
-  
-  :
-  <div id="contact-container">
+    <div id="contact-container">
     <p>Please Contact Us Using the Form Below</p>
-      <form>
-          <div><input type="text" value={name} placeholder="Name" onChange={handleNameChange}/></div>
+      <form >
+          <div><input type="text" value={name} placeholder="Name" required onChange={handleNameChange}/></div>
         
-          <div><input type="text" value={email} placeholder="Email" onChange={handleEmailChange}/></div>
+          <div><input type="email" value={email} placeholder="Email" required onChange={handleEmailChange}/></div>
         
-          <div><input type="text" value={message} placeholder="Message" onChange={handleMessageChange}/></div>
-
-            <button type="submit" onSubmit={handleSubmit}>Send</button>
+          <div><input type="text" value={message} placeholder="Message" required onChange={handleMessageChange}/></div>
+ 
+          <button type="button" onClick={handleSubmit}>Send</button>
+          
           
      </form>
   </div>
-  }
   
-  </div>);
-
+  );
+  
+ 
 }
-
  
 export default ContactForm

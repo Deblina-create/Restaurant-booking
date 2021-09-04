@@ -1,11 +1,15 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
-const restaurantApi = axios.create({
+const restaurantApi: AxiosInstance = axios.create({
   baseURL: "http://localhost:8000",
   headers: {
     "Content-Type": "application/json",
   },
 });
+
+export const runASecondFunction = () => {
+  console.log("second")
+};
 
 //NODEJS BASE URL HERE
 //SOMEENDPOINT HERE
