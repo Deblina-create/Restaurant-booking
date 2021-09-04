@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Booking from "../models/Booking";
 import "./css/Modal.css";
@@ -54,7 +53,7 @@ export const ConfirmationModal: React.FC<ModalProps> = ({
         <div className="modal-footer">
           <p>Your reservation request confirmation was sent to {props.Email}</p>
           <p>
-            Questions? Go to<Link to="/contact"> Contact us</Link>
+            Questions? Go to<a href="/contact"> Contact us</a>
           </p>
         </div>
         <button onClick={routeChange} className="close-icon">
