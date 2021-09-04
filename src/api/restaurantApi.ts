@@ -7,6 +7,10 @@ const restaurantApi: AxiosInstance = axios.create({
   },
 });
 
+export const runASecondFunction = () => {
+  console.log("second")
+};
+
 //NODEJS BASE URL HERE
 //SOMEENDPOINT HERE
 //EMPTY END POINT WILL WORK
