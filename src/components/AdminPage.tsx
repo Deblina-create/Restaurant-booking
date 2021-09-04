@@ -2,18 +2,19 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Admin.css";
 import restaurantApi from "../api/restaurantApi";
-import { AddModal } from "../modals/AddModal";
+// import { AddModal } from "../modals/AddModal";
 import { DeleteModal } from "../modals/DeleteModal";
 import { EditModal } from "../modals/EditModal";
 import Booking from "../models/Booking";
+import { useHistory } from "react-router-dom";
 
 export const AdminPage = () => {
 
     let dateNow = new Date().toDateString();
 
     const [bookings, setBookings] = useState([] as Booking[]);
-    const [selectedBooking, setSelectedBooking] = useState<any>();
-    const [showAddModal, setShowAddModal] = useState(false);
+    const [selectedBooking, setSelectedBooking] = useState<Booking>();
+    // const [showAddModal, setShowAddModal] = useState(false);
     const [date, setDate] = useState(dateNow);
     const [deleteBookingId, setDeleteBookingId] = useState<string>();
 
@@ -29,6 +30,10 @@ export const AdminPage = () => {
       (acc, curr) => acc + curr.NoOfPeople,
       0
     );
+
+    const getEditForm = (booking: Booking) => {
+      history.push("/edit/" + `${booking.id}`)
+    }
 
     const fetchData = async () => {
       console.log("bookings from DB");
@@ -47,6 +52,12 @@ export const AdminPage = () => {
       // console.log(bookings);
     }, [date]);
 
+    const history = useHistory();
+
+    const routeChange = () => {
+      history.push("/search");
+    };
+
     let liTag = bookings.map((booking) => {
       return (
         <div key={booking.id} className="booking-list">
@@ -54,7 +65,7 @@ export const AdminPage = () => {
           <div><i className="fas fa-user-friends guest"></i>{booking.NoOfPeople}</div>
           <div>{booking.Name}</div>
           <div className="buttons">
-          <button onClick={() => setSelectedBooking(booking)} className="edit-icon">
+          <button onClick={() => getEditForm(booking)} className="edit-icon">
             <i className="fas fa-pen"></i>
           </button>
           <button onClick={() => setDeleteBookingId(booking.id)} className="delete-icon">
@@ -89,15 +100,15 @@ export const AdminPage = () => {
           Total: {bookings.length} bookings and {totalNoOfPeople} people
         </p>
         <div className="add">
-          <button onClick={() => setShowAddModal(true)} className="add-icon">
+          <button onClick={routeChange} className="add-icon">
             <i className="fas fa-plus"></i>
           </button>
         </div>
         <div>
           {liTag}
         </div>
-        <AddModal onClose={() => setShowAddModal(false)} show={showAddModal} />
-        <EditModal onClose={onEditDone} show={selectedBooking? true: false} bookingInfo={selectedBooking!}/>
+        {/* <AddModal onClose={() => setShowAddModal(false)} show={showAddModal} /> */}
+        <EditModal onClose={onEditDone} show={selectedBooking? true: false} bookingInfo={selectedBooking}/>
         <DeleteModal onClose={onDeleteDone} show={deleteBookingId ? true : false} bookingId={deleteBookingId!}/>
       </div>
     );

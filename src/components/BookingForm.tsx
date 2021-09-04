@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import restaurantApi from '../api/restaurantApi';
+import { ConfirmationModal } from '../modals/ComfirmationModal';
 import Booking from '../models/Booking';
 import ErrorResponse from '../models/ErrorResponse';
 import Utilities from '../Utilities'
+import "./Admin.css";
 
 const initialBookingInfo: Booking = {
     BookingTime: "",
@@ -20,6 +22,7 @@ const BookingForm = (props: any) => {
     const [bookingInfo, setBookingInfo] = useState(initialBookingInfo);
     const [errorEmail, setErrorEmail] = useState(false);
     const [errorName, setErrorName] = useState(false);
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
     useEffect(()=>{
         const dt = new Date(props.bookingDate);
@@ -73,10 +76,12 @@ const BookingForm = (props: any) => {
         }
         const x = await restaurantApi.post<string | ErrorResponse>("/booking", { data: bookingInfo });
         console.log("response data", x.data);
-        if(props.onSave){
-            props.onSave(bookingInfo);
-        }
-        //history.push("/confirmation");
+        // if(props.onSave){
+        //     props.onSave(bookingInfo);
+        // }
+        setShowConfirmation(true);
+        // history.push("/");
+       
     }
 
     return (
@@ -87,14 +92,14 @@ const BookingForm = (props: any) => {
                 <input disabled type="text" value={props.slot.TimeSlotText} ></input>
                 <input disabled type="text" value={props.peopleCount} ></input>
                 <h3>Contact Info</h3>
-                {errorName ? <p style={{color : "red"}}>Please enter your name</p> : ''}
+                {errorName ? <p style={{color : "orange", margin: 0}}>Please enter your name</p> : ''}
                 <input type="text" placeholder="Name" onChange={nameChanged}></input>
                 <input type="text" placeholder="Phone" onChange={phoneChanged}></input>
-                {errorEmail ? <p style={{color : "red"}}>Please enter a valid email</p> : ''}
+                {errorEmail ? <p style={{color : "orange", margin: 0}}>Please enter a valid email</p> : ''}
                 <input type="email" placeholder="Email" onChange={emailChanged}></input>
-                <button style={{ backgroundColor: "#E1AD01", height: "30px", width: "75px" }} onClick={saveData}>Book</button>
+                <button className="full-btn" onClick={saveData}>Book</button>
             </form>
-
+            <ConfirmationModal onClose={()=>setShowConfirmation(false)} show={showConfirmation} props={bookingInfo}/> 
         </div>
     );
 }

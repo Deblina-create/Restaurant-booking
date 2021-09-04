@@ -7,6 +7,7 @@ import BookingForm from './BookingForm';
 import BookingDetails from './BookingDetails';
 import "./Admin.css";
 import "../modals/css/Modal.css";
+import { Link } from 'react-router-dom';
 
 const initialData: SearchInfo[] = [];
 const initialSelectedSlot : SearchInfo  = {
@@ -79,7 +80,7 @@ const MyBookingSearch = () => {
         
       <div className="admin-page">
         <div className="back">
-          <div>Booking Page</div>
+        <Link to={"/"}><i className="fas fa-chevron-left"></i> Booking Page</Link>
         </div>
         <div>
 
@@ -104,7 +105,7 @@ const MyBookingSearch = () => {
           </button>
         </h2>
             <input type="number" min={1} defaultValue={2} onChange={onNumberOfPeopleChange} />
-            <button style={{ backgroundColor: "#E1AD01", height: "40px", width: "75px" }} onClick={fetchData}>Search</button>
+            <button className="empty-btn" style={{backgroundColor:"black"}} onClick={fetchData}>Search</button>
             <div className="radio">
             {searchData.map((data, index) => <div className="radio-btn" key={index}>
                 <input  type="radio" value={data.TimeSlotText} disabled={!data.IsTableAvailable} name="slot" onClick={() => openForm(data)} />

@@ -1,27 +1,27 @@
 .modal {
-  position: fixed;
+  position: absolute;
   background-color: rgb(50, 50, 50);
   margin: 0 auto;
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: center; */
   width: 91vw;
   border-radius: 15px;
   top: 14vh;
 }
 
 .modal-title {
-  /* text-align: left; */
   top: 10px;
 }
 
 h1 {
-    margin: 10px;
+  margin: 10px;
 }
 
 h3 {
   margin: 0;
   padding-left: 5px;
+}
+
+p {
+  font-size: 18px;
 }
 
 .modal-header {
@@ -30,7 +30,7 @@ h3 {
 
 .modal-body,
 .modal-footer {
-  padding: 0 20px;
+  padding: 20px;
 }
 
 input {
@@ -41,15 +41,20 @@ input {
   border-radius: 10px;
 }
 
-.radio {
- display: flex;
- justify-content: space-around;
- padding-bottom: 10px;
+[disabled] {
+  color: gray;
 }
 
-/* .radio-btn {
-  display: inline-block;
-} */
+.radio {
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 10px;
+}
+
+#time18,
+#time21 {
+  cursor: pointer;
+}
 
 .close-icon {
   position: absolute;
@@ -82,9 +87,23 @@ input {
   margin: 10px;
 }
 
+@media screen and (min-width: 600px) {
+  
+  h1 {
+    font-size: 40px;
+  }
+  p {
+    font-size: 20px;
+  }
+}
 
 @media screen and (min-width: 992px) {
- .modal {
-  width: 60vw;
- }
+  .modal {
+    width: 50vw;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
 }
