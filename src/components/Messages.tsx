@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import restaurantApi from "../api/restaurantApi";
+import { ReadMoreModal } from "../modals/ReadMoreModal";
 import Contact from "../models/Contact";
 
 export const Messages = () => {
   const [contacts, setContacts] = useState([] as Contact[]);
+  const [showModal, setShowModal] = useState(false);
   let divTag = contacts.map((contact) => {
     return (
       <div key={contact.id} className="booking-list">
@@ -14,14 +16,14 @@ export const Messages = () => {
         ) : (
           <div>{contact.Message}</div>
         )}
-        <button>Read more</button>
+        <button onClick={() => {setShowModal(true)}}>Read more</button>
       </div>
     );
   });
 
   const fetchData = async () => {
     console.log("### Contacts from DB");
-    const response = await restaurantApi.post<Contact[]>("/message", {
+    const response = await restaurantApi.post<Contact[]>("/contact", {
       data: [],
     });
     console.log("### Response is ", response);
@@ -39,6 +41,7 @@ export const Messages = () => {
       </div>
       <h2> Messages</h2>
       <div>{divTag}</div>
+      <ReadMoreModal onClose={()=> {setShowModal(true)}} show={showModal} contactId={}/>
     </div>
   );
 };
