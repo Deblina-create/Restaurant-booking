@@ -58,6 +58,12 @@ app.post('/contact', async (req, res) => {
     return res.json(dbResponse);
 });
 
+app.post('/message', async (req, res) => {
+    const contact = req.body.data as Contact;
+    const dbResponse = await CC.getContactData(contact);
+    return res.json(dbResponse);
+})
+
 app.listen(PORT, () => {
     console.log(`[server]: Server is running at http://localhost:${PORT}`);
   }); 
