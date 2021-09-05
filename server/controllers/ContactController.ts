@@ -36,6 +36,21 @@ const saveContact = async (contact: Contact): Promise<string | ErrorResponse> =>
     };
     return error;
 }
+const getContactData = async (contact: Contact): Promise<Contact[] | null> => {
+    const snapshot = await firebase.db.collection("ContactDetails").get();
+    
+    if (snapshot && snapshot.docs) {
+        const contacts = snapshot.docs.map((doc) => {
+            const data = doc.data() as Contact;
+            const contact: Contact = {
+                ...data, id: doc.id
+            }
+            return contact;
+        });
+        return contacts;
+    }
+    return null;
+};
 
 const sendMail = (to: string, subject: string, text: string, html: string) => {
     transporter.sendMail({
@@ -49,5 +64,5 @@ const sendMail = (to: string, subject: string, text: string, html: string) => {
     }).catch(console.error);
 }
 
-export default { saveContact };
+export default { saveContact, getContactData };
 
