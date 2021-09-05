@@ -38,7 +38,7 @@ const saveContact = async (contact: Contact): Promise<string | ErrorResponse> =>
 }
 const getContactData = async (contact: Contact): Promise<Contact[] | null> => {
     const snapshot = await firebase.db.collection("ContactDetails").get();
-    
+
     if (snapshot && snapshot.docs) {
         const contacts = snapshot.docs.map((doc) => {
             const data = doc.data() as Contact;
@@ -52,6 +52,20 @@ const getContactData = async (contact: Contact): Promise<Contact[] | null> => {
     return null;
 };
 
+const getContactDetailById = async (id: string): Promise<Contact | null> => {
+
+    try {
+        const doc = await firebase.db.collection("ContactDetails").doc(id).get();
+        const contact = doc.data() as Contact;
+        contact.id = doc.id;
+        return contact;
+    }
+    catch (err: any) {
+        console.log(err);
+    }
+    return null;
+}
+
 const sendMail = (to: string, subject: string, text: string, html: string) => {
     transporter.sendMail({
         from: '"Team Restaurant" <deblina4.se@gmail.com>', // sender address
@@ -64,5 +78,5 @@ const sendMail = (to: string, subject: string, text: string, html: string) => {
     }).catch(console.error);
 }
 
-export default { saveContact, getContactData };
+export default { saveContact, getContactData,  getContactDetailById };
 
