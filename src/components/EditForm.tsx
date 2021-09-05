@@ -122,7 +122,7 @@ export const EditForm = () => {
   };
 
   return (
-    <div className="admin-page">
+    <div className="container">
       <div className="back">
         <a href={"/admin"}>
           <i className="fas fa-chevron-left"></i> Edit form

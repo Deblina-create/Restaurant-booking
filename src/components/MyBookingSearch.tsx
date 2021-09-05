@@ -90,7 +90,7 @@ const MyBookingSearch = () => {
     return (
         <>
 
-            <div className="admin-page">
+            <div className="container">
                 <div className="back">
                     <Link to={"/"}><i className="fas fa-chevron-left"></i> Booking Page</Link>
                 </div>

@@ -74,7 +74,7 @@ export const AdminPage = () => {
       );
     });
     return (
-      <div className="admin-page">
+      <div className="container">
         <div className="back">
           <a href={"/"} data-testid="admin"><i className="fas fa-chevron-left"></i> Admin</a>
         </div>

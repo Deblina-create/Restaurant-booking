@@ -13,7 +13,7 @@ a {
   padding: 10px 0;
 }
 
-.admin-page {
+.container {
   width: 90vw;
   margin: 0 auto;
 }
@@ -136,7 +136,7 @@ input[disabled] {
 }
 
 @media screen and (min-width: 768px) {
-  /* .admin-page {
+  /* .container {
     width: 70vw;
   } */
   .increase {
@@ -149,7 +149,7 @@ input[disabled] {
 }
 
 @media screen and (min-width: 992px) {
-  .admin-page {
+  .container {
     width: 50vw;
   }
   .increase {
