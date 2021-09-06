@@ -53,7 +53,6 @@ export const ShowMessage = () => {
         <p>Message: </p>
         <p className="text-box">{contactDetail.Message}</p>
       </div>
-      {/* <button onClick={setAsReadMessage} className="full-btn">Mark as read</button> */}
     </div>
   );
 };
