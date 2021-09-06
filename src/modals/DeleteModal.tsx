@@ -1,13 +1,26 @@
+import { useState } from "react";
+import restaurantApi from "../api/restaurantApi";
+import Booking from "../models/Booking";
+import ErrorResponse from "../models/ErrorResponse";
 import "./css/Modal.css";
 
 interface ModalProps {
   onClose: () => void;
   show: boolean;
+  bookingId: string | undefined;
 }
-export const DeleteModal: React.FC<ModalProps> = ({ onClose, show }) => {
+export const DeleteModal: React.FC<ModalProps> = ({ onClose, show, bookingId }) => {
+  // const [bookingId, setBookingId] = useState(id); 
+
   if (!show) {
     return null;
   }
+
+  const deleteBooking = async () => {
+    console.log("delete booking" + bookingId);
+    await restaurantApi.delete<Booking | ErrorResponse>(`/booking/${bookingId}`);
+    onClose();
+  };
 
   return (
     <div className="modal">
@@ -17,12 +30,13 @@ export const DeleteModal: React.FC<ModalProps> = ({ onClose, show }) => {
         </div>
         <div className="modal-body">
           <h3>Delete selected reservation?</h3>
+          <p> Booking no.: {bookingId}</p>
         </div>
         <div className="modal-footer">
-          <button onClick={onClose} className="yes-button">
+          <button onClick={deleteBooking} className="full-btn">
             Yes
           </button>
-          <button onClick={onClose} className="no-button">
+          <button onClick={onClose} className="empty-btn">
             No
           </button>
         </div>

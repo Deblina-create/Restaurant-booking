@@ -1,97 +1,128 @@
-import { useState } from "react";
-import "../Admin.css";
-import { AddModal } from "../modals/AddModal";
+import { useEffect, useState } from "react";
+import "./Admin.css";
+import restaurantApi from "../api/restaurantApi";
+// import { AddModal } from "../modals/AddModal";
 import { DeleteModal } from "../modals/DeleteModal";
 import { EditModal } from "../modals/EditModal";
+import Booking from "../models/Booking";
+import { useHistory } from "react-router-dom";
 
-// import { Link } from "react-router-dom";
+export const AdminPage = () => {
 
-export const AdmingPage = () => {
-  let defaultValue = [
-    { id: 1, BookingTime: "18:00", NoOfPeople: 2, Name: "Stina" },
-    { id: 2, BookingTime: "18:00", NoOfPeople: 4, Name: "Per" },
-    { id: 3, BookingTime: "18:00", NoOfPeople: 3, Name: "Sara" },
-    { id: 4, BookingTime: "18:00", NoOfPeople: 6, Name: "Nils" },
-  ];
+    let dateNow = new Date().toDateString();
 
-  let dateNow = new Date().toDateString();
+    const [bookings, setBookings] = useState([] as Booking[]);
+    const [selectedBooking, setSelectedBooking] = useState<Booking>();
+    // const [showAddModal, setShowAddModal] = useState(false);
+    const [date, setDate] = useState(dateNow);
+    const [deleteBookingId, setDeleteBookingId] = useState<string>();
 
-  const [bookings, setBookings] = useState(defaultValue);
-  const [showEdit, setShowEdit] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
-  const [showAdd, setShowAdd] = useState(false);
-  const [date, setDate] = useState(dateNow);
+    let currentDate = new Date(date);
+    let numberOfMlSeconds = currentDate.getTime();
+    let dayToMlSeconds = 24 * 60 * 60 * 1000;
+    let previousDate = new Date(
+      numberOfMlSeconds - dayToMlSeconds
+    ).toDateString();
+    let nextDate = new Date(numberOfMlSeconds + dayToMlSeconds).toDateString();
 
-  let currentDate = new Date(date);
-  let numberOfMlSeconds = currentDate.getTime();
-  let dayToMlSeconds = 24 * 60 * 60 * 1000;
-  let previousDate = new Date(
-    numberOfMlSeconds - dayToMlSeconds
-  ).toDateString();
-  let nextDate = new Date(numberOfMlSeconds + dayToMlSeconds).toDateString();
-
-  let totalNoOfPeople = bookings.reduce(
-    (acc, curr) => acc + curr.NoOfPeople,
-    0
-  );
-
-  let liTag = bookings.map((booking) => {
-    return (
-      <li key={booking.id} className="booking-list">
-        <span>{booking.BookingTime}</span>
-        <span>{booking.NoOfPeople}</span>
-        <span>{booking.Name}</span>
-        <button onClick={() => setShowEdit(true)} className="edit-icon">
-          <i className="fas fa-pen"></i>
-        </button>
-        <button onClick={() => setShowDelete(true)} className="delete-icon">
-          <i className="fas fa-trash-alt"></i>
-        </button>
-      </li>
+    let totalNoOfPeople = bookings.reduce(
+      (acc, curr) => acc + curr.NoOfPeople,
+      0
     );
-  });
 
-  return (
-    <div className="admin-page">
-      <div className="back">
-        {/* <Link to={"/"}><i></i> Admin</Link> */}
-        <a href="/">
-          <span>
-            <i className="fas fa-chevron-left"></i>
-          </span>
-          <span> Admin</span>
-        </a>
-      </div>
-      <div>
-        <h2>
-          {date}
-          {/* {date === dateNow? <span>(Today)</span> : ""} */}
-          <button
-            onClick={() => setDate(previousDate)}
-            disabled={date === dateNow}
-            className="decrease"
-          >
-            <i className="fas fa-chevron-left"></i>
+    const getEditForm = (booking: Booking) => {
+      history.push("/edit/" + `${booking.id}`)
+    }
+
+    const fetchData = async () => {
+      console.log("### bookings from DB");
+      const response = await restaurantApi.post<Booking[]>("/admin_search", {
+        data: date,
+      });
+      console.log("### Response is ", response);
+      setBookings(response.data as Booking[]);
+    };
+
+    useEffect(() => {
+      console.log("AdminPage.useEffect called");
+      
+      fetchData();
+      console.log(bookings);
+    }, [date]);
+
+    const history = useHistory();
+
+    const routeChange = () => {
+      history.push("/search");
+    };
+
+    let divTag = bookings.map((booking) => {
+      return (
+        <div key={booking.id} className="booking-list" data-testid="booking">
+          <div>{dateStringToTime(booking.BookingTime)}</div>
+          <div><i className="fas fa-user-friends guest"></i>{booking.NoOfPeople}</div>
+          <div>{booking.Name}</div>
+          <div className="buttons">
+          <button onClick={() => getEditForm(booking)} className="edit-icon">
+            <i className="fas fa-pen"></i>
           </button>
-          <button onClick={() => setDate(nextDate)} className="increase">
-            <i className="fas fa-chevron-right"></i>
+          <button onClick={() => setDeleteBookingId(booking.id)} className="delete-icon">
+            <i className="fas fa-trash-alt"></i>
           </button>
-        </h2>
+          </div>
+        </div>
+      );
+    });
+    return (
+      <div className="admin-page">
+        <div className="back">
+          <a href={"/"} data-testid="admin"><i className="fas fa-chevron-left"></i> Admin</a>
+        </div>
+        <div>
+          <h2>
+            {date}
+            {/* {date === dateNow? <span>(Today)</span> : ""} */}
+            <button
+              onClick={() => setDate(previousDate)}
+              disabled={date === dateNow}
+              className="decrease"
+            >
+              <i className="fas fa-chevron-left"></i>
+            </button>
+            <button onClick={() => setDate(nextDate)} className="increase" data-testid="increment">
+              <i className="fas fa-chevron-right"></i>
+            </button>
+          </h2>
+        </div>
+        <p className="total"> 
+          Total: {bookings.length} bookings and {totalNoOfPeople} people
+        </p>
+        <div className="add">
+          <button onClick={routeChange} className="add-icon" data-testid="add-btn">
+            <i className="fas fa-plus"></i>
+          </button>
+        </div>
+        <div>
+          {divTag}
+        </div>
+        {/* <AddModal onClose={() => setShowAddModal(false)} show={showAddModal} /> */}
+        <EditModal onClose={onEditDone} show={selectedBooking? true: false} bookingInfo={selectedBooking}/>
+        <DeleteModal onClose={onDeleteDone} show={deleteBookingId ? true : false} bookingId={deleteBookingId!}/>
       </div>
-      <p className="total">
-        Total: {bookings.length} bookings and {totalNoOfPeople} people
-      </p>
-      <div className="add">
-        <button onClick={() => setShowAdd(true)} className="add-icon">
-          <i className="fas fa-plus"></i>
-        </button>
-      </div>
-      <div>
-        <ul>{liTag}</ul>
-      </div>
-      <AddModal onClose={() => setShowAdd(false)} show={showAdd} />
-      <EditModal onClose={() => setShowEdit(false)} show={showEdit} />
-      <DeleteModal onClose={() => setShowDelete(false)} show={showDelete} />
-    </div>
-  );
+    );
+
+    function onDeleteDone() {
+      setDeleteBookingId(undefined);
+      fetchData();
+    }
+
+    function onEditDone() {
+      setSelectedBooking(undefined);
+      fetchData();
+    }
+
+    function dateStringToTime(datestr:string) {
+      let date = new Date(datestr);
+      return date.toLocaleTimeString("sv-SE", { timeStyle: "short" });
+    }
 };
