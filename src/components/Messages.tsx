@@ -14,7 +14,7 @@ export const Messages = () => {
     history.push("/message/" + `${contact.id}`);
   };
 
-  let divTag = contacts.map((contact) => {
+  let divTag = contacts.sort((a,b)=> a.IsRead ? 1 : -1).map((contact) => {
     return (
       <div key={contact.id} className={`list ${contact.IsRead ? 'isread':'notread'}`}>
         <div>{contact.Name}</div>
