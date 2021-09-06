@@ -16,7 +16,7 @@ const getFail =jest.fn(() => Promise.reject(new Error()));
 
 describe("displays correct thing when API response is succesfull", () => {
   test("API TEST Success", async () => {
-    const { getByLabelText, queryByLabelText } = render(<ContactPage get={getSuccess} />);
+    const { queryByLabelText } = render(<ContactPage get={getSuccess} />);
 
     const stateBeforePost = queryByLabelText(/isSent/i);
     
@@ -34,7 +34,7 @@ describe("displays correct thing when API response is succesfull", () => {
 
 describe("displays correct thing when API response is NOT succesfull", () => {
    test("API TEST Fail", async () => {
-    const { getByLabelText, queryByLabelText } = render(<ContactPage get={getFail} />);
+    const { queryByLabelText } = render(<ContactPage get={getFail} />);
 
     const stateBeforePost = queryByLabelText(/isSent/i);
 
