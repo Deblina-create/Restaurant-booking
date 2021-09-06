@@ -19,25 +19,23 @@ export const ShowMessage = () => {
   const { id } = useParams<detailParams>();
   const [contactDetail, setContactDetail] = useState(initialContact);
 
-  const messageDetail = async () => {
+  useEffect(() => {
+    setAsReadMessage();
+  }, [id]);
+
+  const setAsReadMessage = async () => {
     let res = await restaurantApi.get<Contact | null>(`/contact/${id}`);
     let selectedContact = res.data as Contact;
     setContactDetail(selectedContact);
     console.log("### messageDetail is", selectedContact);
-  };
-
-  const setAsReadMessage = async () => {
-    setContactDetail({
-      ...contactDetail, Name:contactDetail.Name, Email:contactDetail.Email, Message: contactDetail.Message, IsRead: true })
+    const updates = {
+      ...selectedContact, IsRead: true }
       await restaurantApi.put<Contact | ErrorResponse>("/contact", {
-        data: contactDetail,
+        data: updates,
       })
-      console.log("### SetAsRead is", contactDetail);
+      setContactDetail(updates)
+      console.log("### SetAsRead is", updates);
   }
-
-  useEffect(() => {
-    messageDetail();
-  }, []);
 
   return (
     <div className="container">
@@ -55,7 +53,7 @@ export const ShowMessage = () => {
         <p>Message: </p>
         <p className="text-box">{contactDetail.Message}</p>
       </div>
-      <button onClick={setAsReadMessage} className="full-btn">Mark as read</button>
+      {/* <button onClick={setAsReadMessage} className="full-btn">Mark as read</button> */}
     </div>
   );
 };

@@ -147,6 +147,18 @@ th {
   padding: 5px;
 }
 
+.isread {
+  color: gray;
+}
+
+.isread > button {
+  color: gray;
+}
+
+.notread {
+  color: white
+}
+
 @media screen and (min-width: 600px) {
   .increase {
     left: 330px;

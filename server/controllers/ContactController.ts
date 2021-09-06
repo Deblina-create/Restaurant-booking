@@ -82,7 +82,7 @@ const updateCotanctDetail = async (contact: Contact): Promise<boolean> => {
     await firebase.db
       .collection("ContactDetails")
       .doc(contact.id)
-      .update({ Name:contact.Name, Email:contact.Email, Message: contact.Message, IsRead: contact.IsRead });
+      .update({ IsRead: contact.IsRead });
   } catch (err: any) {
     console.log(err);
   }

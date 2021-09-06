@@ -16,12 +16,7 @@ export const Messages = () => {
 
   let divTag = contacts.map((contact) => {
     return (
-        // <tr  key={contact.id}>
-        //   <th>{contact.Name}</th>
-        //   <th>{contact.Email}</th>
-        //   <th>{contact.Message}</th>
-        // </tr>
-      <div key={contact.id} className="booking-list">
+      <div key={contact.id} className={`booking-list ${contact.IsRead ? 'isread':'notread'}`}>
         <div>{contact.Name}</div>
         {contact.Message.length > 5 ? (
           contact.Message.substring(0, 5) + "..."
@@ -29,8 +24,7 @@ export const Messages = () => {
           <div>{contact.Message}</div>
         )} 
         <button
-          onClick={() => showMore(contact)}
-        >
+          onClick={() => showMore(contact)}>
           read more
         </button>
       </div>

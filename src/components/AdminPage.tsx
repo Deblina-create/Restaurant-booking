@@ -85,6 +85,8 @@ export const AdminPage = () => {
       </div>
     );
   });
+
+  let unreadCount = contacts.filter(c => !c.IsRead).length;
   return (
     <div className="container">
       <div className="back">
@@ -118,8 +120,8 @@ export const AdminPage = () => {
           <span>
             <i className="fas fa-envelope envelope"></i>
           </span>
-          {contacts.length === 0? <span className="badge">0</span> : 
-          <span className="badge">{contacts.length}</span>
+          { unreadCount=== 0? <span className="badge">0</span> : 
+          <span className="badge">{unreadCount}</span>
           }
         </a>
       </p>
