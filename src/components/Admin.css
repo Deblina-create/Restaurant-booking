@@ -143,6 +143,10 @@ th {
   border-radius: 5px;
 }
 
+.arrow {
+  padding: 5px;
+}
+
 @media screen and (min-width: 600px) {
   .increase {
     left: 330px;

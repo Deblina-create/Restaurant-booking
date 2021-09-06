@@ -38,8 +38,8 @@ export const ShowMessage = () => {
       <div className="detail">
         <p>
           From: {contactdetail.Name}
-          <i className="fas fa-angle-left"></i> {contactdetail.Email}
-          <i className="fas fa-angle-right"></i>
+          <i className="fas fa-angle-left arrow"></i>{contactdetail.Email}
+          <i className="fas fa-angle-right arrow"></i>
         </p>
         <p>Message: </p>
         <p className="text-box">{contactdetail.Message}</p>
