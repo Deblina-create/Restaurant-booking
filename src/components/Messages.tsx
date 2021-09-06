@@ -11,10 +11,10 @@ export const Messages = () => {
   const [selectedContactId, setSelectedContactId] = useState<string>();
   const history = useHistory();
   
-  const routeChange = () => {
-    history.push("/showmore");
+  const showMore = (contact: Contact) => {
+    history.push("/showmore/" + `${contact.id}`);
   };
-  
+
   let divTag = contacts.map((contact) => {
     return (
         // <tr  key={contact.id}>
@@ -31,7 +31,7 @@ export const Messages = () => {
           <div>{contact.Message}</div>
         )} 
         <button
-          onClick={routeChange}
+          onClick={() => showMore(contact)}
         >
           Read more
         </button>
