@@ -49,7 +49,7 @@ const BookingDelete = () => {
 
 
     return (
-        <div>
+        <div className="container">
             {bookingInfo ? <div>
                 <DeleteModal show={showDeleteModal} bookingId={id} onClose={handleClose} />
             </div>: <p>Invalid reservation number!</p>}

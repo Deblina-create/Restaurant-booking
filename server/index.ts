@@ -58,6 +58,24 @@ app.post('/contact', async (req, res) => {
     return res.json(dbResponse);
 });
 
+app.put('/contact', async (req, res) => {
+    const bd = req.body.data as Contact;
+    const dbResponse= await CC.updateCotanctDetail(bd);
+    return res.json(dbResponse);
+});
+
+app.post('/contact_search', async (req, res) => {
+    const contact = req.body.data as Contact;
+    const dbResponse = await CC.getContactData(contact);
+    return res.json(dbResponse);
+})
+
+app.get('/contact/:id', async (req, res) => {
+    const id = req.params.id;
+    const dbResponse= await CC.getContactDetailById(id); 
+    return res.json(dbResponse);
+});
+
 app.listen(PORT, () => {
     console.log(`[server]: Server is running at http://localhost:${PORT}`);
   }); 
