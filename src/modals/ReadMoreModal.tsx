@@ -1,5 +1,5 @@
+import { useEffect } from "react";
 import restaurantApi from "../api/restaurantApi";
-import Booking from "../models/Booking";
 import Contact from "../models/Contact";
 import ErrorResponse from "../models/ErrorResponse";
 import "./css/Modal.css";
@@ -10,16 +10,17 @@ interface ModalProps {
   contactId: string | undefined
 }
 export const ReadMoreModal: React.FC<ModalProps> = ({ onClose, show, contactId }) => {
-
+  
   if (!show) {
     return null;
   }
 
-  const ReadMoreMessage = async () => {
-    await restaurantApi.post<Booking | ErrorResponse>(`/contact/${contactId}`, {
+  const readMoreMessage = async () => {
+    let response = await restaurantApi.post<Contact | ErrorResponse>(`/contact/${contactId}`, {
         data: contactId
     });
-    onClose();
+    let contactDetail = response.data as Contact
+    console.log(contactDetail)
   };
 
   return (

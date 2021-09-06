@@ -125,6 +125,13 @@ input[disabled] {
   cursor: pointer;
 }
 
+th {
+  padding: 10px 20px;
+  border-top: 1px solid white;
+  text-align: left;
+  cursor: pointer;
+}
+
 @media screen and (min-width: 600px) {
   .increase {
     left: 330px;

@@ -1,27 +1,37 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import restaurantApi from "../api/restaurantApi";
 import { ReadMoreModal } from "../modals/ReadMoreModal";
 import Contact from "../models/Contact";
 import ErrorResponse from "../models/ErrorResponse";
+import "./Admin.css";
 
 export const Messages = () => {
   const [contacts, setContacts] = useState([] as Contact[]);
   const [selectedContactId, setSelectedContactId] = useState<string>();
- 
+  const history = useHistory();
+  
+  const routeChange = () => {
+    history.push("/showmore");
+  };
+  
   let divTag = contacts.map((contact) => {
     return (
+        // <tr  key={contact.id}>
+        //   <th>{contact.Name}</th>
+        //   <th>{contact.Email}</th>
+        //   <th>{contact.Message}</th>
+        // </tr>
       <div key={contact.id} className="booking-list">
         <div>{contact.Name}</div>
         <div>{contact.Email}</div>
         {contact.Message.length > 10 ? (
-          contact.Message.substring(0, 15) + "..."
+          contact.Message.substring(0, 10) + "..."
         ) : (
           <div>{contact.Message}</div>
-        )}
+        )} 
         <button
-          onClick={() => {
-            setSelectedContactId(contact.id);
-          }}
+          onClick={routeChange}
         >
           Read more
         </button>
@@ -49,12 +59,19 @@ export const Messages = () => {
         </a>
       </div>
       <h2> Messages</h2>
+      {/* <table>
+        <tr>
+          <th>NAME</th>
+          <th>CONTACT</th>
+          <th>MESSAGE</th>
+        </tr> */}
+      {/* </table> */}
       <div>{divTag}</div>
-      <ReadMoreModal
+      {/* <ReadMoreModal
         onClose={onReadDone}
         show={selectedContactId ? true : false}
         contactId={selectedContactId!}
-      />
+      /> */}
     </div>
   );
   function onReadDone() {
