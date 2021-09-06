@@ -92,7 +92,7 @@ const MyBookingSearch = () => {
 
             <div className="container">
                 <div className="back">
-                    <Link to={"/"}><i className="fas fa-chevron-left"></i> Booking Page</Link>
+                    <a href={"/"}><i className="fas fa-chevron-left"></i> Booking Page</a>
                 </div>
                 <div>
 

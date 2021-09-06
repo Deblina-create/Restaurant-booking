@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./css/contactForm.css";
+import { useHistory } from "react-router-dom";
 
 
 
@@ -14,6 +15,7 @@ const ContactForm = (props: ContactFormProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const history = useHistory();
 
 
   function handleNameChange(event: any) {
@@ -39,7 +41,7 @@ const ContactForm = (props: ContactFormProps) => {
 
     props.post(payload);
     
-
+    history.push("/");
   }
   
 
