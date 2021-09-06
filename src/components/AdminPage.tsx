@@ -118,7 +118,9 @@ export const AdminPage = () => {
           <span>
             <i className="fas fa-envelope envelope"></i>
           </span>
+          {contacts.length === 0? <span className="badge">0</span> : 
           <span className="badge">{contacts.length}</span>
+          }
         </a>
       </p>
       <div className="add">
