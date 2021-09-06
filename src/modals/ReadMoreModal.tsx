@@ -7,7 +7,7 @@ import "./css/Modal.css";
 interface ModalProps {
   onClose: () => void;
   show: boolean;
-  contactId: Contact
+  contactId: string | undefined
 }
 export const ReadMoreModal: React.FC<ModalProps> = ({ onClose, show, contactId }) => {
 

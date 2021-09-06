@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import restaurantApi from "../api/restaurantApi";
 import { ReadMoreModal } from "../modals/ReadMoreModal";
 import Contact from "../models/Contact";
+import ErrorResponse from "../models/ErrorResponse";
 
 export const Messages = () => {
   const [contacts, setContacts] = useState([] as Contact[]);
-  const [showModal, setShowModal] = useState(false);
+  const [selectedContactId, setSelectedContactId] = useState<string>();
+ 
   let divTag = contacts.map((contact) => {
     return (
       <div key={contact.id} className="booking-list">
@@ -16,15 +18,21 @@ export const Messages = () => {
         ) : (
           <div>{contact.Message}</div>
         )}
-        <button onClick={() => {setShowModal(true)}}>Read more</button>
+        <button
+          onClick={() => {
+            setSelectedContactId(contact.id);
+          }}
+        >
+          Read more
+        </button>
       </div>
     );
   });
 
   const fetchData = async () => {
     console.log("### Contacts from DB");
-    const response = await restaurantApi.post<Contact[]>("/contact", {
-      data: [],
+    const response = await restaurantApi.post<Contact[]>("/contact_search", {
+      data: contacts,
     });
     console.log("### Response is ", response);
     setContacts(response.data as Contact[]);
@@ -32,6 +40,7 @@ export const Messages = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <div className="container">
       <div className="back">
@@ -41,7 +50,15 @@ export const Messages = () => {
       </div>
       <h2> Messages</h2>
       <div>{divTag}</div>
-      <ReadMoreModal onClose={()=> {setShowModal(true)}} show={showModal} contactId={}/>
+      <ReadMoreModal
+        onClose={onReadDone}
+        show={selectedContactId ? true : false}
+        contactId={selectedContactId!}
+      />
     </div>
   );
+  function onReadDone() {
+    setSelectedContactId(undefined);
+    fetchData();
+  }
 };

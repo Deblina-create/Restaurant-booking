@@ -58,7 +58,7 @@ app.post('/contact', async (req, res) => {
     return res.json(dbResponse);
 });
 
-app.post('/contact', async (req, res) => {
+app.post('/contact_search', async (req, res) => {
     const contact = req.body.data as Contact;
     const dbResponse = await CC.getContactData(contact);
     return res.json(dbResponse);
