@@ -12,7 +12,7 @@ const initialContact: Contact = {
   Email: "",
   Message: "",
   Name: "",
-  IsRead: false
+  IsRead: false,
 };
 
 export const ShowMessage = () => {
@@ -23,20 +23,20 @@ export const ShowMessage = () => {
     let res = await restaurantApi.get<Contact | null>(`/contact/${id}`);
     let selectedContact = res.data as Contact;
     setContactDetail(selectedContact);
-    console.log(selectedContact);
+    console.log("### messageDetail is", selectedContact);
   };
 
-  const setReadMessage = async () => {
+  const setAsReadMessage = async () => {
     setContactDetail({
-      ...contactDetail, IsRead: true })
+      ...contactDetail, Name:contactDetail.Name, Email:contactDetail.Email, Message: contactDetail.Message, IsRead: true })
       await restaurantApi.put<Contact | ErrorResponse>("/contact", {
         data: contactDetail,
       })
+      console.log("### SetAsRead is", contactDetail);
   }
 
   useEffect(() => {
     messageDetail();
-    setReadMessage();
   }, []);
 
   return (
@@ -54,8 +54,8 @@ export const ShowMessage = () => {
         </p>
         <p>Message: </p>
         <p className="text-box">{contactDetail.Message}</p>
-        <p>{contactDetail.IsRead}</p>
       </div>
+      <button onClick={setAsReadMessage} className="full-btn">Mark as read</button>
     </div>
   );
 };
