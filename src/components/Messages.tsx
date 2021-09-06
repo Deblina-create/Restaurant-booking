@@ -8,11 +8,10 @@ import "./Admin.css";
 
 export const Messages = () => {
   const [contacts, setContacts] = useState([] as Contact[]);
-  const [selectedContactId, setSelectedContactId] = useState<string>();
   const history = useHistory();
   
   const showMore = (contact: Contact) => {
-    history.push("/showmore/" + `${contact.id}`);
+    history.push("/message/" + `${contact.id}`);
   };
 
   let divTag = contacts.map((contact) => {
@@ -24,16 +23,15 @@ export const Messages = () => {
         // </tr>
       <div key={contact.id} className="booking-list">
         <div>{contact.Name}</div>
-        <div>{contact.Email}</div>
-        {contact.Message.length > 10 ? (
-          contact.Message.substring(0, 10) + "..."
+        {contact.Message.length > 5 ? (
+          contact.Message.substring(0, 5) + "..."
         ) : (
           <div>{contact.Message}</div>
         )} 
         <button
           onClick={() => showMore(contact)}
         >
-          Read more
+          read more
         </button>
       </div>
     );
@@ -74,8 +72,4 @@ export const Messages = () => {
       /> */}
     </div>
   );
-  function onReadDone() {
-    setSelectedContactId(undefined);
-    fetchData();
-  }
 };

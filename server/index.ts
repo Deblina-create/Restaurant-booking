@@ -58,6 +58,12 @@ app.post('/contact', async (req, res) => {
     return res.json(dbResponse);
 });
 
+app.put('/contact', async (req, res) => {
+    const bd = req.body.data as Contact;
+    const dbResponse= await CC.updateCotanctDetail(bd);
+    return res.json(dbResponse);
+});
+
 app.post('/contact_search', async (req, res) => {
     const contact = req.body.data as Contact;
     const dbResponse = await CC.getContactData(contact);

@@ -24,7 +24,7 @@ function App() {
         <Route exact path="/admin" component={AdminPage} />
         <Route exact path="/edit/:id" component={EditForm} />
         <Route exact path="/message" component={Messages} />
-        <Route exact path="/showmore/:id" component={ShowMessage} />
+        <Route exact path="/message/:id" component={ShowMessage} />
         <Route exact path="/*" component={NotFound} />
       </Switch>
     </div>

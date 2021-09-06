@@ -3,6 +3,7 @@ interface Contact {
     Email: string;
     Message: string;
     Name: string;
+    IsRead: boolean;
 }
 
 export default Contact;

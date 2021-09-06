@@ -66,6 +66,19 @@ const getContactDetailById = async (id: string): Promise<Contact | null> => {
     return null;
 }
 
+
+const updateCotanctDetail = async (contact: Contact): Promise<boolean> => {
+    try {
+        await firebase.db.collection("ContactDetails").doc(contact.id).update({IsRead: contact.IsRead});
+    }
+    catch (err: any) {
+        console.log(err);
+    }
+    return false;
+}
+
+
+
 const sendMail = (to: string, subject: string, text: string, html: string) => {
     transporter.sendMail({
         from: '"Team Restaurant" <deblina4.se@gmail.com>', // sender address
@@ -78,5 +91,5 @@ const sendMail = (to: string, subject: string, text: string, html: string) => {
     }).catch(console.error);
 }
 
-export default { saveContact, getContactData,  getContactDetailById };
+export default { saveContact, getContactData,  getContactDetailById, updateCotanctDetail };
 
