@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Admin.css";
+import "./css/style.css";
 import restaurantApi from "../api/restaurantApi";
 // import { AddModal } from "../modals/AddModal";
 import { DeleteModal } from "../modals/DeleteModal";
@@ -64,7 +64,7 @@ export const AdminPage = () => {
 
   let divTag = bookings.map((booking) => {
     return (
-      <div key={booking.id} className="booking-list" data-testid="booking">
+      <div key={booking.id} className="list" data-testid="booking">
         <div>{dateStringToTime(booking.BookingTime)}</div>
         <div>
           <i className="fas fa-user-friends guest"></i>

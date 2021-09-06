@@ -5,7 +5,7 @@ import Booking from "../models/Booking";
 import ErrorResponse from "../models/ErrorResponse";
 import SearchInfo from "../models/SearchInfo";
 import SearchRequest from "../models/SearchRequest";
-import "./Admin.css";
+import "./css/style.css";
 
 type editParams = {
   id: string;

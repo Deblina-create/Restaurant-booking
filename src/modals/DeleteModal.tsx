@@ -2,7 +2,7 @@ import { useState } from "react";
 import restaurantApi from "../api/restaurantApi";
 import Booking from "../models/Booking";
 import ErrorResponse from "../models/ErrorResponse";
-import "./css/Modal.css";
+import "./css/modal.css";
 
 interface ModalProps {
   onClose: () => void;

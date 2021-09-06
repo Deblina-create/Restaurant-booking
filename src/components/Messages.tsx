@@ -4,7 +4,7 @@ import restaurantApi from "../api/restaurantApi";
 import { ReadMoreModal } from "../modals/ReadMoreModal";
 import Contact from "../models/Contact";
 import ErrorResponse from "../models/ErrorResponse";
-import "./Admin.css";
+import "./css/style.css";
 
 export const Messages = () => {
   const [contacts, setContacts] = useState([] as Contact[]);
@@ -16,7 +16,7 @@ export const Messages = () => {
 
   let divTag = contacts.map((contact) => {
     return (
-      <div key={contact.id} className={`booking-list ${contact.IsRead ? 'isread':'notread'}`}>
+      <div key={contact.id} className={`list ${contact.IsRead ? 'isread':'notread'}`}>
         <div>{contact.Name}</div>
         {contact.Message.length > 5 ? (
           contact.Message.substring(0, 5) + "..."

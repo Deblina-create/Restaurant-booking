@@ -5,7 +5,7 @@ import { ConfirmationModal } from '../modals/ComfirmationModal';
 import Booking from '../models/Booking';
 import ErrorResponse from '../models/ErrorResponse';
 import Utilities from '../Utilities'
-import "./Admin.css";
+import "./css/style.css";
 
 const initialBookingInfo: Booking = {
     BookingTime: "",

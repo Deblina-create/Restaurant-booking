@@ -91,7 +91,7 @@ button:disabled {
   cursor: pointer;
 }
 
-.booking-list {
+.list {
   padding: 1em;
   list-style: none;
   border-top: 1px solid white;

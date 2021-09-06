@@ -1,4 +1,4 @@
-import "./Home.css";
+import "./css/home.css";
 import Table_logo from "./assets/The_Table_logo.png";
 
 export const Home = () => {

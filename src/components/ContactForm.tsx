@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./contactForm.css";
+import "./css/contactForm.css";
 
 
 
@@ -45,7 +45,12 @@ const ContactForm = (props: ContactFormProps) => {
 
   return (
   
-    <div id="contact-container">
+    <div className="container">
+        <div className="back">
+          <a href={"/"} data-testid="admin">
+            <i className="fas fa-chevron-left"></i> Contac us
+          </a>
+        </div>
     <p>Please Contact Us Using the Form Below</p>
       <form >
           <div><input type="text" value={name} placeholder="Name" required onChange={handleNameChange}/></div>
@@ -54,7 +59,7 @@ const ContactForm = (props: ContactFormProps) => {
         
           <div><input type="text" value={message} placeholder="Message" required onChange={handleMessageChange}/></div>
  
-          <button type="button" onClick={handleSubmit}>Send</button>
+          <button className="full-btn" type="button" onClick={handleSubmit}>Send</button>
           
           
      </form>
