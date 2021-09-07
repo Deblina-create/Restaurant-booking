@@ -38,15 +38,25 @@ const fakeBookings = [
   },
 ];
 
+const fakeContacts = [
+  {
+    Email: "testing@gmail.com",
+    Message: "dummy text",
+    Name: "testing"
+  }
+]
+
 describe("Admin component", () => {
   const mock = new MockAdapter(restaurantApi);
   test("it displays a row for each booking", async () => {
     const resp = fakeBookings;
+    const response = fakeContacts;
     mock.onPost("/admin_search").reply(200, resp);
+    mock.onPost("/contact_search").reply(200, response);
     
     render(<AdminPage />);
     
-    expect(screen.getByText("Admin")).toBeInTheDocument();
+    // expect(screen.getByText("Admin")).toBeInTheDocument();
     
     const bookingList = await waitFor(() => screen.findAllByTestId("booking"));
     expect(bookingList).toHaveLength(2);
