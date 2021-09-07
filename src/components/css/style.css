@@ -13,7 +13,7 @@ a {
   padding: 10px 0;
 }
 
-.admin-page {
+.container {
   width: 90vw;
   margin: 0 auto;
 }
@@ -53,6 +53,34 @@ button:disabled {
   padding: 5px;
 }
 
+.total > a {
+  float: right;
+}
+
+.notification {
+  color: white;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.envelope {
+  font-size: 30px;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -15px;
+  padding: 4px 10px;
+  border-radius: 50%;
+  background: orange;
+  color: white;
+  font-size: 15px;
+}
+
+
 .add {
   text-align: right;
   padding: 0.5em;
@@ -63,7 +91,7 @@ button:disabled {
   cursor: pointer;
 }
 
-.booking-list {
+.list {
   padding: 1em;
   list-style: none;
   border-top: 1px solid white;
@@ -97,6 +125,40 @@ input[disabled] {
   cursor: pointer;
 }
 
+th {
+  padding: 10px 20px;
+  border-top: 1px solid white;
+  text-align: left;
+  cursor: pointer;
+}
+
+.detail {
+  text-align: left;
+}
+
+.text-box {
+  background-color:white;
+  padding: 20px;
+  color: black;
+  border-radius: 5px;
+}
+
+.arrow {
+  padding: 5px;
+}
+
+.isread {
+  color: gray;
+}
+
+.isread > button {
+  color: gray;
+}
+
+.notread {
+  color: white
+}
+
 @media screen and (min-width: 600px) {
   .increase {
     left: 330px;
@@ -108,7 +170,7 @@ input[disabled] {
 }
 
 @media screen and (min-width: 768px) {
-  /* .admin-page {
+  /* .container {
     width: 70vw;
   } */
   .increase {
@@ -121,7 +183,7 @@ input[disabled] {
 }
 
 @media screen and (min-width: 992px) {
-  .admin-page {
+  .container {
     width: 50vw;
   }
   .increase {

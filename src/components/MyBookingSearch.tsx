@@ -5,8 +5,8 @@ import SearchInfo from '../models/SearchInfo';
 import Booking from '../models/Booking';
 import BookingForm from './BookingForm';
 import BookingDetails from './BookingDetails';
-import "./Admin.css";
-import "../modals/css/Modal.css";
+import "./css/style.css";
+import "../modals/css/modal.css";
 import { Link } from 'react-router-dom';
 
 const initialData: SearchInfo[] = [];
@@ -90,9 +90,9 @@ const MyBookingSearch = () => {
     return (
         <>
 
-            <div className="admin-page">
+            <div className="container">
                 <div className="back">
-                    <Link to={"/"}><i className="fas fa-chevron-left"></i> Booking Page</Link>
+                    <a href={"/"}><i className="fas fa-chevron-left"></i> Booking Page</a>
                 </div>
                 <div>
 

@@ -1,43 +1,40 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import restaurantApi from "../api/restaurantApi";
-import Booking from "../models/Booking";
+import Contact from "../models/Contact";
 import ErrorResponse from "../models/ErrorResponse";
 import "./css/modal.css";
 
 interface ModalProps {
   onClose: () => void;
   show: boolean;
-  bookingId: string | undefined;
+  contactId: string | undefined
 }
-export const DeleteModal: React.FC<ModalProps> = ({ onClose, show, bookingId }) => {
-  // const [bookingId, setBookingId] = useState(id); 
-
+export const ReadMoreModal: React.FC<ModalProps> = ({ onClose, show, contactId }) => {
+  
   if (!show) {
     return null;
   }
 
-  const deleteBooking = async () => {
-    console.log("delete booking" + bookingId);
-    await restaurantApi.delete<Booking | ErrorResponse>(`/booking/${bookingId}`);
-    onClose();
+  const readMoreMessage = async () => {
+    let response = await restaurantApi.post<Contact | ErrorResponse>(`/contact/${contactId}`, {
+        data: contactId
+    });
+    let contactDetail = response.data as Contact
+    console.log(contactDetail)
   };
 
   return (
     <div className="modal">
       <div className="modal-content">
         <div className="modal-header">
-          <h1 className="modal-title">Delete reservation</h1>
+          <h1 className="modal-title">Meassage</h1>
         </div>
         <div className="modal-body">
-          <h3>Delete selected reservation?</h3>
-          <p> Booking no.: {bookingId}</p>
+          <p> Contact no.: {contactId}</p>
         </div>
         <div className="modal-footer">
-          <button onClick={deleteBooking} className="full-btn">
-            Yes
-          </button>
           <button onClick={onClose} className="empty-btn">
-            No
+            Close
           </button>
         </div>
         <button onClick={onClose} className="close-icon">
