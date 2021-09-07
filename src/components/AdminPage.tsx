@@ -36,14 +36,18 @@ export const AdminPage = () => {
 
   useEffect(() => {
     console.log("AdminPage.useEffect called");
-
-    fetchData();
+    setTimeout(() => {
+      fetchData();
+      setTimeout(() => {
+        setcompleted(true);
+      }, 2000);
+    }, 2000)
+   
     console.log(bookings);
   }, [date]);
 
-  const fetchData = () => {
+  const fetchData = async() => {
     console.log("### bookings from DB");
-    setTimeout(async () => {
       const response = await restaurantApi.post<Booking[]>("/admin_search", {
         data: date,
       });
@@ -53,11 +57,6 @@ export const AdminPage = () => {
       console.log("### Response is ", response);
       setBookings(response.data as Booking[]);
       setContacts(rs.data as Contact[]);
-
-      setTimeout(() => {
-        setcompleted(true);
-      }, 1000);
-    }, 2000);
   };
 
   const getEditForm = (booking: Booking) => {
