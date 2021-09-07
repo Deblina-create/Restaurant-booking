@@ -42,6 +42,7 @@ export const EditForm = () => {
   const [selectedSlot, setSelectedSlot] = useState(initialSelectedSlot);
   // const [type, setType] = useState("radio");
   const [hidden, setHidden] = useState(false);
+  const [errorNum, setErrorNum]  = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorName, setErrorName] = useState(false);
   const history = useHistory();
@@ -61,7 +62,9 @@ export const EditForm = () => {
   };
 
   const searchTable = async () => {
-    // setType("hidden");
+    if(!validate()) {
+      return;
+    }
     setHidden(true);
     let peopleCount = bookingInfo.NoOfPeople;
     console.log("Date value", bookedDate);
@@ -128,7 +131,13 @@ export const EditForm = () => {
 
   const validate= () : boolean=>{
     let valid = true;
-    if(bookingInfo.Name == ""){
+    if(isNaN(bookingInfo.NoOfPeople)){
+      setErrorNum(true);
+      valid = false;
+    }else{
+      setErrorNum(false);
+    }
+    if(bookingInfo.Name === ""){
         setErrorName(true);
         valid = false;
     }
@@ -174,6 +183,7 @@ export const EditForm = () => {
           onChange={onNumberOfPeopleChange}
           disabled={disabled}
         />
+         {errorNum ? <p style={{ color: "orange", margin: 0 }}>Please enter number of people!</p> : ''}
         <input
           type="text"
           value={bookedTime}
