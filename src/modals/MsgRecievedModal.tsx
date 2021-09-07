@@ -24,10 +24,10 @@ export const MsgRecievedModal: React.FC<ModalProps> = ({
     <div className="modal">
       <div className="modal-content">
         <div className="modal-header">
-          <h3 className="modal-title">Booking detail</h3>
+          <h3 className="modal-title">Your Message was recieved!</h3>
         </div>
         <div className="modal-body">
-          <div>Your Message was recieved! Give us 6 hours to reply</div>
+          <div>Give us 6 hours to reply</div>
         </div>
         <div className="modal-footer">
         </div>
