@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./css/style.css";
 import restaurantApi from "../api/restaurantApi";
 // import { AddModal } from "../modals/AddModal";
 import { DeleteModal } from "../modals/DeleteModal";
@@ -8,15 +7,19 @@ import Booking from "../models/Booking";
 import { useHistory } from "react-router-dom";
 import { convertTypeAcquisitionFromJson } from "typescript";
 import Contact from "../models/Contact";
+import "./css/style.css";
+import "./css/preloader.css";
 
 export const AdminPage = () => {
   let dateNow = new Date().toDateString();
-
+  const history = useHistory();
   const [bookings, setBookings] = useState([] as Booking[]);
   const [contacts, setContacts] = useState([] as Contact[]);
   const [selectedBooking, setSelectedBooking] = useState<Booking>();
   // const [showAddModal, setShowAddModal] = useState(false);
   const [date, setDate] = useState(dateNow);
+  const [loading] = useState(false);
+  const [completed, setcompleted] = useState(false);
   const [deleteBookingId, setDeleteBookingId] = useState<string>();
 
   let currentDate = new Date(date);
@@ -26,28 +29,10 @@ export const AdminPage = () => {
     numberOfMlSeconds - dayToMlSeconds
   ).toDateString();
   let nextDate = new Date(numberOfMlSeconds + dayToMlSeconds).toDateString();
-
   let totalNoOfPeople = bookings.reduce(
     (acc, curr) => acc + curr.NoOfPeople,
     0
   );
-
-  const getEditForm = (booking: Booking) => {
-    history.push("/edit/" + `${booking.id}`);
-  };
-
-  const fetchData = async () => {
-    console.log("### bookings from DB");
-    const response = await restaurantApi.post<Booking[]>("/admin_search", {
-      data: date,
-    });
-    const rs = await restaurantApi.post<Contact[]>("/contact_search", {
-      data: contacts,
-    });
-    console.log("### Response is ", response);
-    setBookings(response.data as Booking[]);
-    setContacts(rs.data as Contact[]);
-  };
 
   useEffect(() => {
     console.log("AdminPage.useEffect called");
@@ -56,11 +41,42 @@ export const AdminPage = () => {
     console.log(bookings);
   }, [date]);
 
-  const history = useHistory();
+  const fetchData = () => {
+    console.log("### bookings from DB");
+    setTimeout(async () => {
+      const response = await restaurantApi.post<Booking[]>("/admin_search", {
+        data: date,
+      });
+      const rs = await restaurantApi.post<Contact[]>("/contact_search", {
+        data: contacts,
+      });
+      console.log("### Response is ", response);
+      setBookings(response.data as Booking[]);
+      setContacts(rs.data as Contact[]);
+
+      setTimeout(() => {
+        setcompleted(true);
+      }, 1000);
+    }, 2000);
+  };
+
+  const getEditForm = (booking: Booking) => {
+    history.push("/edit/" + `${booking.id}`);
+  };
 
   const routeChange = () => {
     history.push("/search");
   };
+
+  function onDeleteDone() {
+    setDeleteBookingId(undefined);
+    fetchData();
+  }
+
+  function dateStringToTime(datestr: string) {
+    let date = new Date(datestr);
+    return date.toLocaleTimeString("sv-SE", { timeStyle: "short" });
+  }
 
   let divTag = bookings.map((booking) => {
     return (
@@ -86,7 +102,7 @@ export const AdminPage = () => {
     );
   });
 
-  let unreadCount = contacts.filter(c => !c.IsRead).length;
+  let unreadCount = contacts.filter((c) => !c.IsRead).length;
   return (
     <div className="container">
       <div className="back">
@@ -97,7 +113,6 @@ export const AdminPage = () => {
       <div>
         <h2>
           {date}
-          {/* {date === dateNow? <span>(Today)</span> : ""} */}
           <button
             onClick={() => setDate(previousDate)}
             disabled={date === dateNow}
@@ -120,9 +135,11 @@ export const AdminPage = () => {
           <span>
             <i className="fas fa-envelope envelope"></i>
           </span>
-          { unreadCount=== 0? <span className="badge">0</span> : 
-          <span className="badge">{unreadCount}</span>
-          }
+          {unreadCount === 0 ? (
+            <span className="badge">0</span>
+          ) : (
+            <span className="badge">{unreadCount}</span>
+          )}
         </a>
       </p>
       <div className="add">
@@ -134,13 +151,22 @@ export const AdminPage = () => {
           <i className="fas fa-plus"></i>
         </button>
       </div>
-      <div>{divTag}</div>
-      {/* <AddModal onClose={() => setShowAddModal(false)} show={showAddModal} /> */}
-      <EditModal
-        onClose={onEditDone}
-        show={selectedBooking ? true : false}
-        bookingInfo={selectedBooking}
-      />
+      {!completed ? (
+        <>
+          {!loading ? (
+            <div className="wrap">
+              <div className="loading">
+                <div className="bounceball"></div>
+                <div className="text">NOW LOADING</div>
+              </div>
+            </div>
+          ) : (
+            <div className="completed">&#x2713;</div>
+          )}
+        </>
+      ) : (
+        <div>{divTag}</div>
+      )}
       <DeleteModal
         onClose={onDeleteDone}
         show={deleteBookingId ? true : false}
@@ -148,19 +174,4 @@ export const AdminPage = () => {
       />
     </div>
   );
-
-  function onDeleteDone() {
-    setDeleteBookingId(undefined);
-    fetchData();
-  }
-
-  function onEditDone() {
-    setSelectedBooking(undefined);
-    fetchData();
-  }
-
-  function dateStringToTime(datestr: string) {
-    let date = new Date(datestr);
-    return date.toLocaleTimeString("sv-SE", { timeStyle: "short" });
-  }
 };
