@@ -4,13 +4,10 @@ import {
   fireEvent,
   waitFor,
   screen,
-  getByTestId,
 } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { AdminPage } from "../AdminPage";
 import { useState } from "react";
-import axios from "axios";
-// jest.mock('axios');
 
 import MockAdapter from "axios-mock-adapter";
 import restaurantApi from "../../api/restaurantApi";
@@ -56,7 +53,7 @@ describe("Admin component", () => {
     
     render(<AdminPage />);
     
-    // expect(screen.getByText("Admin")).toBeInTheDocument();
+    expect(screen.getByText("Admin")).toBeInTheDocument();
     
     const bookingList = await waitFor(() => screen.findAllByTestId("booking"));
     expect(bookingList).toHaveLength(2);
