@@ -44,6 +44,10 @@ export const EditForm = () => {
 
   const history = useHistory();
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const fetchData = async () => {
     const res = await restaurantApi.get<Booking | null>(`/booking/${id}`);
     let selectedBooking = res.data as Booking;
@@ -80,10 +84,6 @@ export const EditForm = () => {
     });
     history.push("/admin");
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const onNumberOfPeopleChange = (e: any) => {
     setBookingInfo({
