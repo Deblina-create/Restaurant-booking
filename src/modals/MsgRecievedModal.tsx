@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import React from "react";
-import "./css/modal.css";
+import "./css/Modal.css";
 
 interface ModalProps {
   onClose: () => void;
