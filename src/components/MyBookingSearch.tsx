@@ -6,7 +6,7 @@ import Booking from '../models/Booking';
 import BookingForm from './BookingForm';
 import BookingDetails from './BookingDetails';
 import "./css/style.css";
-import "../modals/css/modal.css";
+import "../modals/css/modal_style.css";
 import { Link } from 'react-router-dom';
 
 const initialData: SearchInfo[] = [];
