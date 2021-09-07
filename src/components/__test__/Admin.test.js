@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  waitFor,
-  screen,
-} from "@testing-library/react";
+import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { AdminPage } from "../AdminPage";
 import { useState } from "react";
@@ -39,25 +34,25 @@ const fakeContacts = [
   {
     Email: "testing@gmail.com",
     Message: "dummy text",
-    Name: "testing"
-  }
-]
+    Name: "testing",
+  },
+];
 
 describe("Admin component", () => {
+  
   const mock = new MockAdapter(restaurantApi);
   test("it displays a row for each booking", async () => {
     const resp = fakeBookings;
-    const response = fakeContacts;
+    const response = fakeContacts;    
     mock.onPost("/admin_search").reply(200, resp);
     mock.onPost("/contact_search").reply(200, response);
-    
+
     render(<AdminPage />);
-    
     expect(screen.getByText("Admin")).toBeInTheDocument();
-    
-    const bookingList = await waitFor(() => screen.findAllByTestId("booking"));
+
+    const bookingList = await waitFor(() => screen.findAllByTestId("booking"), {timeout: 5000});
     expect(bookingList).toHaveLength(2);
-  });
+  },5000);
 });
 
 it("can change date", () => {
