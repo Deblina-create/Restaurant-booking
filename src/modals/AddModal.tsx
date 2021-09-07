@@ -3,7 +3,7 @@ import restaurantApi from "../api/restaurantApi";
 import BookingForm from "../components/BookingForm";
 import SearchInfo from "../models/SearchInfo";
 import SearchRequest from "../models/SearchRequest";
-import "./css/modal.css";
+import "./css/modal_style.css";
 
 interface ModalProps {
   onClose: () => void;
