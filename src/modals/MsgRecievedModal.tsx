@@ -1,14 +1,23 @@
+import { useHistory } from "react-router-dom";
 import React from "react";
-import "./css/Modal.css";
+import "./css/modal.css";
 
 interface ModalProps {
   onClose: () => void;
   show: boolean;
 }
-export const MsgRecievedModal: React.FC<ModalProps> = ({ onClose, show }) => {
+export const MsgRecievedModal: React.FC<ModalProps> = ({ 
+  onClose, 
+  show 
+}) => {
+  const history = useHistory();
   if (!show) {
     return null;
   }
+
+  const routeChange = () => {
+    history.push("/");
+  };
 
   return (
     <div className="modal">
@@ -21,7 +30,7 @@ export const MsgRecievedModal: React.FC<ModalProps> = ({ onClose, show }) => {
         </div>
         <div className="modal-footer">
         </div>
-        <button onClick={onClose} className="close-icon">
+        <button onClick={routeChange} className="close-icon">
           <i className="fas fa-times"></i>
         </button>
       </div>
