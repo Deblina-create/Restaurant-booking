@@ -6,6 +6,7 @@ interface ModalProps {
   onClose: () => void;
   show: boolean;
 }
+
 export const MsgRecievedModal: React.FC<ModalProps> = ({ 
   onClose, 
   show 

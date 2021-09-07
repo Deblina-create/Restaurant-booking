@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./contactForm.css";
 import restaurantApi from "../api/restaurantApi";
 import nodemailer from 'nodemailer';
-
+import { MsgRecievedModal } from "../modals/MsgRecievedModal";
 
 
 const transporter = nodemailer.createTransport({
@@ -38,7 +38,7 @@ const ContactForm = (props: ContactFormProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-
+  const [showMsgRecievedModal, setShowMsgRecievedModal] = useState(false);
 
   function handleNameChange(event: any) {
     setName (event.target.value);
@@ -89,6 +89,8 @@ const ContactForm = (props: ContactFormProps) => {
           
           
      </form>
+      
+      < MsgRecievedModal onClose={() => setShowMsgRecievedModal(false)} show={showMsgRecievedModal} />
   </div>
   
   );
