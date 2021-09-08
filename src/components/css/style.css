@@ -95,7 +95,6 @@ button:disabled {
   padding: 1em;
   list-style: none;
   border-top: 1px solid white;
-  /* text-align: left; */
   display: flex;
   justify-content: space-between;
 }
@@ -176,9 +175,6 @@ th {
 }
 
 @media screen and (min-width: 768px) {
-  /* .container {
-    width: 70vw;
-  } */
   .increase {
     left: 390px;
   } 

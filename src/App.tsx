@@ -1,9 +1,8 @@
 import React from "react";
 import "./App.css";
-import ContactForm from "./components/ContactForm";
 import { Route, Switch } from "react-router-dom";
 import MyBookingSearch from "./components/MyBookingSearch";
-import ContactPage from "./pages/ContactPage";
+import ContactPage from "./components/ContactPage";
 import BookingDelete from "./components/BookingDelete";
 import { AdminPage } from "./components/AdminPage";
 import { NotFound } from "./components/NotFound";

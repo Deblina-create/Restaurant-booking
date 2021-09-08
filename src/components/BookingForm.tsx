@@ -77,11 +77,7 @@ const BookingForm = (props: any) => {
         const x = await restaurantApi.post<string | ErrorResponse>("/booking", { data: bookingInfo });
         console.log("response data", x.data);
         setBookingInfo({...bookingInfo, id: x.data as string})
-        // if(props.onSave){
-        //     props.onSave(bookingInfo);
-        // }
         setShowConfirmation(true);
-        // history.push("/");
        
     }
 

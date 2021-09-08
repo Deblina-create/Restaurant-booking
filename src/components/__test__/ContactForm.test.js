@@ -7,7 +7,7 @@ import {
   waitFor,
 } from "@testing-library/react";
 import ContactForm from "../ContactForm";
-import ContactPage from "../../pages/ContactPage";
+import ContactPage from "../ContactPage";
 
 const errorMessage = "**** ERROR ****";
 const successResult = "API REPLY";

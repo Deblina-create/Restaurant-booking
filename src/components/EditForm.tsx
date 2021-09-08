@@ -5,7 +5,7 @@ import Booking from "../models/Booking";
 import ErrorResponse from "../models/ErrorResponse";
 import SearchInfo from "../models/SearchInfo";
 import SearchRequest from "../models/SearchRequest";
-import Utilities from '../Utilities'
+import Utilities from "../Utilities";
 import "./css/style.css";
 
 type editParams = {
@@ -34,9 +34,8 @@ export const EditForm = () => {
   const [disabledContact, setDisableContact] = useState(false);
   const [searchData, setSearchData] = useState(initialData);
   const [dataFetched, setDataFetched] = useState(false);
-  // const [type, setType] = useState("radio");
   const [hidden, setHidden] = useState(false);
-  const [errorNum, setErrorNum]  = useState(false);
+  const [errorNum, setErrorNum] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorName, setErrorName] = useState(false);
   const [notclick, setNotClick] = useState(false);
@@ -59,7 +58,7 @@ export const EditForm = () => {
   const searchTable = async () => {
     setNotClick(false);
     setDisableContact(false);
-    if(!validate()) {
+    if (!validate()) {
       return;
     }
     setHidden(true);
@@ -81,7 +80,7 @@ export const EditForm = () => {
 
   const saveData = async () => {
     console.log(bookingInfo);
-    if(!validate()) {
+    if (!validate()) {
       return;
     }
     await restaurantApi.put<Booking | ErrorResponse>("/booking", {
@@ -90,10 +89,10 @@ export const EditForm = () => {
     history.push("/admin");
   };
 
-  const onDateChange = (e:any) => {
-    setBookedDate(e.target.value)
+  const onDateChange = (e: any) => {
+    setBookedDate(e.target.value);
     validateDate();
-  }
+  };
 
   const onNumberOfPeopleChange = (e: any) => {
     setBookingInfo({
@@ -123,45 +122,41 @@ export const EditForm = () => {
   };
 
   const openForm = (timeSlot: SearchInfo) => {
-    //setSelectedSlot(timeSlot);
     bookingTime(timeSlot);
   };
 
-  const validate= () : boolean=>{
+  const validate = (): boolean => {
     let valid = true;
-    if(isNaN(bookingInfo.NoOfPeople)){
+    if (isNaN(bookingInfo.NoOfPeople)) {
       setErrorNum(true);
       valid = false;
-    }else{
+    } else {
       setErrorNum(false);
     }
-    if(bookingInfo.Name === ""){
-        setErrorName(true);
-        valid = false;
+    if (bookingInfo.Name === "") {
+      setErrorName(true);
+      valid = false;
+    } else {
+      setErrorName(false);
     }
-    else{
-        setErrorName(false);
-    }
-    if(!Utilities.validateEmail(bookingInfo.Email)){
-        setErrorEmail(true);
-        valid = false;
-    }
-    else{
-        setErrorEmail(false);
+    if (!Utilities.validateEmail(bookingInfo.Email)) {
+      setErrorEmail(true);
+      valid = false;
+    } else {
+      setErrorEmail(false);
     }
     return valid;
-}
-const validateDate= () : boolean=>{
-  let valid = true;
-   if(!searchTable) {
+  };
+  const validateDate = (): boolean => {
+    let valid = true;
+    if (!searchTable) {
       setNotClick(true);
       valid = false;
-    }
-    else {
+    } else {
       setNotClick(false);
     }
     return valid;
-  }
+  };
 
   return (
     <div className="container">
@@ -192,14 +187,15 @@ const validateDate= () : boolean=>{
           onChange={onNumberOfPeopleChange}
           disabled={disabled}
         />
-         {errorNum ? <p className="error"><i className="fas fa-exclamation-triangle"></i>Please enter number of people!</p> : ''}
-        <input
-          type="text"
-          value={bookedTime}
-          // onChange={(e) => setBookedDate(e.target.value)}
-          disabled
-          hidden={hidden}
-        />
+        {errorNum ? (
+          <p className="error">
+            <i className="fas fa-exclamation-triangle"></i>Please enter number
+            of people!
+          </p>
+        ) : (
+          ""
+        )}
+        <input type="text" value={bookedTime} disabled hidden={hidden} />
         <div className="radio">
           {searchData.map((data, index) => (
             <div className="radio-btn" key={index}>
@@ -224,18 +220,30 @@ const validateDate= () : boolean=>{
           >
             Check available tabels
           </button>
-          {notclick ? <p className="error"><i className="fas fa-exclamation-triangle"></i> Check available tabels first! </p> : ''}
+          {notclick ? (
+            <p className="error">
+              <i className="fas fa-exclamation-triangle"></i> Check available
+              tabels first!{" "}
+            </p>
+          ) : (
+            ""
+          )}
         </div>
-        <p>
-          Contact information
-        </p>
+        <p>Contact information</p>
         <input
           type="text"
           placeholder="Name"
           value={bookingInfo.Name}
           onChange={nameChanged}
         />
-        {errorName ? <p className="error"><i className="fas fa-exclamation-triangle"></i>Please enter your name</p> : ''}
+        {errorName ? (
+          <p className="error">
+            <i className="fas fa-exclamation-triangle"></i>Please enter your
+            name
+          </p>
+        ) : (
+          ""
+        )}
         <input
           type="text"
           placeholder="Mobile number"
@@ -248,12 +256,14 @@ const validateDate= () : boolean=>{
           value={bookingInfo.Email}
           onChange={emailChanged}
         />
-         {errorEmail ? <p className="error"><i className="fas fa-exclamation-triangle"></i>Please enter a valid email</p> : ''}
-        {/* <input
-            type="text"
-            placeholder="Preference"
-            defaultValue={bookingInfo.Preference}
-          /> */}
+        {errorEmail ? (
+          <p className="error">
+            <i className="fas fa-exclamation-triangle"></i>Please enter a valid
+            email
+          </p>
+        ) : (
+          ""
+        )}
       </div>
       <div className="modal-footer">
         <button
@@ -278,7 +288,6 @@ const validateDate= () : boolean=>{
       bookingTimeText = new Date(new Date(dt).setHours(21, 0, 0, 0)).toString();
     }
     console.log("Changed booking time", bookingTimeText);
-    //bookingInfo.BookingTime = bookingTimeText;
     setBookingInfo({ ...bookingInfo, BookingTime: bookingTimeText });
   }
 };

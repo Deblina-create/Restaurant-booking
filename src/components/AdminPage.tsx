@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import restaurantApi from "../api/restaurantApi";
-// import { AddModal } from "../modals/AddModal";
 import { DeleteModal } from "../modals/DeleteModal";
-import { EditModal } from "../modals/EditModal";
 import Booking from "../models/Booking";
 import { useHistory } from "react-router-dom";
 import Contact from "../models/Contact";
@@ -15,7 +13,6 @@ export const AdminPage = () => {
   const [bookings, setBookings] = useState([] as Booking[]);
   const [contacts, setContacts] = useState([] as Contact[]);
   const [selectedBooking, setSelectedBooking] = useState<Booking>();
-  // const [showAddModal, setShowAddModal] = useState(false);
   const [date, setDate] = useState(dateNow);
   const [loading] = useState(false);
   const [completed, setcompleted] = useState(false);
