@@ -23,11 +23,6 @@ const initialBookingInfo: Booking = {
 };
 
 const initialData: SearchInfo[] = [];
-const initialSelectedSlot: SearchInfo = {
-  TimeSlotIndex: -1,
-  TimeSlotText: "",
-  IsTableAvailable: false,
-};
 
 export const EditForm = () => {
   const { id } = useParams<editParams>();
@@ -36,15 +31,14 @@ export const EditForm = () => {
   const [bookedDate, setBookedDate] = useState("");
   const [bookedTime, setBookedTime] = useState("");
   const [disabled, setDisabled] = useState(true);
-  const [disabledContact, setDisabledContact] = useState(false);
   const [searchData, setSearchData] = useState(initialData);
   const [dataFetched, setDataFetched] = useState(false);
-  const [selectedSlot, setSelectedSlot] = useState(initialSelectedSlot);
   // const [type, setType] = useState("radio");
   const [hidden, setHidden] = useState(false);
   const [errorNum, setErrorNum]  = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorName, setErrorName] = useState(false);
+  const [notclick, setNotClick] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -62,6 +56,7 @@ export const EditForm = () => {
   };
 
   const searchTable = async () => {
+    setNotClick(false);
     if(!validate()) {
       return;
     }
@@ -93,6 +88,11 @@ export const EditForm = () => {
     history.push("/admin");
   };
 
+  const onDateChange = (e:any) => {
+    setBookedDate(e.target.value)
+    validateDate();
+  }
+
   const onNumberOfPeopleChange = (e: any) => {
     setBookingInfo({
       ...bookingInfo,
@@ -116,12 +116,7 @@ export const EditForm = () => {
 
   const activate = () => {
     setDisabled(false);
-    setDisabledContact(true);
-  };
-
-  const activateContact = () => {
-    setDisabledContact(false);
-    setDisabled(true);
+    setNotClick(true);
   };
 
   const openForm = (timeSlot: SearchInfo) => {
@@ -153,6 +148,17 @@ export const EditForm = () => {
     }
     return valid;
 }
+const validateDate= () : boolean=>{
+  let valid = true;
+   if(!searchTable) {
+      setNotClick(true);
+      valid = false;
+    }
+    else {
+      setNotClick(false);
+    }
+    return valid;
+  }
 
   return (
     <div className="container">
@@ -173,7 +179,7 @@ export const EditForm = () => {
         <input
           type="date"
           value={bookedDate}
-          onChange={(e) => setBookedDate(e.target.value)}
+          onChange={onDateChange}
           disabled={disabled}
         />
         <input
@@ -233,6 +239,7 @@ export const EditForm = () => {
           </div>
         </div> */}
         <div>
+        {notclick ? <p style={{ color: "orange", margin: 0 }}>Please check available tabels first!</p> : ''}
           <button
             className="empty-btn"
             style={{ backgroundColor: "black" }}
@@ -291,6 +298,7 @@ export const EditForm = () => {
   );
   function bookingTime(slot: SearchInfo) {
     console.log("Changed Slot", slot);
+    console.log(bookedDate);
     const dt = new Date(bookedDate.toString());
     let bookingTimeText = "";
     if (slot.TimeSlotIndex === 0) {

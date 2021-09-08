@@ -50,9 +50,9 @@ describe("Admin component", () => {
     render(<AdminPage />);
     expect(screen.getByText("Admin")).toBeInTheDocument();
 
-    const bookingList = await waitFor(() => screen.findAllByTestId("booking"), {timeout: 5000});
+    const bookingList = await waitFor(() => screen.findAllByTestId("booking"), {timeout: 3000});
     expect(bookingList).toHaveLength(2);
-  },5000);
+  });
 });
 
 it("can change date", () => {
