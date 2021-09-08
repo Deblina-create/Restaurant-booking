@@ -26,17 +26,19 @@ const saveBookingDetail = async (booking: Booking): Promise<string | ErrorRespon
         tableRequired++;
     }
 
-    const bookings = await getBookingsData(new Date(booking.BookingTime));
-    if (bookings && bookings.length > 0) {
-        const available = checkTableAvailability(bookings, tableRequired, new Date(booking.BookingTime));
-        if (!available) {
-            error = {
-                Code: "ERROR_TABLE_UNAVAILABLE",
-                Message: "We are fully booked on this time slot. Please try a different date and time"
-            };
-            return error;
-        }
+    let bookings = await getBookingsData(new Date(booking.BookingTime));
+    if (!bookings)
+        bookings = [];
+    const available = checkTableAvailability(bookings, tableRequired, new Date(booking.BookingTime));
+    if (!available) {
+        error = {
+            Code: "ERROR_TABLE_UNAVAILABLE",
+            Message: "We are fully booked on this time slot. Please try a different date and time"
+        };
+        return error;
     }
+
+
 
     const doc = await firebase.db.collection("BookingDetails").add({ NoOfPeople: booking.NoOfPeople, Email: booking.Email, Preferences: booking.Preferences, Name: booking.Name, Phone: booking.Phone, BookingTime: booking.BookingTime, BookedTableCount: tableRequired });
 
@@ -101,7 +103,7 @@ const editBookingDetail = async (booking: Booking): Promise<boolean> => {
     let bookings = await getBookingsData(new Date(booking.BookingTime));
     bookings = bookings.filter(b => b.id != booking.id)
     if (bookings && bookings.length > 0) {
-         checkTableAvailability(bookings, tableRequired, new Date(booking.BookingTime));
+        checkTableAvailability(bookings, tableRequired, new Date(booking.BookingTime));
         // if (!available) {
         //     error = {
         //         Code: "ERROR_TABLE_UNAVAILABLE",
@@ -117,7 +119,7 @@ const editBookingDetail = async (booking: Booking): Promise<boolean> => {
         return true;
     }
     catch (err: any) {
-        console.log(err); 
+        console.log(err);
     }
     return false;
 }
@@ -127,7 +129,7 @@ const deleteBookingDetail = async (id: string): Promise<boolean> => {
     try {
         let booking: Booking = await getBookingDetailById(id);
         await firebase.db.collection("BookingDetails").doc(id).delete();
-        
+
         const html = `
         <h3>Your Reservation (#${id}) has been cancelled!</h3>
         `;
@@ -141,11 +143,12 @@ const deleteBookingDetail = async (id: string): Promise<boolean> => {
 }
 
 
-const searchBookingDetail = async (dt: Date, noOfPeople: number): Promise<SearchInfo[]> => {
+const searchBookingDetail = async (dt: Date, noOfPeople: number, currentBookingId: string = null): Promise<SearchInfo[]> => {
     let tableRequired = Math.floor(noOfPeople / TableCapacity);
     if (noOfPeople % TableCapacity > 0) {
         tableRequired++;
     }
+
     //const slots = getDateTimeSlots(dt);
     const firstTimeSlot = new Date(new Date(dt).setHours(18, 0, 0, 0));
     const secondTimeSlot = new Date(new Date(dt).setHours(21, 0, 0, 0));
@@ -154,12 +157,12 @@ const searchBookingDetail = async (dt: Date, noOfPeople: number): Promise<Search
     const firstSlotAvailability: SearchInfo = {
         TimeSlotIndex: 0,
         TimeSlotText: "18:00",
-        IsTableAvailable: checkTableAvailability(firstSlotBookings, tableRequired, firstTimeSlot)
+        IsTableAvailable: checkTableAvailability(firstSlotBookings, tableRequired, firstTimeSlot, currentBookingId)
     };
     const secondSlotAvailability: SearchInfo = {
         TimeSlotIndex: 1,
         TimeSlotText: "21:00",
-        IsTableAvailable: checkTableAvailability(secondSlotBookings, tableRequired, secondTimeSlot)
+        IsTableAvailable: checkTableAvailability(secondSlotBookings, tableRequired, secondTimeSlot, currentBookingId)
     };
     return [firstSlotAvailability, secondSlotAvailability];
 
@@ -173,20 +176,20 @@ const adminSearchBookings = async (date: Date): Promise<Booking[]> => {
     let to = date.toString()
 
     console.log(`Trying to find bookings between ${from} to ${to}`);
-    
-    const snapshot= await firebase.db.collection("BookingDetails")
-    .where("BookingTime", ">", from)
-    .where("BookingTime", "<", to)
-    .get(); 
-    if(snapshot && snapshot.docs){
-        const bds = snapshot.docs.map((doc)=>{
+
+    const snapshot = await firebase.db.collection("BookingDetails")
+        .where("BookingTime", ">", from)
+        .where("BookingTime", "<", to)
+        .get();
+    if (snapshot && snapshot.docs) {
+        const bds = snapshot.docs.map((doc) => {
             const data = doc.data() as Booking;
             const booking: Booking = {
                 ...data, id: doc.id
             }
             return booking;
         });
-        return bds;   
+        return bds;
     }
     return null;
 }
@@ -210,20 +213,21 @@ const getBookingsData = async (timeslot: Date): Promise<Booking[] | null> => {
     return null;
 };
 
-const checkTableAvailability = (bookings: Booking[] | null, tableRequired: number, timeslot: Date): boolean => {
-    if (bookings == null) {
-        return false;
-    }
+const checkTableAvailability = (bookings: Booking[] | null, tableRequired: number, timeslot: Date, currentBookingId: string = null): boolean => {
+    console.log("In check availability - bookings", bookings);
+    console.log("In check availability - table reqd", tableRequired);
+    console.log("In check availability - cid", currentBookingId);
     let NoOfTableBooked = 0;
     bookings.map((b) => {
         if (b.BookedTableCount && timeslot.toString() == b.BookingTime) {
-            NoOfTableBooked += b.BookedTableCount;
+            if (currentBookingId != b.id)
+                NoOfTableBooked += b.BookedTableCount;
         }
     });
     if (NoOfTableBooked + tableRequired <= TotalTableCount) {
         return true;
     }
-    return false; 
+    return false;
 };
 
 const sendMail = (to: string, subject: string, text: string, html: string) => {
