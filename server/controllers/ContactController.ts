@@ -49,5 +49,5 @@ const sendMail = (to: string, subject: string, text: string, html: string) => {
     }).catch(console.error);
 }
 
-export default { saveContact };
-
+//export default { saveContact };
+export default { saveContact,sendMail }
