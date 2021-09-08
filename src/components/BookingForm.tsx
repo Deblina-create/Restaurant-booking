@@ -77,11 +77,7 @@ const BookingForm = (props: any) => {
         const x = await restaurantApi.post<string | ErrorResponse>("/booking", { data: bookingInfo });
         console.log("response data", x.data);
         setBookingInfo({...bookingInfo, id: x.data as string})
-        // if(props.onSave){
-        //     props.onSave(bookingInfo);
-        // }
         setShowConfirmation(true);
-        // history.push("/");
        
     }
 
@@ -93,11 +89,11 @@ const BookingForm = (props: any) => {
                 <input disabled type="text" value={props.slot.TimeSlotText} ></input>
                 <input disabled type="text" value={props.peopleCount} ></input>
                 <h3>Contact Info</h3>
-                {errorName ? <p style={{color : "orange", margin: 0}}>Please enter your name</p> : ''}
                 <input type="text" placeholder="Name" onChange={nameChanged}></input>
+                {errorName ? <p className="error"><i className="fas fa-exclamation-triangle"></i> Please enter your name</p> : ''}
                 <input type="text" placeholder="Phone" onChange={phoneChanged}></input>
-                {errorEmail ? <p style={{color : "orange", margin: 0}}>Please enter a valid email</p> : ''}
                 <input type="email" placeholder="Email" onChange={emailChanged}></input>
+                {errorEmail ? <p className="error"><i className="fas fa-exclamation-triangle"></i> Please enter a valid email</p> : ''}
                 <button className="full-btn" onClick={saveData}>Book</button>
             </form>
             <ConfirmationModal onClose={()=>setShowConfirmation(false)} show={showConfirmation} props={bookingInfo} /> 

@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import restaurantApi from "../api/restaurantApi";
-import { ReadMoreModal } from "../modals/ReadMoreModal";
 import Contact from "../models/Contact";
-import ErrorResponse from "../models/ErrorResponse";
 import "./css/style.css";
 
 export const Messages = () => {
@@ -51,19 +49,7 @@ export const Messages = () => {
         </a>
       </div>
       <h2> Messages</h2>
-      {/* <table>
-        <tr>
-          <th>NAME</th>
-          <th>CONTACT</th>
-          <th>MESSAGE</th>
-        </tr> */}
-      {/* </table> */}
       <div>{divTag}</div>
-      {/* <ReadMoreModal
-        onClose={onReadDone}
-        show={selectedContactId ? true : false}
-        contactId={selectedContactId!}
-      /> */}
     </div>
   );
 };

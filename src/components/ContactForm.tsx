@@ -1,128 +1,147 @@
 import { useState } from "react";
-import restaurantApi from "../api/restaurantApi";
-import nodemailer from 'nodemailer';
 import { MsgRecievedModal } from "../modals/MsgRecievedModal";
 import Utilities from "../Utilities";
-//IMPORT
-
-// const transporter = nodemailer.createTransport({
-//   service: 'gmail',
-//   auth: {
-//       user: 'deblina4.se@gmail.com',
-//       pass: 'frontend@2020',
-//   },
-// });
 import "./css/contactForm.css";
 import { useHistory } from "react-router-dom";
-
-
 
 interface ContactFormProps {
   setIsSent?: any;
   post(payload: any): any;
 }
 
-
 const ContactForm = (props: ContactFormProps) => {
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [showMsgRecievedModal, setShowMsgRecievedModal] = useState(false);
 
-  const [errorName, setErrorName]= useState(false);
-  const [errorEmail, setErrorEmail]= useState(false);
-  const [errorMessage, setErrorMessage]= useState(false);
+  const [errorName, setErrorName] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
   const history = useHistory();
 
-
   function handleNameChange(event: any) {
-    setName (event.target.value);
-  }
-  
-  function handleEmailChange (event: any) {
-    setEmail (event.target.value);
-  }
-  
-  function handleMessageChange (event: any) {
-    setMessage (event.target.value);
+    setName(event.target.value);
   }
 
-  const validate= () : boolean=>{
+  function handleEmailChange(event: any) {
+    setEmail(event.target.value);
+  }
+
+  function handleMessageChange(event: any) {
+    setMessage(event.target.value);
+  }
+
+  const validate = (): boolean => {
     let valid = true;
-    if(name === ""){
-        setErrorName(true);
-        valid = false;
+    if (name === "") {
+      setErrorName(true);
+      valid = false;
+    } else {
+      setErrorName(false);
     }
-    else{
-        setErrorName(false);
+    if (!Utilities.validateEmail(email)) {
+      setErrorEmail(true);
+      valid = false;
+    } else {
+      setErrorEmail(false);
     }
-    if(!Utilities.validateEmail(email)){
-        setErrorEmail(true);
-        valid = false;
-    }
-    else{
-        setErrorEmail(false);
-    }
-    if(message === ""){
+    if (message === "") {
       setErrorMessage(true);
       valid = false;
-  }
-  else{
+    } else {
       setErrorMessage(false);
-  }
+    }
     return valid;
-}
+  };
   async function handleSubmit() {
-    if(!validate()){
-      return
+    if (!validate()) {
+      return;
     }
     const payload = {
       Name: name,
       Email: email,
       Message: message,
     };
-    
-    
-
 
     await props.post(payload);
-    //sends data?
-    setShowMsgRecievedModal(true)
-    
+    setShowMsgRecievedModal(true);
+
     history.push("/");
   }
-  
 
   return (
-  
     <div className="container">
-        <div className="back">
-          <a href={"/"} data-testid="admin">
-            <i className="fas fa-chevron-left"></i> Contac us
-          </a>
+      <div className="back">
+        <a href={"/"} data-testid="admin">
+          <i className="fas fa-chevron-left"></i> Contac us
+        </a>
+      </div>
+      <p>Please Contact Us Using the Form Below</p>
+      <form>
+        <div>
+          <input
+            type="text"
+            value={name}
+            placeholder="Name"
+            required
+            onChange={handleNameChange}
+          />
         </div>
-    <p>Please Contact Us Using the Form Below</p>
-      <form >
+        {errorName ? (
+          <p className="error">
+            <i className="fas fa-exclamation-triangle"></i>Please enter your
+            name
+          </p>
+        ) : (
+          ""
+        )}
+        <div>
+          <input
+            type="email"
+            value={email}
+            placeholder="Email"
+            required
+            onChange={handleEmailChange}
+          />
+        </div>
+        {errorEmail ? (
+          <p className="error">
+            <i className="fas fa-exclamation-triangle"></i>Please enter a valid
+            email
+          </p>
+        ) : (
+          ""
+        )}
+        <div>
+          <input
+            type="text"
+            value={message}
+            placeholder="Message"
+            required
+            onChange={handleMessageChange}
+          />
+        </div>
+        {errorMessage ? (
+          <p className="error">
+            <i className="fas fa-exclamation-triangle"></i>Please enter a
+            Message
+          </p>
+        ) : (
+          ""
+        )}
 
-          {errorName ? <p style={{color : "orange", margin: 0}}>Please enter your name</p> : ''}
-          <div><input type="text" value={name} placeholder="Name" required onChange={handleNameChange}/></div>
-          {errorEmail ? <p style={{color : "orange", margin: 0}}>Please enter a valid email</p> : ''}
-          <div><input type="email" value={email} placeholder="Email" required onChange={handleEmailChange}/></div>
-          {errorMessage ? <p style={{color : "orange", margin: 0}}>Please enter a Message</p> : ''}
-          <div><input type="text" value={message} placeholder="Message" required onChange={handleMessageChange}/></div>
- 
-          <button className="full-btn" type="button" onClick={handleSubmit}>Send</button>
-          
-          
-     </form>
-      
-      < MsgRecievedModal onClose={() => setShowMsgRecievedModal(false)} show={showMsgRecievedModal} />
-  </div>
-  
+        <button className="full-btn" type="button" onClick={handleSubmit}>
+          Send
+        </button>
+      </form>
+
+      <MsgRecievedModal
+        onClose={() => setShowMsgRecievedModal(false)}
+        show={showMsgRecievedModal}
+      />
+    </div>
   );
-  
- 
-}
- 
-export default ContactForm
+};
+
+export default ContactForm;

@@ -11,14 +11,8 @@
   padding: auto;
   margin: 100px auto;
   background-color: orange;
-  /* border-radius: 50%; */
   height: 35vh;
   width: 35vh;
-  /* -webkit-animation:circle 1s linear infinite;
-  -moz-animation:circle 1s linear infinite;
-  -o-animation: circle 1s linear infinite;
-  animation: circle 1s linear infinite; */
-  /* transition: all 0.2s; */
   -webkit-animation: rotation .9s;
 	-moz-animation: rotation .9s;
 	-o-animation: rotation .9s;
@@ -124,15 +118,3 @@
 	  -o-transform: rotate(359deg);
     transform: rotate(359deg);}
 }
-
-/* @keyframes circle {
-  0% {
-    transform:scale(.9);
-  }
-  70% {
-    transform:scale(1);
-  }
-    100% {
-    transform:scale(.9);
-  }
-} */

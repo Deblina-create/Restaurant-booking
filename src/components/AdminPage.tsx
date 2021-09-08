@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import restaurantApi from "../api/restaurantApi";
-// import { AddModal } from "../modals/AddModal";
 import { DeleteModal } from "../modals/DeleteModal";
-import { EditModal } from "../modals/EditModal";
 import Booking from "../models/Booking";
 import { useHistory } from "react-router-dom";
-import { convertTypeAcquisitionFromJson } from "typescript";
 import Contact from "../models/Contact";
 import "./css/style.css";
 import "./css/preloader.css";
@@ -16,7 +13,6 @@ export const AdminPage = () => {
   const [bookings, setBookings] = useState([] as Booking[]);
   const [contacts, setContacts] = useState([] as Contact[]);
   const [selectedBooking, setSelectedBooking] = useState<Booking>();
-  // const [showAddModal, setShowAddModal] = useState(false);
   const [date, setDate] = useState(dateNow);
   const [loading] = useState(false);
   const [completed, setcompleted] = useState(false);
@@ -34,20 +30,9 @@ export const AdminPage = () => {
     0
   );
 
-  useEffect(() => {
-    console.log("AdminPage.useEffect called");
-    setTimeout(() => {
-      fetchData();
-      setTimeout(() => {
-        setcompleted(true);
-      }, 2000);
-    }, 2000)
-   
-    console.log(bookings);
-  }, [date]);
-
-  const fetchData = async() => {
+  const fetchData =  async() => {
     console.log("### bookings from DB");
+    setTimeout(async() => {
       const response = await restaurantApi.post<Booking[]>("/admin_search", {
         data: date,
       });
@@ -57,7 +42,15 @@ export const AdminPage = () => {
       console.log("### Response is ", response);
       setBookings(response.data as Booking[]);
       setContacts(rs.data as Contact[]);
+      setcompleted(true);
+    }, 1000);
   };
+
+  useEffect(() => {
+    console.log("AdminPage.useEffect called");
+    fetchData();
+    console.log(bookings);
+  }, [date]);
 
   const getEditForm = (booking: Booking) => {
     history.push("/edit/" + `${booking.id}`);
@@ -163,7 +156,7 @@ export const AdminPage = () => {
             <div className="completed">&#x2713;</div>
           )}
         </>
-      ) : (
+       ) : ( 
         <div>{divTag}</div>
       )}
       <DeleteModal

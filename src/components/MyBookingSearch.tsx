@@ -115,8 +115,8 @@ const MyBookingSearch = () => {
                                 <i className="fas fa-chevron-right"></i>
                             </button>
                         </h2>
-                        {errorNum ? <p style={{ color: "orange", margin: 0 }}>Please enter number of people!</p> : ''}
                         <input type="number" min={1} placeholder="No. of people" onChange={onNumberOfPeopleChange} />
+                        {errorNum ? <p className="error"><i className="fas fa-exclamation-triangle"></i> Please enter number of people!</p> : ''}
                         <button className="empty-btn" style={{ backgroundColor: "black" }} onClick={fetchData}>Search</button>
                         <div className="radio">
                             {searchData.map((data, index) => <div className="radio-btn" key={index}>
