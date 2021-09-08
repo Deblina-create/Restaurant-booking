@@ -5,6 +5,7 @@ import SearchInfo from '../models/SearchInfo';
 import Booking from '../models/Booking';
 import BookingForm from './BookingForm';
 import BookingDetails from './BookingDetails';
+import ErrorResponse from '../models/ErrorResponse';
 import "./css/style.css";
 import "../modals/css/modal_style.css";
 
@@ -30,23 +31,26 @@ const MyBookingSearch = () => {
     var curr = new Date();
     var dt = curr.toDateString();
     const [bookingDate, setBookingDate] = useState(dt);
-    const [dataSaved, setDataSaved] = useState(false);
+    //const [dataSaved, setDataSaved] = useState(false);
     const [peopleCount, setPeopleCount] = useState(0);
     const [searchData, setSearchData] = useState(initialData);
     const [dataFetched, setDataFetched] = useState(false);
     const [selectedSlot, setSelectedSlot] = useState(initialSelectedSlot);
-    const [savedBookingInfo, setSavedBookingInfo] = useState(initialBookingInfo);
+    //const [savedBookingInfo, setSavedBookingInfo] = useState(initialBookingInfo);
     const [errorNum, setErrorNum] = useState(false);
+    const [errorNumMessage, setErrorNumMessage] = useState("");
 
 
     const validate = (): boolean => {
         let valid = true;
         if (peopleCount <= 0) {
             setErrorNum(true);
+            setErrorNumMessage("Please enter number of people!");
             valid = false;
         }
         else {
             setErrorNum(false);
+            setErrorNumMessage("");
         }
         return valid;
     }
@@ -75,10 +79,10 @@ const MyBookingSearch = () => {
         }
     }
 
-    const saveData = async (booking?: Booking) => {
-        if (booking != null) {
-            setSavedBookingInfo(booking);
-            setDataSaved(true);
+    const saveData = async (err: ErrorResponse, booking?: Booking) => {
+        if(err.Code == "ERROR_TABLE_UNAVAILABLE"){
+            setErrorNum(true);
+            setErrorNumMessage(err.Message);
         }
     }
 
@@ -95,12 +99,7 @@ const MyBookingSearch = () => {
                 </div>
                 <div>
 
-                    {dataSaved ? <BookingDetails
-                        headerMessage="Your Boking Details"
-                        name={savedBookingInfo.Name}
-                        bookingDate={new Date(savedBookingInfo.BookingTime).toDateString()}
-                        peopleCount={savedBookingInfo.NoOfPeople}
-                    /> : <div >
+                    <div >
                         <h2>
                             {bookingDate}
                             {/* {date === dateNow? <span>(Today)</span> : ""} */}
@@ -116,7 +115,7 @@ const MyBookingSearch = () => {
                             </button>
                         </h2>
                         <input type="number" min={1} placeholder="No. of people" onChange={onNumberOfPeopleChange} />
-                        {errorNum ? <p className="error"><i className="fas fa-exclamation-triangle"></i> Please enter number of people!</p> : ''}
+                        {errorNum ? <p className="error"><i className="fas fa-exclamation-triangle"></i> {errorNumMessage}</p> : ''}
                         <button className="empty-btn" style={{ backgroundColor: "black" }} onClick={fetchData}>Search</button>
                         <div className="radio">
                             {searchData.map((data, index) => <div className="radio-btn" key={index}>
@@ -132,7 +131,7 @@ const MyBookingSearch = () => {
 
 
 
-                    </div>}
+                    </div>
                 </div>
             </div>
         </>

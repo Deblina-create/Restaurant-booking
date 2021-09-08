@@ -68,6 +68,7 @@ export const EditForm = () => {
     const payload: SearchRequest = {
       BookingDate: new Date(bookedDate),
       PeopleCount: peopleCount,
+      CurrentBookingId: bookingInfo.id
     };
     console.log("Payload", payload);
     const x = await restaurantApi.post<SearchInfo[]>("/search", {

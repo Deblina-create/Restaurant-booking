@@ -16,7 +16,7 @@ app.use(cors());
 app.post('/search', async (req, res) => {
     const sr = req.body.data as SearchRequest;
     console.log("req payload", req.body);
-    const dbResponse= await BD.searchBookingDetail(sr.BookingDate, sr.PeopleCount);
+    const dbResponse= await BD.searchBookingDetail(sr.BookingDate, sr.PeopleCount, sr.CurrentBookingId);
     return res.json(dbResponse);
 });
 

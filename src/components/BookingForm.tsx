@@ -23,63 +23,82 @@ const BookingForm = (props: any) => {
     const [errorEmail, setErrorEmail] = useState(false);
     const [errorName, setErrorName] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [gdprChecked, setGdprChecked] = useState(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         const dt = new Date(props.bookingDate);
         let bookingTimeText = "";
-        if(props.slot.TimeSlotIndex === 0){
-            bookingTimeText= new Date(new Date(dt).setHours(18,0,0,0)).toString();
+        if (props.slot.TimeSlotIndex === 0) {
+            bookingTimeText = new Date(new Date(dt).setHours(18, 0, 0, 0)).toString();
         }
-        else if(props.slot.TimeSlotIndex === 1){
-            bookingTimeText= new Date(new Date(dt).setHours(21,0,0,0)).toString();
+        else if (props.slot.TimeSlotIndex === 1) {
+            bookingTimeText = new Date(new Date(dt).setHours(21, 0, 0, 0)).toString();
         }
-        setBookingInfo({...bookingInfo, BookingTime: bookingTimeText, NoOfPeople: props.peopleCount});
-    },[props])
+        setBookingInfo({ ...bookingInfo, BookingTime: bookingTimeText, NoOfPeople: props.peopleCount });
+    }, [props])
 
-    const nameChanged = (e:any)=>{
+    const nameChanged = (e: any) => {
         const name = e.target.value.toString();
-        setBookingInfo({...bookingInfo, Name: name});
+        setBookingInfo({ ...bookingInfo, Name: name });
     }
 
-    const phoneChanged = (e:any)=>{
-        setBookingInfo({...bookingInfo, Phone: e.target.value.toString()});
+    const phoneChanged = (e: any) => {
+        setBookingInfo({ ...bookingInfo, Phone: e.target.value.toString() });
     }
 
-    const emailChanged = (e:any)=>{
+    const emailChanged = (e: any) => {
         const email = e.target.value.toString();
-        setBookingInfo({...bookingInfo, Email: email});
+        setBookingInfo({ ...bookingInfo, Email: email });
     }
 
-    const validate= () : boolean=>{
+    const validate = (): boolean => {
         let valid = true;
-        if(bookingInfo.Name == ""){
+        if (bookingInfo.Name == "") {
             setErrorName(true);
             valid = false;
         }
-        else{
+        else {
             setErrorName(false);
         }
-        if(!Utilities.validateEmail(bookingInfo.Email)){
+        if (!Utilities.validateEmail(bookingInfo.Email)) {
             setErrorEmail(true);
             valid = false;
         }
-        else{
+        else {
             setErrorEmail(false);
         }
         return valid;
     }
 
-    const saveData = async (e:any)=>{
+    const saveData = async (e: any) => {
         e.preventDefault();
-        if(!validate()){
+        if (!validate()) {
             return;
         }
         const x = await restaurantApi.post<string | ErrorResponse>("/booking", { data: bookingInfo });
         console.log("response data", x.data);
-        setBookingInfo({...bookingInfo, id: x.data as string})
-        setShowConfirmation(true);
-       
+        console.log("response data type", typeof x.data);
+        let err: ErrorResponse = {
+            Code: "",
+            Message: ""
+        };
+        let dType = typeof x.data;
+        if (dType == "string") {
+            setBookingInfo({ ...bookingInfo, id: x.data as string })
+            setShowConfirmation(true);
+        }
+        else{
+            err = x.data as ErrorResponse;
+        }
+
+        if (props.onSave) {
+            props.onSave(err, bookingInfo);
+        }
+
+        // history.push("/");
+
     }
+
 
     return (
         <div >
@@ -94,9 +113,10 @@ const BookingForm = (props: any) => {
                 <input type="text" placeholder="Phone" onChange={phoneChanged}></input>
                 <input type="email" placeholder="Email" onChange={emailChanged}></input>
                 {errorEmail ? <p className="error"><i className="fas fa-exclamation-triangle"></i> Please enter a valid email</p> : ''}
-                <button className="full-btn" onClick={saveData}>Book</button>
+                <span><input type="checkbox" id="info" name="info" checked={gdprChecked} onChange={() => setGdprChecked(!gdprChecked)}></input>We use your info for better customer experience</span>
+                <button className="full-btn" disabled={!gdprChecked} onClick={saveData}>Book</button>
             </form>
-            <ConfirmationModal onClose={()=>setShowConfirmation(false)} show={showConfirmation} props={bookingInfo} /> 
+            <ConfirmationModal onClose={() => setShowConfirmation(false)} show={showConfirmation} props={bookingInfo} />
         </div>
     );
 }
