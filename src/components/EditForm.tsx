@@ -31,6 +31,7 @@ export const EditForm = () => {
   const [bookedDate, setBookedDate] = useState("");
   const [bookedTime, setBookedTime] = useState("");
   const [disabled, setDisabled] = useState(true);
+  const [disabledContact, setDisableContact] = useState(false);
   const [searchData, setSearchData] = useState(initialData);
   const [dataFetched, setDataFetched] = useState(false);
   // const [type, setType] = useState("radio");
@@ -57,6 +58,7 @@ export const EditForm = () => {
 
   const searchTable = async () => {
     setNotClick(false);
+    setDisableContact(false);
     if(!validate()) {
       return;
     }
@@ -117,6 +119,7 @@ export const EditForm = () => {
   const activate = () => {
     setDisabled(false);
     setNotClick(true);
+    setDisableContact(true);
   };
 
   const openForm = (timeSlot: SearchInfo) => {
@@ -189,7 +192,7 @@ const validateDate= () : boolean=>{
           onChange={onNumberOfPeopleChange}
           disabled={disabled}
         />
-         {errorNum ? <p style={{ color: "orange", margin: 0 }}>Please enter number of people!</p> : ''}
+         {errorNum ? <p className="error"><i className="fas fa-exclamation-triangle"></i>Please enter number of people!</p> : ''}
         <input
           type="text"
           value={bookedTime}
@@ -213,7 +216,6 @@ const validateDate= () : boolean=>{
           ))}
         </div>
         <div>
-        {notclick ? <p style={{ color: "orange", margin: 0 }}>Please check available tabels first!</p> : ''}
           <button
             className="empty-btn"
             style={{ backgroundColor: "black" }}
@@ -222,6 +224,7 @@ const validateDate= () : boolean=>{
           >
             Check available tabels
           </button>
+          {notclick ? <p className="error"><i className="fas fa-exclamation-triangle"></i> Check available tabels first! </p> : ''}
         </div>
         <p>
           Contact information
@@ -232,7 +235,7 @@ const validateDate= () : boolean=>{
           value={bookingInfo.Name}
           onChange={nameChanged}
         />
-        {errorName ? <p style={{color : "orange", margin: 0}}>Please enter your name</p> : ''}
+        {errorName ? <p className="error"><i className="fas fa-exclamation-triangle"></i>Please enter your name</p> : ''}
         <input
           type="text"
           placeholder="Mobile number"
@@ -245,7 +248,7 @@ const validateDate= () : boolean=>{
           value={bookingInfo.Email}
           onChange={emailChanged}
         />
-         {errorEmail ? <p style={{color : "orange", margin: 0}}>Please enter a valid email</p> : ''}
+         {errorEmail ? <p className="error"><i className="fas fa-exclamation-triangle"></i>Please enter a valid email</p> : ''}
         {/* <input
             type="text"
             placeholder="Preference"
@@ -256,7 +259,7 @@ const validateDate= () : boolean=>{
         <button
           onClick={saveData}
           className="empty-btn"
-          // disabled={disabledContact}
+          disabled={disabledContact}
           style={{ backgroundColor: "black" }}
         >
           Save

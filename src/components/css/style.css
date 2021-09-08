@@ -159,6 +159,12 @@ th {
   color: white
 }
 
+.error {
+  color: orange; 
+  margin: 0;
+  font-size: 15px;
+}
+
 @media screen and (min-width: 600px) {
   .increase {
     left: 330px;
