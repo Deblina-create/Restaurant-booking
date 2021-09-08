@@ -5,7 +5,8 @@ import Booking from "../models/Booking";
 import ErrorResponse from "../models/ErrorResponse";
 import SearchInfo from "../models/SearchInfo";
 import SearchRequest from "../models/SearchRequest";
-import "./Admin.css";
+import Utilities from "../Utilities";
+import "./css/style.css";
 
 type editParams = {
   id: string;
@@ -22,11 +23,6 @@ const initialBookingInfo: Booking = {
 };
 
 const initialData: SearchInfo[] = [];
-const initialSelectedSlot: SearchInfo = {
-  TimeSlotIndex: -1,
-  TimeSlotText: "",
-  IsTableAvailable: false,
-};
 
 export const EditForm = () => {
   const { id } = useParams<editParams>();
@@ -35,14 +31,19 @@ export const EditForm = () => {
   const [bookedDate, setBookedDate] = useState("");
   const [bookedTime, setBookedTime] = useState("");
   const [disabled, setDisabled] = useState(true);
-  const [disabledContact, setDisabledContact] = useState(false);
+  const [disabledContact, setDisableContact] = useState(false);
   const [searchData, setSearchData] = useState(initialData);
   const [dataFetched, setDataFetched] = useState(false);
-  const [selectedSlot, setSelectedSlot] = useState(initialSelectedSlot);
-  // const [type, setType] = useState("radio");
   const [hidden, setHidden] = useState(false);
-
+  const [errorNum, setErrorNum] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorName, setErrorName] = useState(false);
+  const [notclick, setNotClick] = useState(false);
   const history = useHistory();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     const res = await restaurantApi.get<Booking | null>(`/booking/${id}`);
@@ -55,7 +56,11 @@ export const EditForm = () => {
   };
 
   const searchTable = async () => {
-    // setType("hidden");
+    setNotClick(false);
+    setDisableContact(false);
+    if (!validate()) {
+      return;
+    }
     setHidden(true);
     let peopleCount = bookingInfo.NoOfPeople;
     console.log("Date value", bookedDate);
@@ -76,15 +81,19 @@ export const EditForm = () => {
 
   const saveData = async () => {
     console.log(bookingInfo);
+    if (!validate()) {
+      return;
+    }
     await restaurantApi.put<Booking | ErrorResponse>("/booking", {
       data: bookingInfo,
     });
     history.push("/admin");
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const onDateChange = (e: any) => {
+    setBookedDate(e.target.value);
+    validateDate();
+  };
 
   const onNumberOfPeopleChange = (e: any) => {
     setBookingInfo({
@@ -109,21 +118,49 @@ export const EditForm = () => {
 
   const activate = () => {
     setDisabled(false);
-    setDisabledContact(true);
-  };
-
-  const activateContact = () => {
-    setDisabledContact(false);
-    setDisabled(true);
+    setNotClick(true);
+    setDisableContact(true);
   };
 
   const openForm = (timeSlot: SearchInfo) => {
-    //setSelectedSlot(timeSlot);
     bookingTime(timeSlot);
   };
 
+  const validate = (): boolean => {
+    let valid = true;
+    if (isNaN(bookingInfo.NoOfPeople)) {
+      setErrorNum(true);
+      valid = false;
+    } else {
+      setErrorNum(false);
+    }
+    if (bookingInfo.Name === "") {
+      setErrorName(true);
+      valid = false;
+    } else {
+      setErrorName(false);
+    }
+    if (!Utilities.validateEmail(bookingInfo.Email)) {
+      setErrorEmail(true);
+      valid = false;
+    } else {
+      setErrorEmail(false);
+    }
+    return valid;
+  };
+  const validateDate = (): boolean => {
+    let valid = true;
+    if (!searchTable) {
+      setNotClick(true);
+      valid = false;
+    } else {
+      setNotClick(false);
+    }
+    return valid;
+  };
+
   return (
-    <div className="admin-page">
+    <div className="container">
       <div className="back">
         <a href={"/admin"}>
           <i className="fas fa-chevron-left"></i> Edit form
@@ -141,7 +178,7 @@ export const EditForm = () => {
         <input
           type="date"
           value={bookedDate}
-          onChange={(e) => setBookedDate(e.target.value)}
+          onChange={onDateChange}
           disabled={disabled}
         />
         <input
@@ -151,13 +188,15 @@ export const EditForm = () => {
           onChange={onNumberOfPeopleChange}
           disabled={disabled}
         />
-        <input
-          type="text"
-          value={bookedTime}
-          // onChange={(e) => setBookedDate(e.target.value)}
-          disabled
-          hidden={hidden}
-        />
+        {errorNum ? (
+          <p className="error">
+            <i className="fas fa-exclamation-triangle"></i>Please enter number
+            of people!
+          </p>
+        ) : (
+          ""
+        )}
+        <input type="text" value={bookedTime} disabled hidden={hidden} />
         <div className="radio">
           {searchData.map((data, index) => (
             <div className="radio-btn" key={index}>
@@ -169,36 +208,10 @@ export const EditForm = () => {
                 onClick={() => openForm(data)}
               />
               <label>{data.TimeSlotText}</label>
-              {!data.IsTableAvailable? <span> (Full)</span> : ""}
+              {!data.IsTableAvailable ? <span> (Full)</span> : ""}
             </div>
           ))}
         </div>
-        {/* <div className="radio">
-          <div className="radio-btn">
-            <input
-              id="time18"
-              type={type}
-              value={"18:00"}
-              name="time"
-              checked={bookedTime === "18:00"}
-              onChange={(e) => setBookedTime(e.target.value)}
-              // disabled={disabled}
-            />
-            <label htmlFor="time18" hidden={hidden}>18:00</label>
-          </div>
-          <div className="radio-btn">
-            <input
-              id="time21"
-              type={type}
-              value={"21:00"}
-              name="time"
-              checked={bookedTime === "21:00"}
-              onChange={(e) => setBookedTime(e.target.value)}
-              // disabled={disabled}
-            />
-            <label htmlFor="time21" hidden={hidden}>21:00</label>
-          </div>
-        </div> */}
         <div>
           <button
             className="empty-btn"
@@ -208,45 +221,56 @@ export const EditForm = () => {
           >
             Check available tabels
           </button>
+          {notclick ? (
+            <p className="error">
+              <i className="fas fa-exclamation-triangle"></i> Check available
+              tabels first!{" "}
+            </p>
+          ) : (
+            ""
+          )}
         </div>
-        <p>
-          Contact information
-          {/* <span className="edit" onClick={activateContact}>
-            <i className="fas fa-pen"></i>
-          </span> */}
-        </p>
+        <p>Contact information</p>
         <input
           type="text"
           placeholder="Name"
           value={bookingInfo.Name}
           onChange={nameChanged}
-          // disabled={disabledContact}
         />
+        {errorName ? (
+          <p className="error">
+            <i className="fas fa-exclamation-triangle"></i>Please enter your
+            name
+          </p>
+        ) : (
+          ""
+        )}
         <input
           type="text"
           placeholder="Mobile number"
           value={bookingInfo.Phone}
           onChange={phoneChanged}
-          // disabled={disabledContact}
         />
         <input
           type="text"
           placeholder="Email"
           value={bookingInfo.Email}
           onChange={emailChanged}
-          // disabled={disabledContact}
         />
-        {/* <input
-            type="text"
-            placeholder="Preference"
-            defaultValue={bookingInfo.Preference}
-          /> */}
+        {errorEmail ? (
+          <p className="error">
+            <i className="fas fa-exclamation-triangle"></i>Please enter a valid
+            email
+          </p>
+        ) : (
+          ""
+        )}
       </div>
       <div className="modal-footer">
         <button
           onClick={saveData}
           className="empty-btn"
-          // disabled={disabledContact}
+          disabled={disabledContact}
           style={{ backgroundColor: "black" }}
         >
           Save
@@ -256,16 +280,15 @@ export const EditForm = () => {
   );
   function bookingTime(slot: SearchInfo) {
     console.log("Changed Slot", slot);
+    console.log(bookedDate);
     const dt = new Date(bookedDate.toString());
     let bookingTimeText = "";
-    if (slot.TimeSlotIndex === 0 ) {
+    if (slot.TimeSlotIndex === 0) {
       bookingTimeText = new Date(new Date(dt).setHours(18, 0, 0, 0)).toString();
-    
-    } else if(slot.TimeSlotIndex === 1) {
+    } else if (slot.TimeSlotIndex === 1) {
       bookingTimeText = new Date(new Date(dt).setHours(21, 0, 0, 0)).toString();
     }
     console.log("Changed booking time", bookingTimeText);
-    //bookingInfo.BookingTime = bookingTimeText;
-    setBookingInfo({...bookingInfo, BookingTime: bookingTimeText});
+    setBookingInfo({ ...bookingInfo, BookingTime: bookingTimeText });
   }
 };

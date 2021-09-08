@@ -5,7 +5,7 @@ import { ConfirmationModal } from '../modals/ComfirmationModal';
 import Booking from '../models/Booking';
 import ErrorResponse from '../models/ErrorResponse';
 import Utilities from '../Utilities'
-import "./Admin.css";
+import "./css/style.css";
 
 const initialBookingInfo: Booking = {
     BookingTime: "",
@@ -108,12 +108,11 @@ const BookingForm = (props: any) => {
                 <input disabled type="text" value={props.slot.TimeSlotText} ></input>
                 <input disabled type="text" value={props.peopleCount} ></input>
                 <h3>Contact Info</h3>
-                {errorName ? <p style={{ color: "orange", margin: 0 }}>Please enter your name</p> : ''}
                 <input type="text" placeholder="Name" onChange={nameChanged}></input>
+                {errorName ? <p className="error"><i className="fas fa-exclamation-triangle"></i> Please enter your name</p> : ''}
                 <input type="text" placeholder="Phone" onChange={phoneChanged}></input>
-                {errorEmail ? <p style={{ color: "orange", margin: 0 }}>Please enter a valid email</p> : ''}
                 <input type="email" placeholder="Email" onChange={emailChanged}></input>
-
+                {errorEmail ? <p className="error"><i className="fas fa-exclamation-triangle"></i> Please enter a valid email</p> : ''}
                 <span><input type="checkbox" id="info" name="info" checked={gdprChecked} onChange={() => setGdprChecked(!gdprChecked)}></input>We use your info for better customer experience</span>
                 <button className="full-btn" disabled={!gdprChecked} onClick={saveData}>Book</button>
             </form>

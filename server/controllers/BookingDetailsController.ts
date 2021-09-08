@@ -116,6 +116,28 @@ const editBookingDetail = async (booking: Booking): Promise<boolean> => {
 
     try {
         await firebase.db.collection("BookingDetails").doc(booking.id).update({ NoOfPeople: booking.NoOfPeople, Email: booking.Email, Preferences: booking.Preferences, Name: booking.Name, Phone: booking.Phone, BookingTime: booking.BookingTime, BookedTableCount: tableRequired });
+        const html = `
+        <h3>Your Reservation (#${booking.id}) has been updated!</h3>
+        <h5>Your booking details are as mentioned below</h5>
+        <table>
+        <tr>
+            <td><b>Reservation No.</b></td>
+            <td><b>Name</b></td>
+            <td><b>Date & Time</b></td>
+            <td><b>No. of people</b></td>
+        </tr>
+        <tr>
+            <td>${booking.id}</td>
+            <td>${booking.Name}</td>
+            <td>${booking.BookingTime}</td>
+            <td>${booking.NoOfPeople}</td>
+        </tr>
+        </table>
+        <div>
+            <p>If you want to cancel the reservation, click <a href="${config.UIServerBaseUrl}/cancel/${booking.id}">here</a></p>
+        </div>
+        `;
+        sendMail(booking.Email, "Restaurant Reservation updated", "Your reservation has been updated!", html);
         return true;
     }
     catch (err: any) {

@@ -1,16 +1,8 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  waitFor,
-  screen,
-  getByTestId,
-} from "@testing-library/react";
+import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { AdminPage } from "../AdminPage";
 import { useState } from "react";
-import axios from "axios";
-// jest.mock('axios');
 
 import MockAdapter from "axios-mock-adapter";
 import restaurantApi from "../../api/restaurantApi";
@@ -38,17 +30,27 @@ const fakeBookings = [
   },
 ];
 
+const fakeContacts = [
+  {
+    Email: "testing@gmail.com",
+    Message: "dummy text",
+    Name: "testing",
+  },
+];
+
 describe("Admin component", () => {
+  
   const mock = new MockAdapter(restaurantApi);
   test("it displays a row for each booking", async () => {
     const resp = fakeBookings;
+    const response = fakeContacts;    
     mock.onPost("/admin_search").reply(200, resp);
-    
+    mock.onPost("/contact_search").reply(200, response);
+
     render(<AdminPage />);
-    
     expect(screen.getByText("Admin")).toBeInTheDocument();
-    
-    const bookingList = await waitFor(() => screen.findAllByTestId("booking"));
+
+    const bookingList = await waitFor(() => screen.findAllByTestId("booking"), {timeout: 3000});
     expect(bookingList).toHaveLength(2);
   });
 });
