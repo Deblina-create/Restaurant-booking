@@ -1,4 +1,17 @@
 import { useState } from "react";
+import restaurantApi from "../api/restaurantApi";
+import nodemailer from 'nodemailer';
+import { MsgRecievedModal } from "../modals/MsgRecievedModal";
+import Utilities from "../Utilities";
+//IMPORT
+
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//       user: 'deblina4.se@gmail.com',
+//       pass: 'frontend@2020',
+//   },
+// });
 import "./css/contactForm.css";
 import { useHistory } from "react-router-dom";
 
@@ -15,6 +28,11 @@ const ContactForm = (props: ContactFormProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [showMsgRecievedModal, setShowMsgRecievedModal] = useState(false);
+
+  const [errorName, setErrorName]= useState(false);
+  const [errorEmail, setErrorEmail]= useState(false);
+  const [errorMessage, setErrorMessage]= useState(false);
   const history = useHistory();
 
 
@@ -30,16 +48,47 @@ const ContactForm = (props: ContactFormProps) => {
     setMessage (event.target.value);
   }
 
-
+  const validate= () : boolean=>{
+    let valid = true;
+    if(name === ""){
+        setErrorName(true);
+        valid = false;
+    }
+    else{
+        setErrorName(false);
+    }
+    if(!Utilities.validateEmail(email)){
+        setErrorEmail(true);
+        valid = false;
+    }
+    else{
+        setErrorEmail(false);
+    }
+    if(message === ""){
+      setErrorMessage(true);
+      valid = false;
+  }
+  else{
+      setErrorMessage(false);
+  }
+    return valid;
+}
   async function handleSubmit() {
+    if(!validate()){
+      return
+    }
     const payload = {
       Name: name,
       Email: email,
       Message: message,
     };
+    
+    
 
 
-    props.post(payload);
+    await props.post(payload);
+    //sends data?
+    setShowMsgRecievedModal(true)
     
     history.push("/");
   }
@@ -55,16 +104,20 @@ const ContactForm = (props: ContactFormProps) => {
         </div>
     <p>Please Contact Us Using the Form Below</p>
       <form >
+
+          {errorName ? <p style={{color : "orange", margin: 0}}>Please enter your name</p> : ''}
           <div><input type="text" value={name} placeholder="Name" required onChange={handleNameChange}/></div>
-        
+          {errorEmail ? <p style={{color : "orange", margin: 0}}>Please enter a valid email</p> : ''}
           <div><input type="email" value={email} placeholder="Email" required onChange={handleEmailChange}/></div>
-        
+          {errorMessage ? <p style={{color : "orange", margin: 0}}>Please enter a Message</p> : ''}
           <div><input type="text" value={message} placeholder="Message" required onChange={handleMessageChange}/></div>
  
           <button className="full-btn" type="button" onClick={handleSubmit}>Send</button>
           
           
      </form>
+      
+      < MsgRecievedModal onClose={() => setShowMsgRecievedModal(false)} show={showMsgRecievedModal} />
   </div>
   
   );

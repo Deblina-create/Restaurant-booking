@@ -7,7 +7,7 @@ import ErrorResponse from "../models/ErrorResponse";
 
 const ContactPage = () => {
   const [isSent, setIsSent] = useState(false);
-  //const [showMsgRec, setShowEdit] = useState(true);
+  
 
   //SEND MAIL???
   const sendMail = (payload: any) => {

@@ -1,20 +1,23 @@
+import { useHistory } from "react-router-dom";
 import React from "react";
-import { useHistory } from "react-router";
 import "./css/modal_style.css";
 
 interface ModalProps {
   onClose: () => void;
   show: boolean;
 }
-export const MsgRecievedModal: React.FC<ModalProps> = ({ onClose, show }) => {
-  let history = useHistory();
+export const MsgRecievedModal: React.FC<ModalProps> = ({ 
+  onClose, 
+  show 
+}) => {
+  const history = useHistory();
   if (!show) {
     return null;
   }
 
   const routeChange = () => {
     history.push("/");
-  }
+  };
 
   return (
     <div className="modal">
