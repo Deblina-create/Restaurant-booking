@@ -90,7 +90,7 @@ const ContactForm = (props: ContactFormProps) => {
         </div>
         {errorName ? (
           <p className="error">
-            <i className="fas fa-exclamation-triangle"></i>Please enter your
+            <i className="fas fa-exclamation-triangle"></i> Please enter your
             name
           </p>
         ) : (
@@ -107,7 +107,7 @@ const ContactForm = (props: ContactFormProps) => {
         </div>
         {errorEmail ? (
           <p className="error">
-            <i className="fas fa-exclamation-triangle"></i>Please enter a valid
+            <i className="fas fa-exclamation-triangle"></i> Please enter a valid
             email
           </p>
         ) : (
@@ -124,7 +124,7 @@ const ContactForm = (props: ContactFormProps) => {
         </div>
         {errorMessage ? (
           <p className="error">
-            <i className="fas fa-exclamation-triangle"></i>Please enter a
+            <i className="fas fa-exclamation-triangle"></i> Please enter a
             Message
           </p>
         ) : (
