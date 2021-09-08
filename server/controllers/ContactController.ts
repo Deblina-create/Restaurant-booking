@@ -1,35 +1,28 @@
-import Contact from "../models/Contact";
-import firebase from "../firebase";
-import ErrorResponse from "../models/ErrorResponse";
-import nodemailer from "nodemailer";
+import Contact from '../models/Contact';
+import firebase from '../firebase';
+import ErrorResponse from '../models/ErrorResponse';
+import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "deblina4.se@gmail.com",
-    pass: "frontend@2020",
-  },
+    service: 'gmail',
+    auth: {
+        user: 'deblina4.se@gmail.com',
+        pass: 'frontend@2020',
+    },
 });
 
-const saveContact = async (
-  contact: Contact
-): Promise<string | ErrorResponse> => {
-  let error: ErrorResponse = {
-    Code: "",
-    Message: "",
-  };
+const saveContact = async (contact: Contact): Promise<string | ErrorResponse> => {
+    let error: ErrorResponse = {
+        Code: "",
+        Message: ""
+    };
 
-  const doc = await firebase.db
-    .collection("ContactDetails")
-    .add({
-      Email: contact.Email,
-      Message: contact.Message,
-      Name: contact.Name,
-    });
 
-  console.log(doc.id);
-  if (doc && doc.id) {
-    const html = `
+    const doc = await firebase.db.collection("ContactDetails").add({ Email: contact.Email, Message: contact.Message, Name: contact.Name });
+
+    console.log(doc.id);
+    if (doc && doc.id) {
+        const html = `
         <div>
             <p>We have received your message. We will take necessary actions.</p>
         </div>
