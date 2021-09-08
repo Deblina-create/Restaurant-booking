@@ -5,7 +5,8 @@ import Booking from "../models/Booking";
 import ErrorResponse from "../models/ErrorResponse";
 import SearchInfo from "../models/SearchInfo";
 import SearchRequest from "../models/SearchRequest";
-import "./Admin.css";
+import Utilities from '../Utilities'
+import "./css/style.css";
 
 type editParams = {
   id: string;
@@ -41,8 +42,14 @@ export const EditForm = () => {
   const [selectedSlot, setSelectedSlot] = useState(initialSelectedSlot);
   // const [type, setType] = useState("radio");
   const [hidden, setHidden] = useState(false);
-
+  const [errorNum, setErrorNum]  = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorName, setErrorName] = useState(false);
   const history = useHistory();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     const res = await restaurantApi.get<Booking | null>(`/booking/${id}`);
@@ -55,7 +62,9 @@ export const EditForm = () => {
   };
 
   const searchTable = async () => {
-    // setType("hidden");
+    if(!validate()) {
+      return;
+    }
     setHidden(true);
     let peopleCount = bookingInfo.NoOfPeople;
     console.log("Date value", bookedDate);
@@ -74,17 +83,15 @@ export const EditForm = () => {
   };
 
   const saveData = async () => {
-    bookingTime();
     console.log(bookingInfo);
+    if(!validate()) {
+      return;
+    }
     await restaurantApi.put<Booking | ErrorResponse>("/booking", {
       data: bookingInfo,
     });
     history.push("/admin");
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const onNumberOfPeopleChange = (e: any) => {
     setBookingInfo({
@@ -118,11 +125,37 @@ export const EditForm = () => {
   };
 
   const openForm = (timeSlot: SearchInfo) => {
-    setSelectedSlot(timeSlot);
+    //setSelectedSlot(timeSlot);
+    bookingTime(timeSlot);
   };
 
+  const validate= () : boolean=>{
+    let valid = true;
+    if(isNaN(bookingInfo.NoOfPeople)){
+      setErrorNum(true);
+      valid = false;
+    }else{
+      setErrorNum(false);
+    }
+    if(bookingInfo.Name === ""){
+        setErrorName(true);
+        valid = false;
+    }
+    else{
+        setErrorName(false);
+    }
+    if(!Utilities.validateEmail(bookingInfo.Email)){
+        setErrorEmail(true);
+        valid = false;
+    }
+    else{
+        setErrorEmail(false);
+    }
+    return valid;
+}
+
   return (
-    <div className="admin-page">
+    <div className="container">
       <div className="back">
         <a href={"/admin"}>
           <i className="fas fa-chevron-left"></i> Edit form
@@ -150,6 +183,7 @@ export const EditForm = () => {
           onChange={onNumberOfPeopleChange}
           disabled={disabled}
         />
+         {errorNum ? <p style={{ color: "orange", margin: 0 }}>Please enter number of people!</p> : ''}
         <input
           type="text"
           value={bookedTime}
@@ -168,7 +202,7 @@ export const EditForm = () => {
                 onClick={() => openForm(data)}
               />
               <label>{data.TimeSlotText}</label>
-              {!data.IsTableAvailable? <span> (Full)</span> : ""}
+              {!data.IsTableAvailable ? <span> (Full)</span> : ""}
             </div>
           ))}
         </div>
@@ -221,6 +255,7 @@ export const EditForm = () => {
           onChange={nameChanged}
           // disabled={disabledContact}
         />
+        {errorName ? <p style={{color : "orange", margin: 0}}>Please enter your name</p> : ''}
         <input
           type="text"
           placeholder="Mobile number"
@@ -235,6 +270,7 @@ export const EditForm = () => {
           onChange={emailChanged}
           // disabled={disabledContact}
         />
+         {errorEmail ? <p style={{color : "orange", margin: 0}}>Please enter a valid email</p> : ''}
         {/* <input
             type="text"
             placeholder="Preference"
@@ -253,15 +289,17 @@ export const EditForm = () => {
       </div>
     </div>
   );
-  function bookingTime() {
+  function bookingTime(slot: SearchInfo) {
+    console.log("Changed Slot", slot);
     const dt = new Date(bookedDate.toString());
     let bookingTimeText = "";
-    if (selectedSlot.TimeSlotIndex === 0 || bookedTime === "18:00") {
+    if (slot.TimeSlotIndex === 0) {
       bookingTimeText = new Date(new Date(dt).setHours(18, 0, 0, 0)).toString();
-    
-    } else if(selectedSlot.TimeSlotIndex === 1 || bookedTime === "21:00") {
+    } else if (slot.TimeSlotIndex === 1) {
       bookingTimeText = new Date(new Date(dt).setHours(21, 0, 0, 0)).toString();
     }
-    bookingInfo.BookingTime = bookingTimeText;
+    console.log("Changed booking time", bookingTimeText);
+    //bookingInfo.BookingTime = bookingTimeText;
+    setBookingInfo({ ...bookingInfo, BookingTime: bookingTimeText });
   }
 };

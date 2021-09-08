@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./contactForm.css";
 import restaurantApi from "../api/restaurantApi";
 import nodemailer from 'nodemailer';
 import { MsgRecievedModal } from "../modals/MsgRecievedModal";
@@ -13,25 +12,15 @@ import Utilities from "../Utilities";
 //       pass: 'frontend@2020',
 //   },
 // });
+import "./css/contactForm.css";
+import { useHistory } from "react-router-dom";
+
+
 
 interface ContactFormProps {
   setIsSent?: any;
   post(payload: any): any;
 }
-
-// const sendMail = (to: string, subject: string, text: string, html: string) => {
-//   transporter.sendMail({
-//       from: '"Team Restaurant" <deblina4.se@gmail.com>', // sender address
-//       to: to,
-//       subject: subject,
-//       text: text,
-//       html: html
-//   }).then(info => {
-//       console.log({ info });
-//   }).catch(console.error);
-// }
-
-
 
 
 const ContactForm = (props: ContactFormProps) => {
@@ -44,6 +33,7 @@ const ContactForm = (props: ContactFormProps) => {
   const [errorName, setErrorName]= useState(false);
   const [errorEmail, setErrorEmail]= useState(false);
   const [errorMessage, setErrorMessage]= useState(false);
+  const history = useHistory();
 
 
   function handleNameChange(event: any) {
@@ -88,32 +78,30 @@ const ContactForm = (props: ContactFormProps) => {
       return
     }
     const payload = {
-      name,
-      email,
-      message,
+      Name: name,
+      Email: email,
+      Message: message,
     };
     
     
 
-    // function show() {
-    //   //add here show msg recieved and set the boleeans
-    //   //setMsgRe
-    //   console.log("modal");
-    //   };
-
-    console.log(props.post)
 
     await props.post(payload);
     //sends data?
     setShowMsgRecievedModal(true)
     
-
+    history.push("/");
   }
   
 
   return (
   
-    <div id="contact-container">
+    <div className="container">
+        <div className="back">
+          <a href={"/"} data-testid="admin">
+            <i className="fas fa-chevron-left"></i> Contac us
+          </a>
+        </div>
     <p>Please Contact Us Using the Form Below</p>
       <form >
 
@@ -124,7 +112,7 @@ const ContactForm = (props: ContactFormProps) => {
           {errorMessage ? <p style={{color : "orange", margin: 0}}>Please enter a Message</p> : ''}
           <div><input type="text" value={message} placeholder="Message" required onChange={handleMessageChange}/></div>
  
-          <button type="button" onClick={handleSubmit}>Send</button>
+          <button className="full-btn" type="button" onClick={handleSubmit}>Send</button>
           
           
      </form>
