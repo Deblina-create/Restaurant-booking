@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import restaurantApi from "../api/restaurantApi";
 import Contact from "../models/Contact";
 import ErrorResponse from "../models/ErrorResponse";
-import "./css/modal.css";
+import "./css/modal_style.css";
 
 interface ModalProps {
   onClose: () => void;
