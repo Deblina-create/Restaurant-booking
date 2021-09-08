@@ -212,32 +212,6 @@ const validateDate= () : boolean=>{
             </div>
           ))}
         </div>
-        {/* <div className="radio">
-          <div className="radio-btn">
-            <input
-              id="time18"
-              type={type}
-              value={"18:00"}
-              name="time"
-              checked={bookedTime === "18:00"}
-              onChange={(e) => setBookedTime(e.target.value)}
-              // disabled={disabled}
-            />
-            <label htmlFor="time18" hidden={hidden}>18:00</label>
-          </div>
-          <div className="radio-btn">
-            <input
-              id="time21"
-              type={type}
-              value={"21:00"}
-              name="time"
-              checked={bookedTime === "21:00"}
-              onChange={(e) => setBookedTime(e.target.value)}
-              // disabled={disabled}
-            />
-            <label htmlFor="time21" hidden={hidden}>21:00</label>
-          </div>
-        </div> */}
         <div>
         {notclick ? <p style={{ color: "orange", margin: 0 }}>Please check available tabels first!</p> : ''}
           <button
@@ -251,16 +225,12 @@ const validateDate= () : boolean=>{
         </div>
         <p>
           Contact information
-          {/* <span className="edit" onClick={activateContact}>
-            <i className="fas fa-pen"></i>
-          </span> */}
         </p>
         <input
           type="text"
           placeholder="Name"
           value={bookingInfo.Name}
           onChange={nameChanged}
-          // disabled={disabledContact}
         />
         {errorName ? <p style={{color : "orange", margin: 0}}>Please enter your name</p> : ''}
         <input
@@ -268,14 +238,12 @@ const validateDate= () : boolean=>{
           placeholder="Mobile number"
           value={bookingInfo.Phone}
           onChange={phoneChanged}
-          // disabled={disabledContact}
         />
         <input
           type="text"
           placeholder="Email"
           value={bookingInfo.Email}
           onChange={emailChanged}
-          // disabled={disabledContact}
         />
          {errorEmail ? <p style={{color : "orange", margin: 0}}>Please enter a valid email</p> : ''}
         {/* <input
