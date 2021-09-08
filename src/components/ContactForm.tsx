@@ -104,13 +104,13 @@ const ContactForm = (props: ContactFormProps) => {
         </div>
     <p>Please Contact Us Using the Form Below</p>
       <form >
-
-          {errorName ? <p style={{color : "orange", margin: 0}}>Please enter your name</p> : ''}
+ 
           <div><input type="text" value={name} placeholder="Name" required onChange={handleNameChange}/></div>
-          {errorEmail ? <p style={{color : "orange", margin: 0}}>Please enter a valid email</p> : ''}
+          {errorName ? <p className="error"><i className="fas fa-exclamation-triangle"></i>Please enter your name</p> : ''}
           <div><input type="email" value={email} placeholder="Email" required onChange={handleEmailChange}/></div>
-          {errorMessage ? <p style={{color : "orange", margin: 0}}>Please enter a Message</p> : ''}
+          {errorEmail ? <p className="error"><i className="fas fa-exclamation-triangle"></i>Please enter a valid email</p> : ''}
           <div><input type="text" value={message} placeholder="Message" required onChange={handleMessageChange}/></div>
+          {errorMessage ? <p className="error"><i className="fas fa-exclamation-triangle"></i>Please enter a Message</p> : ''}
  
           <button className="full-btn" type="button" onClick={handleSubmit}>Send</button>
           
