@@ -19,12 +19,7 @@ const ContactPage = () => {
       });
   };
 
-
-  return isSent ? (
-    <div>
-      <p>Booking detail</p>
-    </div>
-  ) : (
+  return(
     <ContactForm post={sendMail} setIsSent={setIsSent} />
   );
 };

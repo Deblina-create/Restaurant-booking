@@ -18,7 +18,7 @@ const ContactForm = (props: ContactFormProps) => {
   const [errorName, setErrorName] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
-  const history = useHistory();
+  // const history = useHistory();
 
   function handleNameChange(event: any) {
     setName(event.target.value);
@@ -67,7 +67,7 @@ const ContactForm = (props: ContactFormProps) => {
     await props.post(payload);
     setShowMsgRecievedModal(true);
 
-    history.push("/");
+    // history.push("/");
   }
 
   return (
