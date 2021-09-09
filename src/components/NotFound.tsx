@@ -1,6 +1,6 @@
 export const NotFound = () => {
   return (
-    <div style={{width:"90vw", margin:"0 auto"}}>
+    <div style={{ width: "90vw", margin: "0 auto" }}>
       <div className="back">
         <a href={"/"}>
           <i className="fas fa-chevron-left"></i> Home

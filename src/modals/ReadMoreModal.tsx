@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import restaurantApi from "../api/restaurantApi";
 import Contact from "../models/Contact";
 import ErrorResponse from "../models/ErrorResponse";
@@ -7,20 +6,26 @@ import "./css/modal_style.css";
 interface ModalProps {
   onClose: () => void;
   show: boolean;
-  contactId: string | undefined
+  contactId: string | undefined;
 }
-export const ReadMoreModal: React.FC<ModalProps> = ({ onClose, show, contactId }) => {
-  
+export const ReadMoreModal: React.FC<ModalProps> = ({
+  onClose,
+  show,
+  contactId,
+}) => {
   if (!show) {
     return null;
   }
 
   const readMoreMessage = async () => {
-    let response = await restaurantApi.post<Contact | ErrorResponse>(`/contact/${contactId}`, {
-        data: contactId
-    });
-    let contactDetail = response.data as Contact
-    console.log(contactDetail)
+    let response = await restaurantApi.post<Contact | ErrorResponse>(
+      `/contact/${contactId}`,
+      {
+        data: contactId,
+      }
+    );
+    let contactDetail = response.data as Contact;
+    console.log(contactDetail);
   };
 
   return (

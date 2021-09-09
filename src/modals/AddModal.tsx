@@ -92,7 +92,9 @@ export const AddModal: React.FC<ModalProps> = ({ onClose, show }) => {
                 onClick={() => openForm(data)}
                 id={data.TimeSlotText}
               />
-                <label className="slot" htmlFor={data.TimeSlotText}>{data.TimeSlotText}</label>
+              <label className="slot" htmlFor={data.TimeSlotText}>
+                {data.TimeSlotText}
+              </label>
             </div>
           ))}
         </div>

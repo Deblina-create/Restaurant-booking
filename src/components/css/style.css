@@ -80,7 +80,6 @@ button:disabled {
   font-size: 15px;
 }
 
-
 .add {
   text-align: right;
   padding: 0.5em;
@@ -136,7 +135,7 @@ th {
 }
 
 .text-box {
-  background-color:white;
+  background-color: white;
   padding: 20px;
   color: black;
   border-radius: 5px;
@@ -155,11 +154,11 @@ th {
 }
 
 .notread {
-  color: white
+  color: white;
 }
 
 .error {
-  color: orange; 
+  color: orange;
   margin: 0;
   font-size: 15px;
 }
@@ -167,7 +166,7 @@ th {
 @media screen and (min-width: 600px) {
   .increase {
     left: 330px;
-  } 
+  }
 
   .decrease {
     left: 300px;
@@ -177,7 +176,7 @@ th {
 @media screen and (min-width: 768px) {
   .increase {
     left: 390px;
-  } 
+  }
 
   .decrease {
     left: 360px;
@@ -190,21 +189,21 @@ th {
   }
   .increase {
     left: 530px;
-  } 
+  }
 
   .decrease {
     left: 500px;
   }
 
   .delete-icon {
-    padding-left: 20px; 
+    padding-left: 20px;
   }
 }
 
 @media screen and (min-width: 1200px) {
   .increase {
     left: 730px;
-  } 
+  }
 
   .decrease {
     left: 700px;

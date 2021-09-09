@@ -13,10 +13,10 @@
   background-color: orange;
   height: 35vh;
   width: 35vh;
-  -webkit-animation: rotation .9s;
-	-moz-animation: rotation .9s;
-	-o-animation: rotation .9s;
-	animation: rotation .9s;
+  -webkit-animation: rotation 0.9s;
+  -moz-animation: rotation 0.9s;
+  -o-animation: rotation 0.9s;
+  animation: rotation 0.9s;
 }
 
 .bookingLink:hover {
@@ -80,41 +80,49 @@
 }
 
 @-webkit-keyframes rotation {
-	from {
-	  -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);}
-	to {
-	  -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);}
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
 }
 
 @-moz-keyframes rotation {
-	from {
-	  -moz-transform: rotate(0deg);
-    transform: rotate(0deg);}
-	to {
-	  -moz-transform: rotate(359deg);
-    transform: rotate(359deg);}
+  from {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
 }
 
 @-o-keyframes rotation {
-	from {
-	  -o-transform: rotate(0deg);
-    transform: rotate(0deg);}
-	to {
-	  -o-transform: rotate(359deg);
-    transform: rotate(359deg);}
+  from {
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
 }
 
 @keyframes rotation {
-	from {
-	  -webkit-transform: rotate(0deg);
+  from {
+    -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
-	  -o-transform: rotate(0deg);
-    transform: rotate(0deg);}
-	to {
-	  -webkit-transform: rotate(359deg);
-	  -moz-transform: rotate(359deg);
-	  -o-transform: rotate(359deg);
-    transform: rotate(359deg);}
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
 }

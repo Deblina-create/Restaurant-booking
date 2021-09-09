@@ -101,11 +101,6 @@ export const EditModal: React.FC<ModalProps> = ({
             defaultValue={bookingInfo?.Email}
             onChange={(e) => (bookingInfo!.Email = e.target.value)}
           />
-          {/* <input
-            type="text"
-            placeholder="Preference"
-            defaultValue={bookingInfo.Preference}
-          /> */}
         </div>
         <div className="modal-footer">
           <button onClick={editBooking} className="full-btn">

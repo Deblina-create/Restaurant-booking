@@ -7,27 +7,29 @@ import "./css/style.css";
 export const Messages = () => {
   const [contacts, setContacts] = useState([] as Contact[]);
   const history = useHistory();
-  
+
   const showMore = (contact: Contact) => {
     history.push("/message/" + `${contact.id}`);
   };
 
-  let divTag = contacts.sort((a,b)=> a.IsRead ? 1 : -1).map((contact) => {
-    return (
-      <div key={contact.id} className={`list ${contact.IsRead ? 'isread':'notread'}`}>
-        <div>{contact.Name}</div>
-        {contact.Message.length > 5 ? (
-          contact.Message.substring(0, 5) + "..."
-        ) : (
-          <div>{contact.Message}</div>
-        )} 
-        <button
-          onClick={() => showMore(contact)}>
-          read more
-        </button>
-      </div>
-    );
-  });
+  let divTag = contacts
+    .sort((a, b) => (a.IsRead ? 1 : -1))
+    .map((contact) => {
+      return (
+        <div
+          key={contact.id}
+          className={`list ${contact.IsRead ? "isread" : "notread"}`}
+        >
+          <div>{contact.Name}</div>
+          {contact.Message.length > 5 ? (
+            contact.Message.substring(0, 5) + "..."
+          ) : (
+            <div>{contact.Message}</div>
+          )}
+          <button onClick={() => showMore(contact)}>read more</button>
+        </div>
+      );
+    });
 
   const fetchData = async () => {
     console.log("### Contacts from DB");

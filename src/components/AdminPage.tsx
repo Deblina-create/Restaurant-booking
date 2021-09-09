@@ -12,7 +12,6 @@ export const AdminPage = () => {
   const history = useHistory();
   const [bookings, setBookings] = useState([] as Booking[]);
   const [contacts, setContacts] = useState([] as Contact[]);
-  const [selectedBooking, setSelectedBooking] = useState<Booking>();
   const [date, setDate] = useState(dateNow);
   const [loading] = useState(false);
   const [completed, setcompleted] = useState(false);
@@ -30,9 +29,9 @@ export const AdminPage = () => {
     0
   );
 
-  const fetchData =  async() => {
+  const fetchData = async () => {
     console.log("### bookings from DB");
-    setTimeout(async() => {
+    setTimeout(async () => {
       const response = await restaurantApi.post<Booking[]>("/admin_search", {
         data: date,
       });
@@ -156,7 +155,7 @@ export const AdminPage = () => {
             <div className="completed">&#x2713;</div>
           )}
         </>
-       ) : ( 
+      ) : (
         <div>{divTag}</div>
       )}
       <DeleteModal

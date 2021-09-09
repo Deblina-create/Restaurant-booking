@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { MsgRecievedModal } from "../modals/MsgRecievedModal";
 import Utilities from "../Utilities";
-import "./css/contactForm.css";
-import { useHistory } from "react-router-dom";
+import "./css/style.css";
 
 interface ContactFormProps {
   setIsSent?: any;
@@ -14,11 +13,9 @@ const ContactForm = (props: ContactFormProps) => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [showMsgRecievedModal, setShowMsgRecievedModal] = useState(false);
-
   const [errorName, setErrorName] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
-  // const history = useHistory();
 
   function handleNameChange(event: any) {
     setName(event.target.value);
@@ -66,8 +63,6 @@ const ContactForm = (props: ContactFormProps) => {
 
     await props.post(payload);
     setShowMsgRecievedModal(true);
-
-    // history.push("/");
   }
 
   return (
