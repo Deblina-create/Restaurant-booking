@@ -15,7 +15,7 @@ const initialContact: Contact = {
   IsRead: false,
 };
 
-export const ContactDetail = () => {
+export const MessageDetail = () => {
   const { id } = useParams<detailParams>();
   const [contactDetail, setContactDetail] = useState(initialContact);
 
