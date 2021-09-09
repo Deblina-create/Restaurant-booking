@@ -120,6 +120,7 @@ const MyBookingSearch = () => {
                             {searchData.map((data, index) => <div className="radio-btn" key={index}>
                                 <input type="radio" value={data.TimeSlotText} disabled={!data.IsTableAvailable} name="slot" onClick={() => openForm(data)} />
                                 <label>{data.TimeSlotText}</label>
+                                {!data.IsTableAvailable ? <span> (Full)</span> : ""}
                             </div>)}
                         </div>
                         {dataFetched && searchData.length === 0 ? <div>Sorry! we have 0 tables left. Try to change date.</div> : ''}
