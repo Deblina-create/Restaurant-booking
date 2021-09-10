@@ -11,12 +11,6 @@ export const Messages = () => {
   const showMore = (contact: Contact) => {
     history.push("/message/" + `${contact.id}`);
   };
-  let unreadArray = [];
-  const unread = contacts.map((contact) => {
-    if (contact.IsRead === false) {
-      return unreadArray.push(contact);
-    }
-  })
 
   let divTag = contacts
     .sort((a, b) => (a.IsRead ? 1 : -1))
@@ -57,9 +51,6 @@ export const Messages = () => {
         </a>
       </div>
       <h2> Messages</h2>
-      <p className="total">
-        Total: {unreadArray.length} unread messages of {contacts.length} messages
-      </p>
       <div>{divTag}</div>
     </div>
   );
