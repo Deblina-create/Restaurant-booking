@@ -1,4 +1,3 @@
-import { useState } from "react";
 import restaurantApi from "../api/restaurantApi";
 import Booking from "../models/Booking";
 import ErrorResponse from "../models/ErrorResponse";
@@ -9,16 +8,20 @@ interface ModalProps {
   show: boolean;
   bookingId: string | undefined;
 }
-export const DeleteModal: React.FC<ModalProps> = ({ onClose, show, bookingId }) => {
-  // const [bookingId, setBookingId] = useState(id); 
-
+export const DeleteModal: React.FC<ModalProps> = ({
+  onClose,
+  show,
+  bookingId,
+}) => {
   if (!show) {
     return null;
   }
 
   const deleteBooking = async () => {
     console.log("delete booking" + bookingId);
-    await restaurantApi.delete<Booking | ErrorResponse>(`/booking/${bookingId}`);
+    await restaurantApi.delete<Booking | ErrorResponse>(
+      `/booking/${bookingId}`
+    );
     onClose();
   };
 

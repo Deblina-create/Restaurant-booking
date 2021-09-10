@@ -1,6 +1,6 @@
 interface ErrorResponse {
-    Code: string;
-    Message: string;
+  Code: string;
+  Message: string;
 }
 
 export default ErrorResponse;

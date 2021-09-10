@@ -15,7 +15,7 @@ const initialContact: Contact = {
   IsRead: false,
 };
 
-export const ContactDetail = () => {
+export const MessageDetail = () => {
   const { id } = useParams<detailParams>();
   const [contactDetail, setContactDetail] = useState(initialContact);
 
@@ -29,13 +29,15 @@ export const ContactDetail = () => {
     setContactDetail(selectedContact);
     console.log("### messageDetail is", selectedContact);
     const updates = {
-      ...selectedContact, IsRead: true }
-      await restaurantApi.put<Contact | ErrorResponse>("/contact", {
-        data: updates,
-      })
-      setContactDetail(updates)
-      console.log("### SetAsRead is", updates);
-  }
+      ...selectedContact,
+      IsRead: true,
+    };
+    await restaurantApi.put<Contact | ErrorResponse>("/contact", {
+      data: updates,
+    });
+    setContactDetail(updates);
+    console.log("### SetAsRead is", updates);
+  };
 
   return (
     <div className="container">
@@ -47,7 +49,8 @@ export const ContactDetail = () => {
       <div className="detail">
         <p>
           From: {contactDetail.Name}
-          <i className="fas fa-angle-left arrow"></i>{contactDetail.Email}
+          <i className="fas fa-angle-left arrow"></i>
+          {contactDetail.Email}
           <i className="fas fa-angle-right arrow"></i>
         </p>
         <p>Message: </p>

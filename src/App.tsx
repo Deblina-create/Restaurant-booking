@@ -9,7 +9,7 @@ import { NotFound } from "./components/NotFound";
 import { Home } from "./components/Home";
 import { EditForm } from "./components/EditForm";
 import { Messages } from "./components/Messages";
-import { ContactDetail } from "./components/ContactDetail";
+import { MessageDetail } from "./components/MessageDetail";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
         <Route exact path="/admin" component={AdminPage} />
         <Route exact path="/edit/:id" component={EditForm} />
         <Route exact path="/message" component={Messages} />
-        <Route exact path="/message/:id" component={ContactDetail} />
+        <Route exact path="/message/:id" component={MessageDetail} />
         <Route exact path="/*" component={NotFound} />
       </Switch>
     </div>
