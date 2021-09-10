@@ -4,7 +4,6 @@ import restaurantApi from '../api/restaurantApi';
 import SearchInfo from '../models/SearchInfo';
 import Booking from '../models/Booking';
 import BookingForm from './BookingForm';
-import BookingDetails from './BookingDetails';
 import ErrorResponse from '../models/ErrorResponse';
 import "./css/style.css";
 import "../modals/css/modal_style.css";

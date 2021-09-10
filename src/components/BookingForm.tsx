@@ -113,7 +113,7 @@ const BookingForm = (props: any) => {
                 <input type="text" placeholder="Phone" onChange={phoneChanged}></input>
                 <input type="email" placeholder="Email" onChange={emailChanged}></input>
                 {errorEmail ? <p className="error"><i className="fas fa-exclamation-triangle"></i> Please enter a valid email</p> : ''}
-                <span><input type="checkbox" id="info" name="info" checked={gdprChecked} onChange={() => setGdprChecked(!gdprChecked)}></input>We use your info for better customer experience</span>
+                <p className="checkbox"><input type="checkbox" id="info" name="info" checked={gdprChecked} onChange={() => setGdprChecked(!gdprChecked)}></input>We use your info for better customer experience</p>
                 <button className="full-btn" disabled={!gdprChecked} onClick={saveData}>Book</button>
             </form>
             <ConfirmationModal onClose={() => setShowConfirmation(false)} show={showConfirmation} props={bookingInfo} />
